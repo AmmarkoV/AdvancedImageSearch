@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
                       unsigned int len = strlen(argv[1]);
                       dirtosearch = (char*) malloc(sizeof(char) * len);
                      }
-
+   //TODO SENSE INPUT HERE
    struct AISLib_SearchCriteria criteria;
    struct AISLib_SearchResults *  result =  AISLib_Search(dirtosearch,&criteria);
 

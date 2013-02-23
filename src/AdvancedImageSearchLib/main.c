@@ -164,7 +164,6 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
       if ( ( img->width>criteria->maxWidth ) || ( img->height>criteria->maxHeight ) ) { return 0; }
     }
 
-
     return 1;
 }
 
