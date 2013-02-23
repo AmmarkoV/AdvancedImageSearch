@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="src/AdvancedImageSearchLib/AdvancedImageSearchLib.cbp" active="1" />
+		<Project filename="src/lsimg/lsimg.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
