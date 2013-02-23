@@ -32,8 +32,13 @@ struct CStr
 
 struct AISLib_SearchCriteria
 {
+   char minDimensionsUsed;
+   unsigned int minWidth;
+   unsigned int minHeight;
 
-
+   char maxDimensionsUsed;
+   unsigned int maxWidth;
+   unsigned int maxHeight;
 };
 
 struct AISLib_SearchResults

@@ -54,6 +54,7 @@ struct AISLib_SearchResults * addMoreSearchResults(struct AISLib_SearchResults *
 }
 
 
+//I have to make an external tool to generate code segments like the following!
 int scanStringForImageExtensions(char * inpt)
 {
   if (inpt==0) { return 0; }
@@ -143,10 +144,29 @@ int fileIsImage(char * filename)
          //We use the filename extensions to speed up discarding non image files
          return 0;
      }
-
+   return 1;
 }
 
 
+
+int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria)
+{
+   if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect image \n");    return 0; }
+   if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect criteria \n"); return 0; }
+
+   if (criteria->minDimensionsUsed)
+    { //Ready to discard for violation of minimum dimensions
+      if ( ( img->width<criteria->minWidth ) || ( img->height<criteria->minHeight ) ) { return 0; }
+    }
+
+   if (criteria->maxDimensionsUsed)
+    { //Ready to discard for violation of maximum dimensions
+      if ( ( img->width>criteria->maxWidth ) || ( img->height>criteria->maxHeight ) ) { return 0; }
+    }
+
+
+    return 1;
+}
 
 
 
@@ -170,8 +190,11 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               struct Image pic;
               if ( readImage(epdf->d_name , JPG_CODEC , & pic)  )
               {
+                 if (imageFitsCriteria(&pic,criteria))
+                 {
                   printf("%s\n",epdf->d_name);
-                  fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
+                 }
+                fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
               }
           }
       }
