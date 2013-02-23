@@ -174,6 +174,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
   DIR *dpdf=0;
   struct dirent *epdf=0;
 
+  char fullPath[4096]={0};
+
   if (directory == 0) { dpdf = opendir("./"); } else
                       { dpdf = opendir(directory); }
 
@@ -184,16 +186,23 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
      while (epdf = readdir(dpdf))
       {
+         //printf("RAW %s\n",epdf->d_name);
          if (fileIsImage(epdf->d_name))
           {
+              strcpy(fullPath,directory);
+              strcat(fullPath,"/");
+              strcat(fullPath,epdf->d_name);
+
               struct Image pic;
-              if ( readImage(epdf->d_name , JPG_CODEC , & pic)  )
+              if ( readImage(fullPath , JPG_CODEC , & pic)  )
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {
                   printf("%s\n",epdf->d_name);
                  }
-                fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
+
+                //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
+                if (pic.pixels!=0) { free(pic.pixels); pic.pixels=0; }
               }
           }
       }

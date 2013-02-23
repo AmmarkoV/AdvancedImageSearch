@@ -38,7 +38,6 @@ void term_buffer(struct jpeg_compress_struct* cinfo) { return ; }
 
 int ReadJPEG( char *filename,struct Image * pic)
 {
-    fprintf(stderr,"Reading JPEG %s ",filename);
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
