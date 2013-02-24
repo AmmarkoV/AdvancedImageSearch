@@ -198,7 +198,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {
-                  printf("%s\n",epdf->d_name);
+                  printf("%s ",epdf->d_name);
                  }
 
                 //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);

@@ -47,7 +47,7 @@ char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCr
 int main(int argc, char *argv[])
 {
    char * dirtosearch=0;
-   struct AISLib_SearchCriteria criteria;
+   struct AISLib_SearchCriteria criteria={0}; // Initialize all null! IMPORTAN!
 
     if ( argc <1 )
      {

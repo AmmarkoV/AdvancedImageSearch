@@ -10,3 +10,13 @@ Of course this functionality is highly theoretical for now , but I hope I will h
 ./install.sh adds the binaries to the system
 
 
+
+Sample usage of lsimg
+
+It will move all images smaller than 640x480 to the subdir small!
+ mv `lsimg -maxDims 640 480 /home/me/Pictures/Wallpapers/Raw` Small/
+
+
+
+It will move all images suitable for wallpaper ( larger than 1680x1050 ) to the wallpaper dir!
+ mv `lsimg -minDims 1680 1050 /home/me/Downloads/` /home/me/Pictures/Wallpapers/Raw/
