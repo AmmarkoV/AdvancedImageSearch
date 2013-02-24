@@ -7,4 +7,7 @@
 void printListOfParametersRecognized();
 char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );
 
+char searchCriteriaRequireOnlyImageHeaderLoaded(struct AISLib_SearchCriteria * criteria);
+
+
 #endif // FILENAME_PARSER_H_INCLUDED

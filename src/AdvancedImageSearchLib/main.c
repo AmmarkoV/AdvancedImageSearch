@@ -29,6 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "codecs/codecs.h"
 #include "codecs/jpg.h"
 
+#include "image_processing/histograms.h"
+
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
 
@@ -128,26 +130,46 @@ inline int fileIsImage(char * filename)
 int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria)
 {
    if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect image \n");    return 0; }
-   if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect criteria \n"); return 0; }
+   if (criteria==0) { fprintf(stderr,"imageFitsCriteria : Incorrect criteria \n"); return 0; }
 
    if (criteria->minDimensionsUsed)
     { //Ready to discard for violation of minimum dimensions
-      if ( ( img->width<criteria->minWidth ) || ( img->height<criteria->minHeight ) ) { return 0; }
+      if ( ( img->width < criteria->minWidth ) || ( img->height < criteria->minHeight ) ) { return 0; }
     }
 
    if (criteria->maxDimensionsUsed)
     { //Ready to discard for violation of maximum dimensions
-      if ( ( img->width>criteria->maxWidth ) || ( img->height>criteria->maxHeight ) ) { return 0; }
+      if ( ( img->width > criteria->maxWidth ) || ( img->height > criteria->maxHeight ) ) { return 0; }
     }
+
+   if (criteria->colorRangeUsed)
+    {
+      struct Histogram * histogram=generateHistogram(img->pixels ,img->width,img->height,3);
+      if ( histogram!=0 )
+      {
+         if (! histogramIsCloseToColor(histogram, criteria->colorRangeSpecificR  ,
+                                                   criteria->colorRangeSpecificG  ,
+                                                   criteria->colorRangeSpecificB,
+                                                   criteria->colorRange,
+                                                   img->width*img->height*3,
+                                                   30.0 ) )
+                                                   {
+                                                    free(histogram);
+                                                    return 0;
+                                                   }
+        free(histogram);
+       } else
+       {
+          //No Histogram no color range enforced , doesnt fit the criteria
+          return 0;
+       }
+    }
+
+
 
     return 1;
 }
 
-
-char searchCriteriaRequireOnlyHeader(struct AISLib_SearchCriteria * criteria)
-{
- return 1;
-}
 
 
 struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria)
@@ -176,7 +198,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               strcat(fullPath,epdf->d_name);
 
               struct Image pic;
-              if ( readImage(fullPath , image_type , & pic , searchCriteriaRequireOnlyHeader(criteria) )  )
+              if ( readImage(fullPath , image_type , & pic , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) )  )
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {

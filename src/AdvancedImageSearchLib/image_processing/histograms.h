@@ -5,7 +5,7 @@
 
 struct histogramChannel
 {
-  unsigned int intensity[255];
+  unsigned int intensity[256];
 };
 
 
@@ -15,6 +15,7 @@ struct Histogram
     struct histogramChannel channel[3];
 };
 
-int generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels , struct Histogram * hist );
+struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels );
+int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char Deviation,unsigned int imageSize,float targetPercentage);
 
 #endif // HISTOGRAMS_H_INCLUDED

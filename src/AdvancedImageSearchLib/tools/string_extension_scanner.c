@@ -54,8 +54,6 @@ int is_valid_suffix(char *s)
 	ssize_t i = strlen(s) - 1;
 	while (--i, i >= 0) s[i] = tolower(s[i]);
 
-
-
     if (strcmp("jpg", s) == 0) { return JPG_CODEC; }
     if (strcmp("jpeg", s) == 0) { return JPG_CODEC; }
 
@@ -80,27 +78,6 @@ int scanStringForImageExtensionsSimple(char * inpt)
 	 }
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
