@@ -12,7 +12,7 @@ struct histogramChannel
 
 struct Histogram
 {
-    struct histogramChannel channel[3];
+  struct histogramChannel channel[3];
 };
 
 struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels );

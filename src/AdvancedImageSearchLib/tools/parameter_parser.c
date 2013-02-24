@@ -28,7 +28,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
  {
    if (strcmp(argv[i],"-help")==0)
     {
-      displayHelp();
+      criteria->needHelp=1;
     } else
    if (strcmp(argv[i],"-minDims")==0)
     {
@@ -61,7 +61,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    //last argument should be dir!
    if (i==argc-1)
     {
-      fprintf(stderr,"Found DIR! %s \n",argv[i]);
+      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
       outdir = ( char* ) malloc((strlen(argv[i])+1) *(sizeof(char) )); //+1 for null termination!
       if (outdir!=0) {   strcpy(outdir,argv[i]);  }
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "string_extension_scanner.h"
 #include "../codecs/codecs.h"
 

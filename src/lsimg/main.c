@@ -15,8 +15,6 @@ void displayHelp()
 
     //Parameters supported by the SharedObject Library
     AISLib_printHelp();
-
-    exit(0);
 }
 
 int main(int argc, char *argv[])
@@ -25,8 +23,13 @@ int main(int argc, char *argv[])
    struct AISLib_SearchCriteria criteria={0}; // Initialize all null! IMPORTAN!
 
     if ( argc <1 )        { fprintf(stderr,"Argument zero should be executable path :S \n"); return 1; } else
-    //if ( argc == 1 )      { /*Running from current directory PRINT OPTIONS MAYBE ?*/ } else
     /*We have arguments*/ { dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,&criteria); }
+
+   if (criteria.needHelp)
+    {
+        displayHelp();
+        return 0;
+    }
 
 
    struct AISLib_SearchResults *  result =  AISLib_Search(dirtosearch,&criteria);

@@ -10,31 +10,22 @@ void cleanHistogram ( struct Histogram * hist )
 {
    //memset(hist , 0 , sizeof(struct Histogram));
     unsigned int i =0;
-    for (i=0; i<255; i++) { hist->channel[0].intensity[i]=0;  }
-    for (i=0; i<255; i++) { hist->channel[1].intensity[i]=0;  }
-    for (i=0; i<255; i++) { hist->channel[2].intensity[i]=0;  }
+    for (i=0; i<255; i++) { hist->channel[0].intensity[i]=0; }
+    for (i=0; i<255; i++) { hist->channel[1].intensity[i]=0; }
+    for (i=0; i<255; i++) { hist->channel[2].intensity[i]=0; }
 }
 
 
 
 struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
-
+   if (rgb==0) { return 0; }
    char * rgbPTR = rgb;
-   char * rgbLimit = rgb+width*height*channels;
+   char * rgbLimit = rgb + width*height*channels;
    struct Histogram *  hist =  (struct Histogram * ) malloc (sizeof(struct Histogram));
    if (hist==0) { return 0; }
    cleanHistogram(hist);
 
-
-   if (channels==1)
-   {
-    while (rgbPTR<rgbLimit)
-     {
-        ++hist->channel[0].intensity[(unsigned int) *rgbPTR];
-        ++rgbPTR;
-     }
-   } else
    if (channels==3)
    {
     unsigned int overlaps = 0;
@@ -102,13 +93,21 @@ int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char De
 
   if (thresR+thresG+thresB == 0) { return 0; }
 
-  float ourPercentage = (float) imageSize / ((float) thresR+thresG+thresB/3) ;
+  unsigned int imageSizePerChannel = (unsigned int) imageSize;
+
+  float ourR_Percentage = (float) 100 * thresR/imageSizePerChannel ;
+  float ourG_Percentage = (float) 100 * thresG/imageSizePerChannel ;
+  float ourB_Percentage = (float) 100 * thresB/imageSizePerChannel ;
 
   #if DEBUG_HISTOGRAMS
-    fprintf(stderr,"Our Percentage %0.2f , target %0.2f \n",ourPercentage,targetPercentage);
+    fprintf(stderr,"Our R %0.2f%% G %0.2f%% B %0.2f%% , target %0.2f \n",ourR_Percentage,ourG_Percentage,ourB_Percentage,targetPercentage);
   #endif
 
-  if (ourPercentage>targetPercentage) { return 1; }
+  if (
+       (ourR_Percentage>targetPercentage) &&
+       (ourG_Percentage>targetPercentage) &&
+       (ourB_Percentage>targetPercentage)
+     ) { return 1; }
 
   return 0;
 }

@@ -30,7 +30,7 @@ DEP_DEBUG =
 OUT_DEBUG = libAdvancedImageSearchLib.so
 
 INC_RELEASE =  $(INC)
-CFLAGS_RELEASE =  $(CFLAGS) -O2 -fPIC
+CFLAGS_RELEASE =  $(CFLAGS) -fexpensive-optimizations -O3 -fPIC -march=native -mtune=native
 RESINC_RELEASE =  $(RESINC)
 RCFLAGS_RELEASE =  $(RCFLAGS)
 LIBDIR_RELEASE =  $(LIBDIR)

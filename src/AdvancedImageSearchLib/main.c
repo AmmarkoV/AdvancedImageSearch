@@ -37,7 +37,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
 
 
-char * AISLib_Version()
+const char * AISLib_Version()
 {
   return FULLVERSION_STRING;
 }
@@ -156,7 +156,7 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
       struct Histogram * histogram=generateHistogram(img->pixels ,img->width,img->height,3);
       if ( histogram!=0 )
       {
-         if (! histogramIsCloseToColor(histogram, criteria->colorRangeSpecificR  ,
+         if (! histogramIsCloseToColor(histogram,  criteria->colorRangeSpecificR  ,
                                                    criteria->colorRangeSpecificG  ,
                                                    criteria->colorRangeSpecificB,
                                                    criteria->colorRange,
@@ -196,7 +196,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
   if (dpdf != 0)
    {
      struct AISLib_SearchResults * sr = createSearchResults(INITIAL_ALLOCATED_MEMORY_FOR_RESULTS);
-
+     if (sr==0) { return 0; }
 
      while (epdf = readdir(dpdf))
       {
@@ -208,12 +208,12 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               strcat(fullPath,"/");
               strcat(fullPath,epdf->d_name);
 
-              struct Image pic;
+              struct Image pic={0};
               if ( readImage(fullPath , image_type , & pic , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) )  )
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {
-                  printf("%s ",epdf->d_name);
+                   printf("%s ",epdf->d_name);
                  }
 
                 //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
@@ -223,6 +223,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
       }
 
       closedir(dpdf);
+      return sr;
     }
 
   return 0;

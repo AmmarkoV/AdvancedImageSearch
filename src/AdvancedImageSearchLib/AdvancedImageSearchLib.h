@@ -64,6 +64,8 @@ struct AISLib_SearchCriteria
    unsigned int colorRange;
    unsigned char colorRangeSpecificR,colorRangeSpecificG,colorRangeSpecificB;
 
+   char needHelp;
+
 };
 
 struct AISLib_SearchResults
@@ -73,7 +75,7 @@ struct AISLib_SearchResults
 
 };
 
-char * AISLib_Version();
+const char * AISLib_Version();
 
 void AISLib_printHelp();
 char * AISLib_loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );

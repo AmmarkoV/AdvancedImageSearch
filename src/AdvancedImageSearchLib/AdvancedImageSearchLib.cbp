@@ -26,8 +26,11 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
 					<Add option="-fPIC" />
+					<Add option="-march=native" />
+					<Add option="-mtune=native" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
