@@ -164,9 +164,11 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
                                                    30.0 ) )
                                                    {
                                                     free(histogram);
+                                                    histogram=0;
                                                     return 0;
                                                    }
         free(histogram);
+        histogram=0;
        } else
        {
           //No Histogram no color range enforced , doesnt fit the criteria

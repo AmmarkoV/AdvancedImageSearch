@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DEBUG_HISTOGRAMS 0
 
 void cleanHistogram ( struct Histogram * hist )
 {
@@ -57,7 +58,11 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
         ++rgbPTR;
      }
 
-     if (overlaps>0) { fprintf(stderr,"Had %u overlaps\n",overlaps); }
+     if (overlaps>0) {
+                       #if DEBUG_HISTOGRAMS
+                        fprintf(stderr,"Had %u overlaps\n",overlaps);
+                       #endif
+                     }
 
    }
     else
@@ -99,8 +104,11 @@ int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char De
 
   float ourPercentage = (float) imageSize / ((float) thresR+thresG+thresB/3) ;
 
-  fprintf(stderr,"Our Percentage %0.2f , target %0.2f \n",ourPercentage,targetPercentage);
-  if (ourPercentage>targetPercentage) { fprintf(stderr,"Success\n"); return 1; }
+  #if DEBUG_HISTOGRAMS
+    fprintf(stderr,"Our Percentage %0.2f , target %0.2f \n",ourPercentage,targetPercentage);
+  #endif
+
+  if (ourPercentage>targetPercentage) { return 1; }
 
   return 0;
 }
