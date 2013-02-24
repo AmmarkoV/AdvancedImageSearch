@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "Copying to system bin directory"
 
+make
 
 if [ -d "/usr/lib/AdvancedImageSearch" ]; then
 echo "AdvancedImageSearch Library path detected patching it up :)"

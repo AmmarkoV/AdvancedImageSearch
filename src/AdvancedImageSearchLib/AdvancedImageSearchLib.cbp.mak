@@ -12,14 +12,14 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS =  -Wall
+CFLAGS =  -Wall -fPIC
 RESINC = 
 LIBDIR = 
 LIB = 
-LDFLAGS = 
+LDFLAGS =  -lpng -ljpeg
 
 INC_DEBUG =  $(INC)
-CFLAGS_DEBUG =  $(CFLAGS) -g
+CFLAGS_DEBUG =  $(CFLAGS) -g -fPIC
 RESINC_DEBUG =  $(RESINC)
 RCFLAGS_DEBUG =  $(RCFLAGS)
 LIBDIR_DEBUG =  $(LIBDIR)
@@ -27,10 +27,10 @@ LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG =  $(LDFLAGS)
 OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
-OUT_DEBUG = bin/Debug/libAdvancedImageSearchLib.so
+OUT_DEBUG = libAdvancedImageSearchLib.so
 
 INC_RELEASE =  $(INC)
-CFLAGS_RELEASE =  $(CFLAGS) -O2
+CFLAGS_RELEASE =  $(CFLAGS) -O2 -fPIC
 RESINC_RELEASE =  $(RESINC)
 RCFLAGS_RELEASE =  $(RCFLAGS)
 LIBDIR_RELEASE =  $(LIBDIR)
@@ -38,18 +38,18 @@ LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE =  $(LDFLAGS) -s
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = bin/Release/libAdvancedImageSearchLib.so
+OUT_RELEASE = libAdvancedImageSearchLib.so
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/main.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/codecs/codecs.o $(OBJDIR_DEBUG)/codecs/jpg.o $(OBJDIR_DEBUG)/codecs/ppm.o $(OBJDIR_DEBUG)/main.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/main.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/codecs/codecs.o $(OBJDIR_RELEASE)/codecs/jpg.o $(OBJDIR_RELEASE)/codecs/ppm.o $(OBJDIR_RELEASE)/main.o
 
 all: debug release
 
 clean: clean_debug clean_release
 
 before_debug: 
-	test -d bin/Debug || mkdir -p bin/Debug
+	test -d $(OBJDIR_DEBUG)/codecs || mkdir -p $(OBJDIR_DEBUG)/codecs
 	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
 
 after_debug: 
@@ -59,16 +59,25 @@ debug: before_debug out_debug after_debug
 out_debug: $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) -shared $(LDFLAGS_DEBUG) $(LIBDIR_DEBUG) $(OBJ_DEBUG) $(LIB_DEBUG) -o $(OUT_DEBUG)
 
+$(OBJDIR_DEBUG)/codecs/codecs.o: codecs/codecs.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c codecs/codecs.c -o $(OBJDIR_DEBUG)/codecs/codecs.o
+
+$(OBJDIR_DEBUG)/codecs/jpg.o: codecs/jpg.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c codecs/jpg.c -o $(OBJDIR_DEBUG)/codecs/jpg.o
+
+$(OBJDIR_DEBUG)/codecs/ppm.o: codecs/ppm.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c codecs/ppm.c -o $(OBJDIR_DEBUG)/codecs/ppm.o
+
 $(OBJDIR_DEBUG)/main.o: main.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c main.c -o $(OBJDIR_DEBUG)/main.o
 
 clean_debug: 
 	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
-	rm -rf bin/Debug
+	rm -rf $(OBJDIR_DEBUG)/codecs
 	rm -rf $(OBJDIR_DEBUG)
 
 before_release: 
-	test -d bin/Release || mkdir -p bin/Release
+	test -d $(OBJDIR_RELEASE)/codecs || mkdir -p $(OBJDIR_RELEASE)/codecs
 	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
 
 after_release: 
@@ -78,12 +87,21 @@ release: before_release out_release after_release
 out_release: $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) -shared $(LDFLAGS_RELEASE) $(LIBDIR_RELEASE) $(OBJ_RELEASE) $(LIB_RELEASE) -o $(OUT_RELEASE)
 
+$(OBJDIR_RELEASE)/codecs/codecs.o: codecs/codecs.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c codecs/codecs.c -o $(OBJDIR_RELEASE)/codecs/codecs.o
+
+$(OBJDIR_RELEASE)/codecs/jpg.o: codecs/jpg.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c codecs/jpg.c -o $(OBJDIR_RELEASE)/codecs/jpg.o
+
+$(OBJDIR_RELEASE)/codecs/ppm.o: codecs/ppm.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c codecs/ppm.c -o $(OBJDIR_RELEASE)/codecs/ppm.o
+
 $(OBJDIR_RELEASE)/main.o: main.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c main.c -o $(OBJDIR_RELEASE)/main.o
 
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
-	rm -rf bin/Release
+	rm -rf $(OBJDIR_RELEASE)/codecs
 	rm -rf $(OBJDIR_RELEASE)
 
 .PHONY: before_debug after_debug clean_debug before_release after_release clean_release

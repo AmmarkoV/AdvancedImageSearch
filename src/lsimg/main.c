@@ -44,9 +44,13 @@ char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCr
      criteria->maxWidth = atoi(argv[i+1]);
      criteria->maxHeight = atoi(argv[i+2]);
     } else
+
+
+
+
+   //last argument should be dir!
    if (i==argc-1)
     {
-      //last argument should be dir!
       //fprintf(stderr,"Found DIR! %s \n",argv[i]);
       outdir = ( char* ) malloc(strlen(argv[i])*(sizeof(char) ));
       strcpy(outdir,argv[i]);
