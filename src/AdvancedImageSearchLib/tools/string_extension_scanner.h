@@ -1,6 +1,6 @@
 #ifndef STRING_EXTENSION_SCANNER_H_INCLUDED
 #define STRING_EXTENSION_SCANNER_H_INCLUDED
 
-
+int scanStringForImageExtensionsSimple(char * inpt);
 
 #endif // STRING_EXTENSION_SCANNER_H_INCLUDED

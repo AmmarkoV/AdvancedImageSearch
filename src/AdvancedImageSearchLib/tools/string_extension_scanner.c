@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "string_extension_scanner.h"
+#include "../codecs/codecs.h"
 
 
 //I have to make an external tool to generate code segments like the following!
-int scanStringForImageExtensions(char * inpt)
+int scanStringForImageExtensionsFastJPGOnly(char * inpt)
 {
   if (inpt==0) { return 0; }
   unsigned int length = strlen(inpt);
@@ -45,3 +46,61 @@ int scanStringForImageExtensions(char * inpt)
   }
  return 0;
 }
+
+
+
+int is_valid_suffix(char *s)
+{
+	ssize_t i = strlen(s) - 1;
+	while (--i, i >= 0) s[i] = tolower(s[i]);
+
+
+
+    if (strcmp("jpg", s) == 0) { return JPG_CODEC; }
+    if (strcmp("jpeg", s) == 0) { return JPG_CODEC; }
+
+
+    if (strcmp("png", s) == 0) { return PNG_CODEC; }
+
+    if (strcmp("ppm", s) == 0) { return PPM_CODEC; }
+    if (strcmp("pnm", s) == 0) { return PPM_CODEC; }
+
+    return 0;
+}
+
+
+int scanStringForImageExtensionsSimple(char * inpt)
+ {
+	char *s = 0;
+
+	s = strrchr(inpt, '.');
+	if (s != 0)
+	 {
+	     return is_valid_suffix(++s);
+	 }
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

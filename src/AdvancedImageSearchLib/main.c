@@ -118,14 +118,9 @@ int scanFileForImage(char * filename)
 
 
 
-int fileIsImage(char * filename)
+inline int fileIsImage(char * filename)
 {
-    if (!scanStringForImageExtensions(filename))
-     {
-         //We use the filename extensions to speed up discarding non image files
-         return 0;
-     }
-   return 1;
+  return scanStringForImageExtensionsSimple(filename);
 }
 
 
@@ -173,14 +168,15 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
      while (epdf = readdir(dpdf))
       {
          //printf("RAW %s\n",epdf->d_name);
-         if (fileIsImage(epdf->d_name))
+         unsigned int image_type  = fileIsImage(epdf->d_name);
+         if (image_type!=0)
           {
               strcpy(fullPath,directory);
               strcat(fullPath,"/");
               strcat(fullPath,epdf->d_name);
 
               struct Image pic;
-              if ( readImage(fullPath , JPG_CODEC , & pic , searchCriteriaRequireOnlyHeader(criteria) )  )
+              if ( readImage(fullPath , image_type , & pic , searchCriteriaRequireOnlyHeader(criteria) )  )
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {
