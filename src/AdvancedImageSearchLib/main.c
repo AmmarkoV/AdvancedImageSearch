@@ -52,6 +52,15 @@ struct AISLib_SearchResults * createSearchResults(unsigned int initialNumberOfRe
   return sr;
 }
 
+void destroySearchResults(struct AISLib_SearchResults * sr)
+{
+  if (sr==0) { return ; }
+  free(sr);
+  return;
+}
+
+
+
 struct AISLib_SearchResults * addMoreSearchResults(struct AISLib_SearchResults * initial_results,unsigned int addedNumberOfResults)
 {
   struct AISLib_SearchResults * sr = (struct AISLib_SearchResults *)  realloc(initial_results , (initial_results->resultsMAX+addedNumberOfResults)* sizeof(struct AISLib_SearchResults));
@@ -210,6 +219,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               }
           }
       }
+
+      closedir(dpdf);
     }
 
   return 0;

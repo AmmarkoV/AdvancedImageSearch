@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 
 
    struct AISLib_SearchResults *  result =  AISLib_Search(dirtosearch,&criteria);
+   destroySearchResults(result);
+
 
    if (dirtosearch!=0) { free(dirtosearch); }
 
