@@ -219,6 +219,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
                 //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
                 if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
+                if (img!=0) { free(img); img=0; }
               }
           }
 

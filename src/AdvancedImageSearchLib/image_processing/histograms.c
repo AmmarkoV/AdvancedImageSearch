@@ -92,17 +92,17 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
 
     while ( rgbPTRIndex< rgbPTRIndexLimit)
      {
-        unsigned int tmpR = *(rgb+rgbPTRIndex);
+        unsigned char tmpR = *(rgb+rgbPTRIndex);
         if (tmpR>=255) { tmpR=255; ++overlaps;  }
-        rHist->intensity[ tmpR ]+=1;
+        rHist->intensity[ tmpR ]=rHist->intensity[ tmpR ]+1;
 
-        unsigned int tmpG =  rgb[rgbPTRIndex];
+        unsigned char tmpG =  rgb[rgbPTRIndex];
         if (tmpG>=255) { tmpG=255; ++overlaps;  }
-        gHist->intensity[ tmpG ]+=1;
+        gHist->intensity[ tmpG ]=gHist->intensity[ tmpG ]+1;
 
-        unsigned int tmpB =  rgb[rgbPTRIndex];
+        unsigned char tmpB =  rgb[rgbPTRIndex];
         if (tmpB>=255) { tmpB=255; ++overlaps;  }
-        bHist->intensity[ tmpB ]+=1;
+        bHist->intensity[ tmpB ]=bHist->intensity[ tmpB ]+1;
 
         ++rgbPTRIndex;
      }
