@@ -24,24 +24,40 @@
 #include <string.h>
 
 #include "jpg.h"
+#include "ppm.h"
+
+#define DEBUG_READING_IMAGES 0
 
 struct Image * readImage( char *filename,unsigned int type,char read_only_header)
 {
-   struct Image * pic = (struct Image *) malloc(sizeof(struct Image));
-   memset(pic,0,sizeof(struct Image));
+   struct Image * img = 0;
+   img = (struct Image *) malloc( sizeof(struct Image) );
+   memset(img,0,sizeof(struct Image));
 
    switch (type)
    {
       case JPG_CODEC :
-       if (!ReadJPEG(filename,pic,read_only_header)) { free(pic); pic=0; }
+       if (!ReadJPEG(filename,img,read_only_header)) { free(img); img=0; }
+
+        #if DEBUG_READING_IMAGES
+	     char ppmfilename[512]={0};
+	     strcpy(ppmfilename,filename);
+	     strcat(ppmfilename,".ppm");
+	     WritePPM(ppmfilename,img);
+	    #endif
       break;
+
+       case PPM_CODEC :
+       if (!ReadPPM(filename,img,read_only_header)) { free(img); img=0; }
+       break;
+
       default :
-      free(pic);
-      pic=0;
+       free(img);
+       img=0;
       break;
    };
 
-   return pic;
+   return img;
 }
 
 

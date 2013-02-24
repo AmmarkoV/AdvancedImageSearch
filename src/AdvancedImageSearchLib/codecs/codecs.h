@@ -26,6 +26,9 @@ extern "C"
 {
 #endif
 
+
+#define READ_CREATES_A_NEW_PIXEL_BUFFER 1
+
 enum codecTypeList
 {
    NO_CODEC = 0,

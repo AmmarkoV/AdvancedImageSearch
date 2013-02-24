@@ -4,7 +4,7 @@
 #include "codecs.h"
 
 
-int ReadPPM(char * filename,struct Image * pic);
+int ReadPPM(char * filename,struct Image * pic,char read_only_header);
 int WritePPM(char * filename,struct Image * pic);
 
 

@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "codecs.h"
 #include "ppm.h"
 
 #define PPMREADBUFLEN 256
-#define READ_CREATES_A_NEW_PIXEL_BUFFER 1
 
 
-int ReadPPM(char * filename,struct Image * pic)
+int ReadPPM(char * filename,struct Image * pic,char read_only_header)
 {
     FILE *pf=0;
     pf = fopen(filename,"rb");
@@ -33,17 +33,10 @@ int ReadPPM(char * filename,struct Image * pic)
         r = fscanf(pf, "%u\n", &d);
         if ( (r < 1) || ( d != 255 ) ) { fclose(pf); return 0; }
 
-        if ( (w!=pic->width) || (h!=pic->height) )
-           {
-             fprintf(stderr,"Incorrect file size ( %s ) :P\n",filename);
-             if ( w * h > pic->width * pic->height )
-               {
-                 fprintf(stderr,"File %s will lead to overflow stopping read..\n",filename);
-                 fclose(pf);
-                 return 0;
-               }
-           }
+        pic->width=w;
+        pic->height=h;
 
+        if (read_only_header) { fclose(pf); return 1; }
 
       #if READ_CREATES_A_NEW_PIXEL_BUFFER
 	    pic->pixels = (char * ) malloc(pic->height*pic->width * 3 * sizeof(char));

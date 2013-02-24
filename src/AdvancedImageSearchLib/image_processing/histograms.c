@@ -4,11 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG_HISTOGRAMS 0
+#define DEBUG_HISTOGRAMS 1
 
 void cleanHistogram ( struct Histogram * hist )
 {
-   //memset(hist , 0 , sizeof(struct Histogram));
+    memset(hist , 0 , sizeof(struct Histogram));
+    return ;
     unsigned int i =0;
     for (i=0; i<255; i++) { hist->channel[0].intensity[i]=0; }
     for (i=0; i<255; i++) { hist->channel[1].intensity[i]=0; }
@@ -82,19 +83,26 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
    {
     unsigned int overlaps = 0;
     unsigned int rgbPTRIndex=0;
-    while (rgbPTRIndex<width*height*channels)
+    unsigned int rgbPTRIndexLimit = width*height*channels;
+
+    struct histogramChannel * rHist = &hist->channel[0];
+    struct histogramChannel * gHist = &hist->channel[1];
+    struct histogramChannel * bHist = &hist->channel[2];
+
+
+    while ( rgbPTRIndex< rgbPTRIndexLimit)
      {
-        unsigned int tmp =  rgb[rgbPTRIndex];
-        if (tmp>255) { tmp=255; ++overlaps;  }
-        hist->channel[0].intensity[ tmp ]+=1;
+        unsigned int tmpR = *(rgb+rgbPTRIndex);
+        if (tmpR>=255) { tmpR=255; ++overlaps;  }
+        rHist->intensity[ tmpR ]+=1;
 
-        tmp =  rgb[rgbPTRIndex];
-        if (tmp>255) { tmp=255; ++overlaps;  }
-        hist->channel[1].intensity[ tmp ]+=1;
+        unsigned int tmpG =  rgb[rgbPTRIndex];
+        if (tmpG>=255) { tmpG=255; ++overlaps;  }
+        gHist->intensity[ tmpG ]+=1;
 
-        tmp =  rgb[rgbPTRIndex];
-        if (tmp>255) { tmp=255; ++overlaps;  }
-        hist->channel[2].intensity[ tmp ]+=1;
+        unsigned int tmpB =  rgb[rgbPTRIndex];
+        if (tmpB>=255) { tmpB=255; ++overlaps;  }
+        bHist->intensity[ tmpB ]+=1;
 
         ++rgbPTRIndex;
      }
@@ -130,6 +138,8 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
 int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char Deviation,unsigned int imageSize,float targetPercentage)
 {
   if (hist==0) { return 0; }
+  if (imageSize==0) { return 0; }
+
   unsigned char minR = R; unsigned char maxR = R;
   unsigned char minG = G; unsigned char maxG = G;
   unsigned char minB = B; unsigned char maxB = B;
@@ -152,9 +162,9 @@ int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char De
   for (i=0; i<255; i++) { if ( ( minB<=i ) && (i<=maxB) ) { thresB+=hist->channel[2].intensity[i]; }  }
 
 
-  if (thresR+thresG+thresB == 0) { return 0; }
 
   unsigned int imageSizePerChannel = (unsigned int) imageSize;
+  if (imageSizePerChannel == 0) { return 0; }
 
   float ourR_Percentage = (float) 100 * thresR/imageSizePerChannel ;
   float ourG_Percentage = (float) 100 * thresG/imageSizePerChannel ;
@@ -165,9 +175,9 @@ int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char De
   #endif
 
   if (
-       (ourR_Percentage>targetPercentage) &&
-       (ourG_Percentage>targetPercentage) &&
-       (ourB_Percentage>targetPercentage)
+       (ourR_Percentage>=targetPercentage) &&
+       (ourG_Percentage>=targetPercentage) &&
+       (ourB_Percentage>=targetPercentage)
      ) { return 1; }
 
   return 0;

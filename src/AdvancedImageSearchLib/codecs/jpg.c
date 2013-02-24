@@ -5,7 +5,6 @@
 #include "codecs.h"
 #include "jpg.h"
 
-#define READ_CREATES_A_NEW_PIXEL_BUFFER 1
 
 /* we will be using this uninitialized pointer later to store raw, uncompressd image */
 //unsigned char *raw_image = NULL;
@@ -38,6 +37,9 @@ void term_buffer(struct jpeg_compress_struct* cinfo) { return ; }
 
 int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 {
+    if (filename==0) { fprintf(stderr,"Cannot load Null filename\n"); return 0; }
+    if (pic==0) { fprintf(stderr,"Damaged picture structure , cannot load %s\n",filename); return 0; }
+
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -84,7 +86,9 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	jpeg_start_decompress( &cinfo );
 
 	/* allocate memory to hold the uncompressed image */
-	unsigned char *raw_image = (unsigned char*)malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
+    char * raw_image = (char*) malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
+    memset(raw_image,0,cinfo.output_width*cinfo.output_height*cinfo.num_components);
+
 	/* now actually read the jpeg into the raw buffer */
 	row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );
 	/* read one scan line at a time */
@@ -96,9 +100,8 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	}
 	/* wrap up decompression, destroy objects, free pointers and close open files */
 
-
     #if READ_CREATES_A_NEW_PIXEL_BUFFER
-	  pic->pixels = (char*) raw_image;
+	  pic->pixels = raw_image;
     #else
 	 strncpy(pic->pixels,(char *) raw_image,cinfo.output_width*cinfo.output_height*cinfo.num_components);
 	 free(raw_image);

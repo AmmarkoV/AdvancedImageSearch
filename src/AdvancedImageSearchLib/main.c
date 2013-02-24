@@ -152,15 +152,15 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
     }
 
    if (criteria->colorRangeUsed)
-    {
-      struct Histogram * histogram=generateHistogram(img->pixels ,img->width,img->height,3);
+    {//Ready to discard for violation of histogram
+      struct Histogram * histogram = generateHistogram( img->pixels , img->width , img->height , 3);
       if ( histogram!=0 )
       {
          if (! histogramIsCloseToColor(histogram,  criteria->colorRangeSpecificR  ,
                                                    criteria->colorRangeSpecificG  ,
                                                    criteria->colorRangeSpecificB,
                                                    criteria->colorRange,
-                                                   img->width*img->height*3,
+                                                   img->width * img->height * 3,
                                                    30.0 ) )
                                                    {
                                                     free(histogram);
@@ -171,7 +171,7 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
         histogram=0;
        } else
        {
-          //No Histogram no color range enforced , doesnt fit the criteria
+          //No Histogram no color but range enforced , doesnt fit the criteria
           return 0;
        }
     }
@@ -198,7 +198,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
      struct AISLib_SearchResults * sr = createSearchResults(INITIAL_ALLOCATED_MEMORY_FOR_RESULTS);
      if (sr==0) { return 0; }
 
-     while (epdf = readdir(dpdf))
+     epdf = readdir(dpdf);
+     while ( epdf !=  0 )
       {
          //printf("RAW %s\n",epdf->d_name);
          unsigned int image_type  = fileIsImage(epdf->d_name);
@@ -208,10 +209,10 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               strcat(fullPath,"/");
               strcat(fullPath,epdf->d_name);
 
-              struct Image * img =readImage(fullPath , image_type , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) );
+              struct Image * img = readImage(fullPath , image_type , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) );
               if (  img!=0 )
               {
-                 if (imageFitsCriteria(&img,criteria))
+                 if (imageFitsCriteria(img,criteria))
                  {
                    printf("%s ",epdf->d_name);
                  }
@@ -220,6 +221,9 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
                 if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
               }
           }
+
+        //Next Value
+        epdf = readdir(dpdf);
       }
 
       closedir(dpdf);
