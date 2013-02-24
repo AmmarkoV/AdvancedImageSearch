@@ -43,7 +43,7 @@ struct Image
   unsigned int image_size;
 };
 
-int readImage( char *filename,unsigned int type,struct Image * pic,char read_only_header);
+struct Image * readImage( char *filename,unsigned int type,char read_only_header);
 int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,unsigned long * mem_size);
 
 #ifdef __cplusplus

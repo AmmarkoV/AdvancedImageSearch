@@ -17,11 +17,11 @@ void cleanHistogram ( struct Histogram * hist )
 
 
 
-struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
+struct Histogram *  generateHistogramPTRS(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
    if (rgb==0) { return 0; }
-   char * rgbPTR = rgb;
-   char * rgbLimit = rgb + width*height*channels;
+   unsigned char * rgbPTR = (unsigned char* )rgb;
+   unsigned char * rgbLimit = rgbPTR + width*height*channels;
    struct Histogram *  hist =  (struct Histogram * ) malloc (sizeof(struct Histogram));
    if (hist==0) { return 0; }
    cleanHistogram(hist);
@@ -32,17 +32,20 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
     unsigned int rgbPTRIndex=0;
     while (rgbPTR<rgbLimit)
      {
-        rgbPTRIndex = 0 + (unsigned int) *rgbPTR;
+        rgbPTRIndex = 0;
+        rgbPTRIndex = (unsigned int) (*rgbPTR);
         if (rgbPTRIndex>255) { rgbPTRIndex=255; ++overlaps;  }
         hist->channel[0].intensity[rgbPTRIndex]+=1;
 
         ++rgbPTR;
-        rgbPTRIndex = 0 + (unsigned int) *rgbPTR;
+        rgbPTRIndex = 0;
+        rgbPTRIndex = (unsigned int) (*rgbPTR);
         if (rgbPTRIndex>255) { rgbPTRIndex=255; ++overlaps; }
         hist->channel[1].intensity[rgbPTRIndex]+=1;
 
         ++rgbPTR;
-        rgbPTRIndex = 0 + (unsigned int) *rgbPTR;
+        rgbPTRIndex = 0;
+        rgbPTRIndex = (unsigned int) (*rgbPTR);
         if (rgbPTRIndex>255) { rgbPTRIndex=255; ++overlaps;  }
         hist->channel[2].intensity[rgbPTRIndex]+=1;
 
@@ -67,8 +70,66 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
 }
 
 
+
+struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
+{
+   if (rgb==0) { return 0; }
+   struct Histogram *  hist =  (struct Histogram * ) malloc (sizeof(struct Histogram));
+   if (hist==0) { return 0; }
+   cleanHistogram(hist);
+
+   if (channels==3)
+   {
+    unsigned int overlaps = 0;
+    unsigned int rgbPTRIndex=0;
+    while (rgbPTRIndex<width*height*channels)
+     {
+        unsigned int tmp =  rgb[rgbPTRIndex];
+        if (tmp>255) { tmp=255; ++overlaps;  }
+        hist->channel[0].intensity[ tmp ]+=1;
+
+        tmp =  rgb[rgbPTRIndex];
+        if (tmp>255) { tmp=255; ++overlaps;  }
+        hist->channel[1].intensity[ tmp ]+=1;
+
+        tmp =  rgb[rgbPTRIndex];
+        if (tmp>255) { tmp=255; ++overlaps;  }
+        hist->channel[2].intensity[ tmp ]+=1;
+
+        ++rgbPTRIndex;
+     }
+
+     if (overlaps>0) {
+                       #if DEBUG_HISTOGRAMS
+                        fprintf(stderr,"Had %u overlaps\n",overlaps);
+                       #endif
+                     }
+
+   }
+    else
+    {
+       fprintf(stderr,"Cannot make histogram for %u channels \n",channels);
+       free(hist);
+       return 0;
+    }
+
+   return hist;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char Deviation,unsigned int imageSize,float targetPercentage)
 {
+  if (hist==0) { return 0; }
   unsigned char minR = R; unsigned char maxR = R;
   unsigned char minG = G; unsigned char maxG = G;
   unsigned char minB = B; unsigned char maxB = B;

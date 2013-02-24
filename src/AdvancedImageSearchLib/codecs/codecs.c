@@ -25,15 +25,23 @@
 
 #include "jpg.h"
 
-int readImage( char *filename,unsigned int type,struct Image * pic,char read_only_header)
+struct Image * readImage( char *filename,unsigned int type,char read_only_header)
 {
+   struct Image * pic = (struct Image *) malloc(sizeof(struct Image));
+   memset(pic,0,sizeof(struct Image));
+
    switch (type)
    {
       case JPG_CODEC :
-       return ReadJPEG(filename,pic,read_only_header);
+       if (!ReadJPEG(filename,pic,read_only_header)) { free(pic); pic=0; }
+      break;
+      default :
+      free(pic);
+      pic=0;
+      break;
    };
 
-   return 0;
+   return pic;
 }
 
 
