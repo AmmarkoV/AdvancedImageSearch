@@ -12,11 +12,6 @@ void displayHelp()
     printf("This is a GPLv3 licensed program\n");
     printf("Source code : https://github.com/AmmarkoV/AdvancedImageSearch\n");
     printf("todo explain here \n\n\n");
-    printf("Parameters : \n");
-    printf("-minDims MIN_WIDTH MIN_HEIGHT i.e. -minDims 1920 1080\n");
-    printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n");
-    printf("-maxDims MAX_WIDTH MAX_HEIGHT i.e. -maxDims 1920 1080\n");
-    printf("Returned images will have a maximum dimension specified by MAX_WIDTH and MAX_HEIGHT\n");
     exit(0);
 }
 
@@ -34,7 +29,7 @@ int main(int argc, char *argv[])
     if ( argc == 1 ) { /*Running from current directory PRINT OPTIONS MAYBE ?*/ } else
 
     {
-       dirtosearch = loadDirAndCriteriaFromArgs(argc,argv,&criteria);
+       dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,&criteria);
     }
 
 

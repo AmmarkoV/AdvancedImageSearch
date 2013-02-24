@@ -29,6 +29,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "codecs/codecs.h"
 #include "codecs/jpg.h"
 
+#include "tools/string_extension_scanner.h"
+#include "tools/parameter_parser.h"
+
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
 
 
@@ -62,89 +65,17 @@ struct AISLib_SearchResults * addMoreSearchResults(struct AISLib_SearchResults *
 
 
 
-
-
-char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
+void AISLib_printHelp()
 {
- char * outdir=0;
- int i=0;
- for (i=0; i<argc; i++)
- {
-   if (strcmp(argv[i],"-help")==0)
-    {
-      displayHelp();
-    } else
-   if (strcmp(argv[i],"-minDims")==0)
-    {
-     criteria->minDimensionsUsed = 1;
-     criteria->minWidth = atoi(argv[i+1]);
-     criteria->minHeight = atoi(argv[i+2]);
-    } else
-   if (strcmp(argv[i],"-maxDims")==0)
-    {
-     criteria->maxDimensionsUsed = 1;
-     criteria->maxWidth = atoi(argv[i+1]);
-     criteria->maxHeight = atoi(argv[i+2]);
-    } else
+    printListOfParametersRecognized();
+}
 
-
-
-
-   //last argument should be dir!
-   if (i==argc-1)
-    {
-      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
-      outdir = ( char* ) malloc(strlen(argv[i])*(sizeof(char) ));
-      strcpy(outdir,argv[i]);
-    }
-
- }
- return outdir;
+char * AISLib_loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
+{
+ return parseCommandLineParameters(argc,argv,criteria);
 }
 
 
-
-//I have to make an external tool to generate code segments like the following!
-int scanStringForImageExtensions(char * inpt)
-{
-  if (inpt==0) { return 0; }
-  unsigned int length = strlen(inpt);
-  if (length<3) { return 0; }
-
-
-  char * inptPTR = inpt;
-  char * inptLimit = inpt+length;
-
-  //We recognize the words JPG only , case insensitive :P
-
-  while (inptPTR<inptLimit)
-  {
-    switch (*inptPTR)
-     {
-       case 'j' :
-       case 'J' :
-        if (inptPTR+2>=inptLimit)  { /*fprintf(stderr,"Out of bounds skip");*/ return 0; }
-        switch (*(inptPTR+1))
-        {
-          case 'p' :
-          case 'P' :
-          switch (*(inptPTR+2))
-          {
-           case 'g' :
-           case 'G' :
-             //fprintf(stderr,"JPG found\n");
-             return 1;
-           break;
-          }
-          break;
-        }
-       break;
-     }
-
-    ++inptPTR;
-  }
- return 0;
-}
 
 
 

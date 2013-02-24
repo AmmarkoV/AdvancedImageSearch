@@ -40,9 +40,9 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = libAdvancedImageSearchLib.so
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/codecs/codecs.o $(OBJDIR_DEBUG)/codecs/jpg.o $(OBJDIR_DEBUG)/codecs/ppm.o $(OBJDIR_DEBUG)/main.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/codecs/codecs.o $(OBJDIR_DEBUG)/codecs/jpg.o $(OBJDIR_DEBUG)/codecs/ppm.o $(OBJDIR_DEBUG)/image_processing/histograms.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/tools/parameter_parser.o $(OBJDIR_DEBUG)/tools/string_extension_scanner.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/codecs/codecs.o $(OBJDIR_RELEASE)/codecs/jpg.o $(OBJDIR_RELEASE)/codecs/ppm.o $(OBJDIR_RELEASE)/main.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/codecs/codecs.o $(OBJDIR_RELEASE)/codecs/jpg.o $(OBJDIR_RELEASE)/codecs/ppm.o $(OBJDIR_RELEASE)/image_processing/histograms.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/tools/parameter_parser.o $(OBJDIR_RELEASE)/tools/string_extension_scanner.o
 
 all: debug release
 
@@ -50,7 +50,9 @@ clean: clean_debug clean_release
 
 before_debug: 
 	test -d $(OBJDIR_DEBUG)/codecs || mkdir -p $(OBJDIR_DEBUG)/codecs
+	test -d $(OBJDIR_DEBUG)/image_processing || mkdir -p $(OBJDIR_DEBUG)/image_processing
 	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
+	test -d $(OBJDIR_DEBUG)/tools || mkdir -p $(OBJDIR_DEBUG)/tools
 
 after_debug: 
 
@@ -68,17 +70,30 @@ $(OBJDIR_DEBUG)/codecs/jpg.o: codecs/jpg.c
 $(OBJDIR_DEBUG)/codecs/ppm.o: codecs/ppm.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c codecs/ppm.c -o $(OBJDIR_DEBUG)/codecs/ppm.o
 
+$(OBJDIR_DEBUG)/image_processing/histograms.o: image_processing/histograms.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c image_processing/histograms.c -o $(OBJDIR_DEBUG)/image_processing/histograms.o
+
 $(OBJDIR_DEBUG)/main.o: main.c
 	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c main.c -o $(OBJDIR_DEBUG)/main.o
+
+$(OBJDIR_DEBUG)/tools/parameter_parser.o: tools/parameter_parser.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c tools/parameter_parser.c -o $(OBJDIR_DEBUG)/tools/parameter_parser.o
+
+$(OBJDIR_DEBUG)/tools/string_extension_scanner.o: tools/string_extension_scanner.c
+	$(CC) $(CFLAGS_DEBUG) $(INC_DEBUG) -c tools/string_extension_scanner.c -o $(OBJDIR_DEBUG)/tools/string_extension_scanner.o
 
 clean_debug: 
 	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
 	rm -rf $(OBJDIR_DEBUG)/codecs
+	rm -rf $(OBJDIR_DEBUG)/image_processing
 	rm -rf $(OBJDIR_DEBUG)
+	rm -rf $(OBJDIR_DEBUG)/tools
 
 before_release: 
 	test -d $(OBJDIR_RELEASE)/codecs || mkdir -p $(OBJDIR_RELEASE)/codecs
+	test -d $(OBJDIR_RELEASE)/image_processing || mkdir -p $(OBJDIR_RELEASE)/image_processing
 	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
+	test -d $(OBJDIR_RELEASE)/tools || mkdir -p $(OBJDIR_RELEASE)/tools
 
 after_release: 
 
@@ -96,13 +111,24 @@ $(OBJDIR_RELEASE)/codecs/jpg.o: codecs/jpg.c
 $(OBJDIR_RELEASE)/codecs/ppm.o: codecs/ppm.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c codecs/ppm.c -o $(OBJDIR_RELEASE)/codecs/ppm.o
 
+$(OBJDIR_RELEASE)/image_processing/histograms.o: image_processing/histograms.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c image_processing/histograms.c -o $(OBJDIR_RELEASE)/image_processing/histograms.o
+
 $(OBJDIR_RELEASE)/main.o: main.c
 	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c main.c -o $(OBJDIR_RELEASE)/main.o
+
+$(OBJDIR_RELEASE)/tools/parameter_parser.o: tools/parameter_parser.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c tools/parameter_parser.c -o $(OBJDIR_RELEASE)/tools/parameter_parser.o
+
+$(OBJDIR_RELEASE)/tools/string_extension_scanner.o: tools/string_extension_scanner.c
+	$(CC) $(CFLAGS_RELEASE) $(INC_RELEASE) -c tools/string_extension_scanner.c -o $(OBJDIR_RELEASE)/tools/string_extension_scanner.o
 
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
 	rm -rf $(OBJDIR_RELEASE)/codecs
+	rm -rf $(OBJDIR_RELEASE)/image_processing
 	rm -rf $(OBJDIR_RELEASE)
+	rm -rf $(OBJDIR_RELEASE)/tools
 
 .PHONY: before_debug after_debug clean_debug before_release after_release clean_release
 

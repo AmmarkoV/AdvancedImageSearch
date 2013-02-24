@@ -32,8 +32,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
-			<Add option="-lpng" />
-			<Add option="-ljpeg" />
+			<Add library="jpeg" />
 			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearchLib.so" />
 		</Linker>
 		<Unit filename="main.c">

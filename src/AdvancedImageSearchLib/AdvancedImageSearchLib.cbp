@@ -55,9 +55,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="codecs/ppm.h" />
+		<Unit filename="image_processing/histograms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image_processing/histograms.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="tools/parameter_parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tools/parameter_parser.h" />
+		<Unit filename="tools/string_extension_scanner.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tools/string_extension_scanner.h" />
 		<Unit filename="version.h" />
 		<Extensions>
 			<envvars />

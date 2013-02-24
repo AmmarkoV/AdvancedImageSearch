@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "Copying to system bin directory"
+echo "Installation needs root"
+sudo echo "Thank you"
 
 make
 

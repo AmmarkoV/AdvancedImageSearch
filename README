@@ -5,7 +5,8 @@ lsimg for example ( which is the first implemented application ) should be able 
 Of course this functionality is highly theoretical for now , but I hope I will have time to implement at least some of them 
 
 
- Requires libjpeg , libpng , gcc to be compiled!
+Requires libjpeg , libpng , gcc to be compiled!
+Requires exif tool ( sudo apt-get install exif ) for JPG exif functionality
 
 ./install.sh adds the binaries to the system
 
