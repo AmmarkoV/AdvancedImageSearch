@@ -25,12 +25,12 @@
 
 #include "jpg.h"
 
-int readImage( char *filename,unsigned int type,struct Image * pic)
+int readImage( char *filename,unsigned int type,struct Image * pic,char read_only_header)
 {
    switch (type)
    {
       case JPG_CODEC :
-       return ReadJPEG(filename,pic);
+       return ReadJPEG(filename,pic,read_only_header);
    };
 
    return 0;

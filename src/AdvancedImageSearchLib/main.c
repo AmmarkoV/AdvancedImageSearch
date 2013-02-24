@@ -61,6 +61,49 @@ struct AISLib_SearchResults * addMoreSearchResults(struct AISLib_SearchResults *
 }
 
 
+
+
+
+char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
+{
+ char * outdir=0;
+ int i=0;
+ for (i=0; i<argc; i++)
+ {
+   if (strcmp(argv[i],"-help")==0)
+    {
+      displayHelp();
+    } else
+   if (strcmp(argv[i],"-minDims")==0)
+    {
+     criteria->minDimensionsUsed = 1;
+     criteria->minWidth = atoi(argv[i+1]);
+     criteria->minHeight = atoi(argv[i+2]);
+    } else
+   if (strcmp(argv[i],"-maxDims")==0)
+    {
+     criteria->maxDimensionsUsed = 1;
+     criteria->maxWidth = atoi(argv[i+1]);
+     criteria->maxHeight = atoi(argv[i+2]);
+    } else
+
+
+
+
+   //last argument should be dir!
+   if (i==argc-1)
+    {
+      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
+      outdir = ( char* ) malloc(strlen(argv[i])*(sizeof(char) ));
+      strcpy(outdir,argv[i]);
+    }
+
+ }
+ return outdir;
+}
+
+
+
 //I have to make an external tool to generate code segments like the following!
 int scanStringForImageExtensions(char * inpt)
 {
@@ -175,6 +218,11 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
 }
 
 
+char searchCriteriaRequireOnlyHeader(struct AISLib_SearchCriteria * criteria)
+{
+ return 1;
+}
+
 
 struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria)
 {
@@ -201,7 +249,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               strcat(fullPath,epdf->d_name);
 
               struct Image pic;
-              if ( readImage(fullPath , JPG_CODEC , & pic)  )
+              if ( readImage(fullPath , JPG_CODEC , & pic , searchCriteriaRequireOnlyHeader(criteria) )  )
               {
                  if (imageFitsCriteria(&pic,criteria))
                  {

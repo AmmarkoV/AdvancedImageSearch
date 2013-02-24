@@ -36,7 +36,7 @@ int empty_buffer(struct jpeg_compress_struct* cinfo) { return 1; }
 void term_buffer(struct jpeg_compress_struct* cinfo) { return ; }
 
 
-int ReadJPEG( char *filename,struct Image * pic)
+int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 {
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
@@ -65,6 +65,15 @@ int ReadJPEG( char *filename,struct Image * pic)
 
 	pic->width=cinfo.image_width;
 	pic->height=cinfo.image_height;
+
+	if (read_only_header)
+	  {
+	    //we dont want to load the body , just return here
+        jpeg_destroy_decompress( &cinfo );
+        fclose( infile );
+	    return 1;
+	  }
+
 	/*--
 	printf( "JPEG File Information: \n" );
 	printf( "Image width and height: %d pixels and %d pixels.\n", cinfo.image_width, cinfo.image_height );
@@ -200,7 +209,7 @@ int jpegtest()
 	char *infilename = (char*) "test.jpg", *outfilename = (char*) "test_out.jpg";
 
 	/* Try opening a jpeg*/
-	if( ReadJPEG( infilename , 0 ) > 0 )
+	if( ReadJPEG( infilename , 0  , 0 ) > 0 )
 	{
 		/* then copy it to another file */
 		if( WriteJPEG( outfilename ,0 ,0,0 ) < 0 ) return -1;

@@ -74,6 +74,9 @@ struct AISLib_SearchResults
 };
 
 char * AISLib_Version();
+
+char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );
+
 struct AISLib_SearchResults *  AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria);
 
 

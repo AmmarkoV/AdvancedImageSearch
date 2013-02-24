@@ -20,51 +20,6 @@ void displayHelp()
     exit(0);
 }
 
-
-
-char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
-{
- char * outdir=0;
- int i=0;
- for (i=0; i<argc; i++)
- {
-   if (strcmp(argv[i],"-help")==0)
-    {
-      displayHelp();
-    } else
-   if (strcmp(argv[i],"-minDims")==0)
-    {
-     criteria->minDimensionsUsed = 1;
-     criteria->minWidth = atoi(argv[i+1]);
-     criteria->minHeight = atoi(argv[i+2]);
-    } else
-   if (strcmp(argv[i],"-maxDims")==0)
-    {
-     criteria->maxDimensionsUsed = 1;
-     criteria->maxWidth = atoi(argv[i+1]);
-     criteria->maxHeight = atoi(argv[i+2]);
-    } else
-
-
-
-
-   //last argument should be dir!
-   if (i==argc-1)
-    {
-      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
-      outdir = ( char* ) malloc(strlen(argv[i])*(sizeof(char) ));
-      strcpy(outdir,argv[i]);
-    }
-
- }
- return outdir;
-}
-
-
-
-
-
-
 int main(int argc, char *argv[])
 {
    char * dirtosearch=0;
