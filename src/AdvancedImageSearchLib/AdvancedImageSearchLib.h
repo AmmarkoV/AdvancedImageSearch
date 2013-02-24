@@ -73,7 +73,7 @@ struct AISLib_SearchResults
 
 };
 
-
+char * AISLib_Version();
 struct AISLib_SearchResults *  AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria);
 
 

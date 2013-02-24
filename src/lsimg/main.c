@@ -5,7 +5,20 @@
 #include "../AdvancedImageSearchLib/AdvancedImageSearchLib.h"
 
 
-
+void displayHelp()
+{
+    printf("lsimg written by Ammar Qammaz a.k.a. AmmarkoV , http://ammar.gr\n");
+    printf("linked to AdvancedImageSearch lib v.%s\n",AISLib_Version());
+    printf("This is a GPLv3 licensed program\n");
+    printf("Source code : https://github.com/AmmarkoV/AdvancedImageSearch\n");
+    printf("todo explain here \n\n\n");
+    printf("Parameters : \n");
+    printf("-minDims MIN_WIDTH MIN_HEIGHT i.e. -minDims 1920 1080\n");
+    printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n");
+    printf("-maxDims MAX_WIDTH MAX_HEIGHT i.e. -maxDims 1920 1080\n");
+    printf("Returned images will have a maximum dimension specified by MAX_WIDTH and MAX_HEIGHT\n");
+    exit(0);
+}
 
 
 
@@ -15,6 +28,10 @@ char * loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCr
  int i=0;
  for (i=0; i<argc; i++)
  {
+   if (strcmp(argv[i],"-help")==0)
+    {
+      displayHelp();
+    } else
    if (strcmp(argv[i],"-minDims")==0)
     {
      criteria->minDimensionsUsed = 1;

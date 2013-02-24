@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/libAdvancedImageSearchLib" prefix_auto="1" extension_auto="1" />
+				<Option output="libAdvancedImageSearchLib" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -15,10 +15,11 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-fPIC" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/libAdvancedImageSearchLib" prefix_auto="1" extension_auto="1" />
+				<Option output="libAdvancedImageSearchLib" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -26,6 +27,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -34,12 +36,37 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fPIC" />
 		</Compiler>
+		<Linker>
+			<Add option="-lpng" />
+			<Add option="-ljpeg" />
+		</Linker>
+		<Unit filename="AdvancedImageSearchLib.h" />
+		<Unit filename="codecs/codecs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codecs/codecs.h" />
+		<Unit filename="codecs/jpg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codecs/jpg.h" />
+		<Unit filename="codecs/ppm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codecs/ppm.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="version.h" />
 		<Extensions>
 			<envvars />
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" do_auto_increment="1" ask_to_increment="0" language="C" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
 			<code_completion />
 			<debugger />
 		</Extensions>

@@ -24,11 +24,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
+#include "version.h"
 
 #include "codecs/codecs.h"
 #include "codecs/jpg.h"
 
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
+
+
+char * AISLib_Version()
+{
+  return FULLVERSION_STRING;
+}
 
 
 struct AISLib_SearchResults * createSearchResults(unsigned int initialNumberOfResults)
