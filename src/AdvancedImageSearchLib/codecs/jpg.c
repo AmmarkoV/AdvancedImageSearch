@@ -68,7 +68,7 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	pic->width=cinfo.image_width;
 	pic->height=cinfo.image_height;
 
-	if (read_only_header)
+	if ( (read_only_header) || ( (pic->width==0)&&(pic->height==0)  ) )
 	  {
 	    //we dont want to load the body , just return here
         jpeg_destroy_decompress( &cinfo );
@@ -86,8 +86,15 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	jpeg_start_decompress( &cinfo );
 
 	/* allocate memory to hold the uncompressed image */
-    unsigned char * raw_image = (unsigned char*) malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
-    memset(raw_image,0,cinfo.output_width*cinfo.output_height*cinfo.num_components);
+	unsigned long img_size = cinfo.output_width*cinfo.output_height*cinfo.num_components;
+	pic->image_size = img_size;
+    unsigned char * raw_image = (unsigned char*) malloc( img_size );
+    memset(raw_image,0,img_size);
+
+    float get_channels = (float) cinfo.output_width*cinfo.output_height*cinfo.num_components / cinfo.image_width * cinfo.image_height;
+	pic->depth=cinfo.out_color_components;
+
+    if (get_channels < pic->depth) { fprintf(stderr,"Picture %s has incorrect filesize allocated for its channels ( %u vs %0.2f) ..!\n",filename , pic->depth , get_channels); }
 
 	/* now actually read the jpeg into the raw buffer */
 	row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );

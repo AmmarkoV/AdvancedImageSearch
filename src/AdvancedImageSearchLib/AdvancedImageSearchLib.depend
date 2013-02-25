@@ -1,1 +1,78 @@
 # depslib dependency file v1.0
+1361747790 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
+	"codecs.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"jpg.h"
+	"ppm.h"
+
+1361826299 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
+
+1361706319 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpg.h
+	"codecs.h"
+
+1361747599 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppm.h
+	"codecs.h"
+
+1361827697 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpg.c
+	<stdio.h>
+	<string.h>
+	<jpeglib.h>
+	<stdlib.h>
+	"codecs.h"
+	"jpg.h"
+
+1361827261 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppm.c
+	"codecs.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"codecs.h"
+	"ppm.h"
+
+1361826196 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.c
+	"histograms.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1361782733 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
+
+1361826357 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/main.c
+	"AdvancedImageSearchLib.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<dirent.h>
+	"version.h"
+	"codecs/codecs.h"
+	"codecs/jpg.h"
+	"image_processing/histograms.h"
+	"tools/string_extension_scanner.h"
+	"tools/parameter_parser.h"
+
+1361737463 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/AdvancedImageSearchLib.h
+
+1361665780 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/version.h
+
+1361719430 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.h
+
+1361722976 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.h
+	"../AdvancedImageSearchLib.h"
+
+1361737181 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"parameter_parser.h"
+
+1361737077 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"string_extension_scanner.h"
+	"../codecs/codecs.h"
+

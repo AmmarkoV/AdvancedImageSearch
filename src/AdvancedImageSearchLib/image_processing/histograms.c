@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG_HISTOGRAMS 1
+#define DEBUG_HISTOGRAMS 0
 
 void cleanHistogram ( struct Histogram * hist )
 {
@@ -20,6 +20,8 @@ void cleanHistogram ( struct Histogram * hist )
 
 struct Histogram *  generateHistogramPTRS(unsigned char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
+   fprintf(stderr,"This code compiles incorrectly :P \n");
+   return 0;
    if (rgb==0) { return 0; }
    unsigned char * rgbPTR = (unsigned char* )rgb;
    unsigned char * rgbLimit = rgbPTR + width*height*channels;
@@ -89,22 +91,30 @@ struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width ,
     struct histogramChannel * gHist = &hist->channel[1];
     struct histogramChannel * bHist = &hist->channel[2];
 
+    unsigned int tmpR = 0;
+    unsigned int tmpG = 0;
+    unsigned int tmpB = 0;
 
     while ( rgbPTRIndex< rgbPTRIndexLimit)
      {
-        unsigned int tmpR =  rgb[rgbPTRIndex];
-        //tmpR gets values like 4294967294
-        if (tmpR>=255) { tmpR=255; ++overlaps;  }
+        tmpR = rgb[rgbPTRIndex];
+        #if DEBUG_HISTOGRAMS
+         if (tmpR>255) { tmpR=255; ++overlaps;  }
+        #endif
         rHist->intensity[ tmpR ]+=1;
 
          ++rgbPTRIndex;
-        unsigned int tmpG =  rgb[rgbPTRIndex];
-        if (tmpG>=255) { tmpG=255; ++overlaps;  }
+        tmpG = rgb[rgbPTRIndex];
+        #if DEBUG_HISTOGRAMS
+         if (tmpG>255) { tmpG=255; ++overlaps;  }
+        #endif
         gHist->intensity[ tmpG ]+=1;
 
          ++rgbPTRIndex;
-        unsigned int tmpB =  rgb[rgbPTRIndex];
-        if (tmpB>=255) { tmpB=255; ++overlaps;  }
+        tmpB = rgb[rgbPTRIndex];
+        #if DEBUG_HISTOGRAMS
+         if (tmpB>255) { tmpB=255; ++overlaps;  }
+        #endif
         bHist->intensity[ tmpB ]+=1;
 
          ++rgbPTRIndex;
@@ -119,7 +129,9 @@ struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width ,
    }
     else
     {
-       fprintf(stderr,"Cannot make histogram for %u channels \n",channels);
+       #if DEBUG_HISTOGRAMS
+        fprintf(stderr,"Cannot make histogram for %u channels \n",channels);
+       #endif
        free(hist);
        return 0;
     }
@@ -166,12 +178,11 @@ int histogramIsCloseToColor(struct Histogram * hist,unsigned char R,unsigned cha
 
 
 
-  unsigned int imageSizePerChannel = (unsigned int) imageSize;
-  if (imageSizePerChannel == 0) { return 0; }
+  unsigned int imageSizePerChannel = (unsigned int) imageSize/3;
 
-  float ourR_Percentage = (float) 100 * thresR/imageSizePerChannel ;
-  float ourG_Percentage = (float) 100 * thresG/imageSizePerChannel ;
-  float ourB_Percentage = (float) 100 * thresB/imageSizePerChannel ;
+  float ourR_Percentage = (float) 100 * ((float) thresR/imageSizePerChannel) ;
+  float ourG_Percentage = (float) 100 * ((float) thresG/imageSizePerChannel) ;
+  float ourB_Percentage = (float) 100 * ((float) thresB/imageSizePerChannel) ;
 
   #if DEBUG_HISTOGRAMS
     fprintf(stderr,"Our R %0.2f%% G %0.2f%% B %0.2f%% , target %0.2f \n",ourR_Percentage,ourG_Percentage,ourB_Percentage,targetPercentage);
