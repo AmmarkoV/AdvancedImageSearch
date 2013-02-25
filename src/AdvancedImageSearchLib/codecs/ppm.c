@@ -39,7 +39,7 @@ int ReadPPM(char * filename,struct Image * pic,char read_only_header)
         if (read_only_header) { fclose(pf); return 1; }
 
       #if READ_CREATES_A_NEW_PIXEL_BUFFER
-	    pic->pixels = (char * ) malloc(pic->height*pic->width * 3 * sizeof(char));
+	    pic->pixels = (unsigned char * ) malloc(pic->height*pic->width * 3 * sizeof(char));
 	  #endif
 
 

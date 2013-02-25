@@ -39,7 +39,7 @@ enum codecTypeList
 
 struct Image
 {
-  char * pixels;
+  unsigned char * pixels;
   unsigned int width;
   unsigned int height;
   unsigned int depth;

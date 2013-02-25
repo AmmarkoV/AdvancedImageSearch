@@ -86,7 +86,7 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	jpeg_start_decompress( &cinfo );
 
 	/* allocate memory to hold the uncompressed image */
-    char * raw_image = (char*) malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
+    unsigned char * raw_image = (unsigned char*) malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
     memset(raw_image,0,cinfo.output_width*cinfo.output_height*cinfo.num_components);
 
 	/* now actually read the jpeg into the raw buffer */

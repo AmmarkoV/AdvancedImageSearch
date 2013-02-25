@@ -18,7 +18,7 @@ void cleanHistogram ( struct Histogram * hist )
 
 
 
-struct Histogram *  generateHistogramPTRS(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
+struct Histogram *  generateHistogramPTRS(unsigned char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
    if (rgb==0) { return 0; }
    unsigned char * rgbPTR = (unsigned char* )rgb;
@@ -72,7 +72,7 @@ struct Histogram *  generateHistogramPTRS(char * rgb , unsigned int width , unsi
 
 
 
-struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned int height , unsigned int channels )
+struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
    if (rgb==0) { return 0; }
    struct Histogram *  hist =  (struct Histogram * ) malloc (sizeof(struct Histogram));
@@ -92,7 +92,6 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
 
     while ( rgbPTRIndex< rgbPTRIndexLimit)
      {
-
         //*(rgb+rgbPTRIndex);
         unsigned int tmpR =  rgb[rgbPTRIndex];
         //tmpR gets values like 4294967294
@@ -138,7 +137,7 @@ struct Histogram *  generateHistogram(char * rgb , unsigned int width , unsigned
 
 
 
-int histogramIsCloseToColor(struct Histogram * hist,char R,char G,char B,char Deviation,unsigned int imageSize,float targetPercentage)
+int histogramIsCloseToColor(struct Histogram * hist,unsigned char R,unsigned char G,unsigned char B,unsigned char Deviation,unsigned int imageSize,float targetPercentage)
 {
   if (hist==0) { return 0; }
   if (imageSize==0) { return 0; }

@@ -153,7 +153,7 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
 
    if (criteria->colorRangeUsed)
     {//Ready to discard for violation of histogram
-      struct Histogram * histogram = generateHistogram( img->pixels , img->width , img->height , 3);
+      struct Histogram * histogram = generateHistogram( (unsigned char * ) img->pixels , img->width , img->height , 3);
       if ( histogram!=0 )
       {
          if (! histogramIsCloseToColor(histogram,  criteria->colorRangeSpecificR  ,
