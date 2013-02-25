@@ -6,7 +6,7 @@
 
 #define DEBUG_HISTOGRAMS 0
 
-float HISTOGRAM_SUCCESS_PERCENTAGE = 60; //%
+float HISTOGRAM_SUCCESS_PERCENTAGE = 50; //%
 
 void cleanHistogram ( struct Histogram * hist )
 {

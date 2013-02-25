@@ -27,7 +27,7 @@ LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG =  $(LDFLAGS)
 OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
-OUT_DEBUG = libAdvancedImageSearchLib.so
+OUT_DEBUG = AdvancedImageSearchLib.so
 
 INC_RELEASE =  $(INC)
 CFLAGS_RELEASE =  $(CFLAGS) -fexpensive-optimizations -O3 -fPIC -march=native -mtune=native
@@ -38,7 +38,7 @@ LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE =  $(LDFLAGS) -s
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = libAdvancedImageSearchLib.so
+OUT_RELEASE = AdvancedImageSearchLib.so
 
 OBJ_DEBUG = $(OBJDIR_DEBUG)/codecs/codecs.o $(OBJDIR_DEBUG)/codecs/jpg.o $(OBJDIR_DEBUG)/codecs/ppm.o $(OBJDIR_DEBUG)/image_processing/histograms.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/tools/parameter_parser.o $(OBJDIR_DEBUG)/tools/string_extension_scanner.o
 
