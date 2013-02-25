@@ -6,6 +6,8 @@
 
 #define DEBUG_HISTOGRAMS 0
 
+float HISTOGRAM_SUCCESS_PERCENTAGE = 60; //%
+
 void cleanHistogram ( struct Histogram * hist )
 {
     memset(hist , 0 , sizeof(struct Histogram));
@@ -189,9 +191,9 @@ int histogramIsCloseToColor(struct Histogram * hist,unsigned char R,unsigned cha
   #endif
 
   if (
-       (ourR_Percentage>=targetPercentage) &&
-       (ourG_Percentage>=targetPercentage) &&
-       (ourB_Percentage>=targetPercentage)
+       (ourR_Percentage>=HISTOGRAM_SUCCESS_PERCENTAGE) &&
+       (ourG_Percentage>=HISTOGRAM_SUCCESS_PERCENTAGE) &&
+       (ourB_Percentage>=HISTOGRAM_SUCCESS_PERCENTAGE)
      ) { return 1; }
 
   return 0;

@@ -152,7 +152,10 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
     }
 
    if (criteria->colorRangeUsed)
-    {//Ready to discard for violation of histogram
+    {
+      //Ready to discard for violation of histogram
+      if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
+
       struct Histogram * histogram = generateHistogram( (unsigned char * ) img->pixels , img->width , img->height , img->depth );
       if ( histogram!=0 )
       {
