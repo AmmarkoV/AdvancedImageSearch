@@ -16,6 +16,9 @@ void printListOfParametersRecognized()
 
     printf("-histogram R G B DEVIATION i.e. -histogram 240 240 0 30\n");
     printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n");
+
+    printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
+    printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
 }
 
 
@@ -29,6 +32,12 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"-help")==0)
     {
       criteria->needHelp=1;
+    } else
+   if (strcmp(argv[i],"-lmit")==0)
+    {
+     if (i+1<argc) {
+                     criteria->limitResults = atoi(argv[i+1]);
+                   }
     } else
    if (strcmp(argv[i],"-minDims")==0)
     {

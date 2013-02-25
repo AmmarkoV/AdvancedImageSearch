@@ -189,6 +189,7 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
 struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria)
 {
   DIR *dpdf=0;
+  unsigned int numberOfResults = 0;
   struct dirent *epdf=0;
 
   char fullPath[4096]={0};
@@ -202,7 +203,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
      if (sr==0) { return 0; }
 
      epdf = readdir(dpdf);
-     while ( epdf !=  0 )
+     while ( ( epdf !=  0 ) && ( (criteria->limitResults==0)||(numberOfResults < criteria->limitResults) )  )
       {
          //printf("RAW %s\n",epdf->d_name);
          unsigned int image_type  = fileIsImage(epdf->d_name);
@@ -217,6 +218,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
               {
                  if (imageFitsCriteria(img,criteria))
                  {
+                   ++numberOfResults;
                    printf("%s ",epdf->d_name);
                  }
 

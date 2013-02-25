@@ -64,6 +64,8 @@ struct AISLib_SearchCriteria
    unsigned int colorRange;
    unsigned char colorRangeSpecificR,colorRangeSpecificG,colorRangeSpecificB;
 
+   unsigned int limitResults;
+
    char needHelp;
 
 };
