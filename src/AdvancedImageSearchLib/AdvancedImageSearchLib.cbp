@@ -66,6 +66,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="image_processing/histograms.h" />
+		<Unit filename="image_processing/imageComparison.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image_processing/imageComparison.h" />
 		<Unit filename="image_processing/imageResizer.c">
 			<Option compilerVar="CC" />
 		</Unit>

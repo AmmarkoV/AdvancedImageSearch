@@ -1,9 +1,5 @@
-#!/bin/bash
-echo "This script is a stub.. if someone has arch please tell me the deps of the project to include them"
-exit 1
-
-
-echo "This script is supposed to solve all dependencies "
+#!/bin/bash 
+echo "This script is supposed to solve all dependencies using pacman"
 echo "This script supposes a ARch distro with apt-get as a package manager!"
 
 echo
@@ -15,7 +11,7 @@ fi
  
 echo "Starting downloads " 
 
-sudo pacman -s gcc libjpeg-dev libpng-dev
+sudo pacman -s gcc libpng libjpeg-turbo
  
   
 
