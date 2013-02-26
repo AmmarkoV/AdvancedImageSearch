@@ -12,8 +12,6 @@
 
 #include "../image_processing/imageResizer.h"
 
-#define comparisonWidth 64
-#define comparisonHeight 64
 
 
 static int strcasecmp_internal(char * input1, char * input2)
@@ -164,14 +162,15 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-like")==0)
     {
-     if (i+1<argc) {
+     if (i+2<argc) {
                      criteria->similarityUsed=1;
+                     criteria->similarityPercent=atoi(argv[i+2]);
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
                      struct Image * img = readImage(argv[i+1],JPG_CODEC,0);
                      if (img!=0)
                      {
-                       struct Image * rszdImage = resizeImage(img,comparisonWidth,comparisonHeight);
+                       struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
                        WritePPM("test.ppm",rszdImage);
 
                        if (rszdImage!=img) { //We succesfully resized , we don't need the original any more
@@ -200,9 +199,11 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
 
 
+//This function returns true if criteria needs only header
 char searchCriteriaRequireOnlyImageHeaderLoaded(struct AISLib_SearchCriteria * criteria)
 {
    if (criteria->colorRangeUsed) { return 0; }
+   if (criteria->similarityUsed) { return 0; }
    return 1;
 }
 

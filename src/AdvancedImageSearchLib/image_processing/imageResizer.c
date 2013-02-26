@@ -7,6 +7,7 @@
 
 unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
 {
+  if (rgb==0) { fprintf(stderr,"Can not increase null image \n");  return 0; }
   if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { fprintf(stderr,"Can not increase image size\n"); return rgb; }
   if ( ( resizeHeight == 0 ) || (resizeWidth == 0 ) ) { fprintf(stderr,"Will not resize to 0  \n"); return rgb; }
   unsigned char * output = (unsigned char *) malloc(resizeWidth*resizeHeight*3);

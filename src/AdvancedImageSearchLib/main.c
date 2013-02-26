@@ -28,8 +28,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "codecs/codecs.h"
 #include "codecs/jpg.h"
+#include "codecs/ppm.h"
 
 #include "image_processing/histograms.h"
+#include "image_processing/imageResizer.h"
+#include "image_processing/imageComparison.h"
 
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
@@ -49,6 +52,9 @@ struct AISLib_SearchCriteria * AISLib_createCriteria()
    if (criteria==0) { fprintf(stderr,"Could not allocate space for criteria , returning null criteria\n"); }
 
    memset(criteria,0,sizeof(struct AISLib_SearchCriteria));
+
+   criteria->comparisonWidth=64;
+   criteria->comparisonHeight=64;
 
    return criteria;
 }
@@ -206,10 +212,18 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
 
     if (criteria->similarityUsed)
     {
-       struct Image * img = (struct Image *) criteria->similarImage;
-       if (img->pixels!=0) { fprintf(stderr,"similarityUsed : "); }
-       fprintf(stderr,"Comparison not implemented\n");
-       return 0;
+       struct Image * referenceImg = (struct Image *) criteria->similarImage;
+       struct Image * imgThumbnail = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
+
+       if (!compareImages(referenceImg,imgThumbnail, criteria->similarityPercent) )
+       {
+           WritePPM("succ_comp.ppm",imgThumbnail);
+           if (imgThumbnail!=img) { destroyImage(img);  /*We succesfully resized , we don't need the original any more*/ }
+           return 0;
+       }
+
+       if (imgThumbnail!=img) { destroyImage(img);  /*We succesfully resized , we don't need the original any more*/ }
+
     }
 
 

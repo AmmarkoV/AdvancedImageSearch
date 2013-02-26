@@ -73,8 +73,13 @@ struct AISLib_SearchCriteria
    unsigned int colorRange;
    unsigned char colorRangeSpecificR,colorRangeSpecificG,colorRangeSpecificB;
 
+
+   unsigned int comparisonWidth;
+   unsigned int comparisonHeight;
+
    char similarityUsed;
    char similarImageFilename[MAX_CRITERIA_STRING_SIZE];
+   float similarityPercent;
    void * similarImage;
 
 
