@@ -128,7 +128,7 @@ int scanFileForImage(char * filename)
     strncat(command,filename,1000);
     strcat(command,"\"");
 
-  FILE *fp;
+   FILE *fp=0;
     /* Open the command for reading. */
      fp = popen(command, "r");
      if (fp == 0 )
@@ -149,12 +149,9 @@ int scanFileForImage(char * filename)
         break;
     }
 
-
   /* close */
   pclose(fp);
-
-    return 0;
-
+  return 0;
 }
 
 
@@ -223,11 +220,13 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
 
        if (!compareImages(referenceImg,imgThumbnail, criteria->similarityPercent) )
        {
-           WritePPM("succ_comp.ppm",imgThumbnail);
+
+           WritePPM("fail_comp.ppm",imgThumbnail);
            destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
            return 0;
        }
 
+       WritePPM("succ_comp.ppm",imgThumbnail);
        destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
     }
 

@@ -33,15 +33,18 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
   fprintf(stderr,"We have %ux%u blocks\n",xBlockCount,yBlockCount);
   #endif
 
-  unsigned int xBlock=0;
-  unsigned int yBlock=0;
+  unsigned int x=0;
+  unsigned int y=0;
 
   unsigned char * rgbOut = output;
   unsigned char * rgbIn = rgb;
+  unsigned char * rgbInLimit = rgb + originalWidth*originalScanline;
 
-  for (yBlock = 0 ;  yBlock<resizeHeight; yBlock++)
+  for (y = 0 ;  y<resizeHeight; y++)
   {
-    for (xBlock = 0 ;  xBlock<resizeWidth; xBlock++)
+    rgbIn = rgb+ (y*yBlockCount) * originalScanline;
+
+    for (x = 0 ;  x<resizeWidth; x++)
     {
       //Sample a group of pixels that will become one pixel!
       unsigned int valueR = 0;
@@ -55,7 +58,7 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
       unsigned char * tmpRGBLimit = rgbIn + blockScanline;
 
       #if DEBUG_RESIZING
-        fprintf(stderr,"Sum on block : %ux%u \n",xBlock,yBlock);
+        fprintf(stderr,"Sum on block : %ux%u \n",x,y);
      #endif
 
       for (i=0; i<repeatTimes; i++)
@@ -66,9 +69,12 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
         while (tmpRGB<tmpRGBLimit)
         {
-         valueR+= (unsigned int) *tmpRGB; ++tmpRGB;
-         valueG+= (unsigned int) *tmpRGB; ++tmpRGB;
-         valueB+= (unsigned int) *tmpRGB; ++tmpRGB;
+          if (rgbInLimit>tmpRGB)
+          {
+           valueR+= (unsigned int) *tmpRGB; ++tmpRGB;
+           valueG+= (unsigned int) *tmpRGB; ++tmpRGB;
+           valueB+= (unsigned int) *tmpRGB; ++tmpRGB;
+          }
         }
 
        #if DEBUG_RESIZING
@@ -100,7 +106,7 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
       rgbIn+= blockScanline;
     }
 
-    rgbIn+= originalScanline  * yBlockCount;
+    //rgbIn+= originalScanline  * yBlockCount;
   }
 
   return output;
