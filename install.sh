@@ -14,7 +14,7 @@ fi
 
 sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearchLib.so
 
-./makeSystem.sh
+scripts/makeSystem.sh
 
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
 exit 0

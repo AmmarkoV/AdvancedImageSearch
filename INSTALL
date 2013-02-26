@@ -1,0 +1,24 @@
+--------------- Library Dependencies ---------------
+You can use the apt-get-dependencies.sh to apt-get the required packages..!
+
+
+--------------- Compilation ---------------
+To compile the project open a terminal and run
+make
+This will produce the executables   , see README for information on running them
+
+
+--------------- Installation of current version---------------
+if you want to install the app , run 
+./install.sh
+your password is required..  
+
+--------------- Installation of latest version --------------- 
+./update_from_git.sh will download the latest version of the software from the master repository on github and then run the install.sh script
+your password is required..  
+
+
+--------------- Uninstallation of current version---------------
+if you want to uninstall the app , run 
+./uninstall.sh
+your password is required..  
