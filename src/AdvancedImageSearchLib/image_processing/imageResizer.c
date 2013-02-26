@@ -25,24 +25,39 @@ unsigned char * resizeImageInternal3bytes(unsigned char * rgb, unsigned int orig
     {
 
       //Sample a group of pixels that will become one pixel!
-      unsigned int value = 0;
+      unsigned int valueR = 0;
+      unsigned int valueG = 0;
+      unsigned int valueB = 0;
       unsigned char * tmpRGB = rgbIn;
       unsigned char * tmpRGBLimit = rgbIn + xBlockCount*3;
       unsigned int repeatTimes = yBlockCount;
       unsigned int i=0;
       for (i=0; i<repeatTimes; i++)
       {
-        value+= *tmpRGB;
+        while (tmpRGB<tmpRGBLimit)
+        {
+         valueR+= *tmpRGB; ++tmpRGB;
+         valueG+= *tmpRGB; ++tmpRGB;
+         valueR+= *tmpRGB; ++tmpRGB;
+        }
+
         tmpRGB+=originalWidth*3;
         tmpRGBLimit+=originalWidth*3;
       }
       //Finished
 
-      value/=xBlockCount*yBlockCount;
+      valueR/=xBlockCount*yBlockCount;
       if (value>255) { value = 255; }
+      valueG/=xBlockCount*yBlockCount;
+      if (valueG>255) { valueG = 255; }
+      valueB/=xBlockCount*yBlockCount;
+      if (valueB>255) { valueB = 255; }
 
-      *rgbOut = (unsigned char) value;
-      rgbOut+=3;
+
+
+      *rgbOut = (unsigned char) valueR; ++rgbOut;
+      *rgbOut = (unsigned char) valueG; ++rgbOut;
+      *rgbOut = (unsigned char) valueB; ++rgbOut;
 
       rgbIn+= xBlockCount*3;
     }
