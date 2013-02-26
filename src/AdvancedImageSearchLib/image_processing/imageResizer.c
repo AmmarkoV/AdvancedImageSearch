@@ -74,7 +74,11 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
            valueR+= (unsigned int) *tmpRGB; ++tmpRGB;
            valueG+= (unsigned int) *tmpRGB; ++tmpRGB;
            valueB+= (unsigned int) *tmpRGB; ++tmpRGB;
+          } else
+          {
+            tmpRGB+=3;
           }
+
         }
 
        #if DEBUG_RESIZING

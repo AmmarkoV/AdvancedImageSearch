@@ -71,8 +71,8 @@ void printListOfParametersRecognized()
     printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
 
-    printf("-like FILENAME THRESHOLD i.e. -like myphoto.jpg 10\n");
-    printf("Returned images will look like myphoto.jpg with a 10%% threshold \n");
+    printf("-like FILENAME THRESHOLD i.e. -like myphoto.jpg 10.5\n");
+    printf("Returned images will look like myphoto.jpg with a 10.5%% threshold ( THRESHOLD is a float )\n");
 }
 
 
@@ -163,7 +163,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"-like")==0)
     {
      if (i+2<argc) {
-                     criteria->similarityPercent=atoi(argv[i+2]);
+                     criteria->similarityPercent=atof(argv[i+2]);
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
                      struct Image * img = readImage(argv[i+1],JPG_CODEC,0);

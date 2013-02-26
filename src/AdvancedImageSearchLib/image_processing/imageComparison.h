@@ -4,6 +4,6 @@
 
 #include "../codecs/codecs.h"
 
-int compareImages(struct Image * img1,struct Image * img2,float similarityPercent);
+int imagesAreSimilar(struct Image * img1,struct Image * img2,float differencePercent);
 
 #endif // IMAGECOMPARISON_H_INCLUDED

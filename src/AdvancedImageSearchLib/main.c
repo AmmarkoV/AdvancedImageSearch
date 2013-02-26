@@ -211,14 +211,14 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     {
        if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
 
-       fprintf(stderr,"Trying %s \n",filename);
+       //fprintf(stderr,"Trying %s \n",filename);
 
        struct Image * imgThumbnail = resizeImage(img , criteria->comparisonWidth , criteria->comparisonHeight );
        struct Image * referenceImg = (struct Image *) criteria->similarImage;
 
        if(imgThumbnail==0) { return 0; /*Can't resize , Can't compare doesnt fit criteria */ }
 
-       if (!compareImages(referenceImg,imgThumbnail, criteria->similarityPercent) )
+       if (!imagesAreSimilar(referenceImg,imgThumbnail, criteria->similarityPercent) )
        {
 
            WritePPM("fail_comp.ppm",imgThumbnail);
