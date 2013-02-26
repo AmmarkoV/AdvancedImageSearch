@@ -1,14 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "imageResizer.h"
 
 
-#include <stdio.h>
-#include <stdlib.h>
 
-unsigned char * resizeImageInternal3bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
+unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
 {
+  if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { fprintf(stderr,"Can not increase image size\n"); return rgb; }
   if ( ( resizeHeight == 0 ) || (resizeWidth == 0 ) ) { fprintf(stderr,"Will not resize to 0  \n"); return rgb; }
   unsigned char * output = (unsigned char *) malloc(resizeWidth*resizeHeight*3);
-  if ( output != 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return rgb; }
+  memset(output,0,resizeWidth*resizeHeight*3);
+
+  if ( output == 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return rgb; }
 
   unsigned int xBlockCount = originalWidth  / resizeWidth;
   unsigned int yBlockCount = originalHeight / resizeHeight;
@@ -47,7 +51,7 @@ unsigned char * resizeImageInternal3bytes(unsigned char * rgb, unsigned int orig
       //Finished
 
       valueR/=xBlockCount*yBlockCount;
-      if (value>255) { value = 255; }
+      if (valueR>255) { valueR = 255; }
       valueG/=xBlockCount*yBlockCount;
       if (valueG>255) { valueG = 255; }
       valueB/=xBlockCount*yBlockCount;
@@ -80,7 +84,7 @@ struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigne
  smallerImg->height = resizeHeight;
  smallerImg->depth = img->depth;
 
- smallerImg->pixels = resizeImageInternal3bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
+ smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
 
  return smallerImg;
 }

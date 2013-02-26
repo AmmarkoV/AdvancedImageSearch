@@ -48,6 +48,8 @@ struct AISLib_SearchCriteria * AISLib_createCriteria()
    struct AISLib_SearchCriteria * criteria = ( struct AISLib_SearchCriteria *  ) malloc(sizeof(struct AISLib_SearchCriteria));
    if (criteria==0) { fprintf(stderr,"Could not allocate space for criteria , returning null criteria\n"); }
 
+   memset(criteria,0,sizeof(struct AISLib_SearchCriteria));
+
    return criteria;
 }
 

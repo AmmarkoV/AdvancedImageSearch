@@ -5,6 +5,11 @@
 #include "parameter_parser.h"
 
 #include "../codecs/codecs.h"
+
+//This can be removed after finished testing with resize function
+#include "../codecs/ppm.h"
+
+
 #include "../image_processing/imageResizer.h"
 
 #define comparisonWidth 64
@@ -76,6 +81,16 @@ void printListOfParametersRecognized()
 
 char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
 {
+ if (criteria==0)
+ {
+    fprintf(stderr,"Please initialize criteria using AISLib_createCriteria before calling parseCommandLineParameters\n");
+    return 0;
+ }
+
+ criteria->needHelp = 0;
+ criteria->limitResults = 0;
+
+
  char * outdir=0;
  int i=0;
  for (i=0; i<argc; i++)
@@ -153,9 +168,20 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->similarityUsed=1;
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
-                     struct Image * img = readImage(argv[i+1],0,0);
-                     criteria->similarImage = (void*) resizeImage(img,comparisonWidth,comparisonHeight);
-                     criteria->criteriaSpecified=1;
+                     struct Image * img = readImage(argv[i+1],JPG_CODEC,0);
+                     if (img!=0)
+                     {
+                       struct Image * rszdImage = resizeImage(img,comparisonWidth,comparisonHeight);
+                       WritePPM("test.ppm",rszdImage);
+
+                       if (rszdImage!=img) { //We succesfully resized , we don't need the original any more
+                                             destroyImage(img); }
+
+
+
+                       criteria->similarImage = (void*) rszdImage;
+                       criteria->criteriaSpecified=1;
+                     }
                    }
     } else
 
