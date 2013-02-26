@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "parameter_parser.h"
 
 
@@ -75,10 +76,11 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     {
       criteria->needHelp=1;
     } else
-   if (strcmp(argv[i],"-lmit")==0)
+   if (strcmp(argv[i],"-limit")==0)
     {
      if (i+1<argc) {
                      criteria->limitResults = atoi(argv[i+1]);
+                     criteria->criteriaSpecified=1;
                    }
     } else
    if (strcmp(argv[i],"-minDims")==0)
@@ -87,6 +89,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->minDimensionsUsed = 1;
                      criteria->minWidth = atoi(argv[i+1]);
                      criteria->minHeight = atoi(argv[i+2]);
+                     criteria->criteriaSpecified=1;
                    }
     } else
    if (strcmp(argv[i],"-maxDims")==0)
@@ -95,6 +98,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->maxDimensionsUsed = 1;
                      criteria->maxWidth = atoi(argv[i+1]);
                      criteria->maxHeight = atoi(argv[i+2]);
+                     criteria->criteriaSpecified=1;
                    }
     } else
    if (strcmp(argv[i],"-histogram")==0)
@@ -105,6 +109,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->colorRangeSpecificG = atoi(argv[i+2]);
                      criteria->colorRangeSpecificB = atoi(argv[i+3]);
                      criteria->colorRange = atoi(argv[i+4]);
+                     criteria->criteriaSpecified=1;
                    }
     } else
    if (strcmp(argv[i],"-color")==0)
@@ -130,7 +135,8 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                 criteria->colorRangeUsed = 0;
               }
 
-           criteria->colorRange = 40;
+           if (criteria->colorRangeUsed) {  criteria->criteriaSpecified=1; }
+           criteria->colorRange = 50;
         }
     } else
 

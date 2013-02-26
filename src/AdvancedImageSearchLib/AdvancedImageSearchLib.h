@@ -43,6 +43,9 @@ enum AISLib_ImageColorRanges
 
 struct AISLib_SearchCriteria
 {
+
+   char criteriaSpecified;
+
    char minDimensionsUsed;
    unsigned int minWidth;
    unsigned int minHeight;

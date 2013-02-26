@@ -205,30 +205,36 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
      epdf = readdir(dpdf);
      while ( ( epdf !=  0 ) && ( (criteria->limitResults==0)||(numberOfResults < criteria->limitResults) )  )
       {
-         //printf("RAW %s\n",epdf->d_name);
-         unsigned int image_type  = fileIsImage(epdf->d_name);
-         if (image_type!=0)
+          unsigned int image_type  = fileIsImage(epdf->d_name);
+          if (image_type!=0)
           {
-              strcpy(fullPath,directory);
-              strcat(fullPath,"/");
-              strcat(fullPath,epdf->d_name);
+             if (!criteria->criteriaSpecified)
+               {
+                  //No criteria specified , return all images
+                  printf("%s ",epdf->d_name);
+               } else
+               {
+                 strcpy(fullPath,directory);
+                 strcat(fullPath,"/");
+                 strcat(fullPath,epdf->d_name);
 
-              struct Image * img = readImage(fullPath , image_type , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) );
-              if (  img!=0 )
-              {
-                 if (imageFitsCriteria(img,criteria))
-                 {
-                   ++numberOfResults;
-                   printf("%s ",epdf->d_name);
-                 }
+                 struct Image * img = readImage(fullPath , image_type , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) );
+                 if (  img!=0 )
+                   {
+                     if (imageFitsCriteria(img,criteria))
+                        {
+                          ++numberOfResults;
+                          printf("%s ",epdf->d_name);
+                        }
 
-                //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
-                if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
-                if (img!=0) { free(img); img=0; }
-              }
+                  //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
+                  if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
+                  if (img!=0) { free(img); img=0; }
+                  }
+                }
           }
 
-        //Next Value
+        //Next Filename to check
         epdf = readdir(dpdf);
       }
 
