@@ -20,21 +20,24 @@ void displayHelp()
 int main(int argc, char *argv[])
 {
    char * dirtosearch=0;
-   struct AISLib_SearchCriteria criteria={0}; // Initialize all null! IMPORTAN!
+   struct AISLib_SearchCriteria * criteria=AISLib_createCriteria();
+
 
     if ( argc <1 )        { fprintf(stderr,"Argument zero should be executable path :S \n"); return 1; } else
-    /*We have arguments*/ { dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,&criteria); }
+    /*We have arguments*/ { dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,criteria); }
 
-   if (criteria.needHelp)
+   if (criteria->needHelp)
     {
         displayHelp();
         return 0;
     }
 
 
-   struct AISLib_SearchResults *  result =  AISLib_Search(dirtosearch,&criteria);
-   destroySearchResults(result);
+   struct AISLib_SearchResults *  result =  AISLib_Search(dirtosearch,criteria);
+   AISLib_destroySearchResults(result);
 
+
+  AISLib_destroyCriteria(criteria);
 
    if (dirtosearch!=0) { free(dirtosearch); }
 

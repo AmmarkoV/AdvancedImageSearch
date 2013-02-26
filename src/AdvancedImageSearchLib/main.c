@@ -43,6 +43,28 @@ const char * AISLib_Version()
 }
 
 
+struct AISLib_SearchCriteria * AISLib_createCriteria()
+{
+   struct AISLib_SearchCriteria * criteria = ( struct AISLib_SearchCriteria *  ) malloc(sizeof(struct AISLib_SearchCriteria));
+   if (criteria==0) { fprintf(stderr,"Could not allocate space for criteria , returning null criteria\n"); }
+
+   return criteria;
+}
+
+
+int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria)
+{
+  if (criteria==0) { return 1; }
+  if (criteria->similarImage!=0)
+     {
+       struct Image * img = (struct Image *) criteria->similarImage;
+       destroyImage(img);
+     }
+  free(criteria);
+  return 1;
+}
+
+
 struct AISLib_SearchResults * createSearchResults(unsigned int initialNumberOfResults)
 {
   struct AISLib_SearchResults * sr = (struct AISLib_SearchResults *)  malloc(initialNumberOfResults* sizeof(struct AISLib_SearchResults));
@@ -52,7 +74,7 @@ struct AISLib_SearchResults * createSearchResults(unsigned int initialNumberOfRe
   return sr;
 }
 
-void destroySearchResults(struct AISLib_SearchResults * sr)
+void AISLib_destroySearchResults(struct AISLib_SearchResults * sr)
 {
   if (sr==0) { return ; }
   free(sr);
@@ -180,6 +202,14 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
     }
 
 
+    if (criteria->similarityUsed)
+    {
+       struct Image * img = (struct Image *) criteria->similarImage;
+       if (img->pixels!=0) { fprintf(stderr,"similarityUsed : "); }
+       fprintf(stderr,"Comparison not implemented\n");
+       return 0;
+    }
+
 
     return 1;
 }
@@ -228,8 +258,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
                         }
 
                   //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
-                  if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
-                  if (img!=0) { free(img); img=0; }
+                   destroyImage(img);
+                   img=0;
                   }
                 }
           }

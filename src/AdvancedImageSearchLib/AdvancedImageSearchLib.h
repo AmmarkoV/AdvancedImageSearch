@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #ifndef ADVANCEDIMAGESEARCHLIB_H_INCLUDED
 #define ADVANCEDIMAGESEARCHLIB_H_INCLUDED
 
+#define MAX_CRITERIA_STRING_SIZE 1024
 
 enum AISLib_ImageCategories
 {
@@ -45,7 +46,11 @@ struct AISLib_SearchCriteria
 {
 
    char criteriaSpecified;
+   unsigned int limitResults;
+   char needHelp;
 
+
+   //Dimension restrains ( only header required )
    char minDimensionsUsed;
    unsigned int minWidth;
    unsigned int minHeight;
@@ -63,13 +68,15 @@ struct AISLib_SearchCriteria
    char categoryUsed;
    unsigned int category;
 
+   //Content restrains ( image body required)
    char colorRangeUsed;
    unsigned int colorRange;
    unsigned char colorRangeSpecificR,colorRangeSpecificG,colorRangeSpecificB;
 
-   unsigned int limitResults;
+   char similarityUsed;
+   char similarImageFilename[MAX_CRITERIA_STRING_SIZE];
+   void * similarImage;
 
-   char needHelp;
 
 };
 
@@ -86,9 +93,10 @@ void AISLib_printHelp();
 char * AISLib_loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );
 
 struct AISLib_SearchResults *  AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria);
-void destroySearchResults(struct AISLib_SearchResults * sr);
+void AISLib_destroySearchResults(struct AISLib_SearchResults * sr);
 
-
+struct AISLib_SearchCriteria * AISLib_createCriteria();
+int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria);
 
 
 

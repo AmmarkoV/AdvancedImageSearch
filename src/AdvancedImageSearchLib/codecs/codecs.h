@@ -48,6 +48,7 @@ struct Image
 
 struct Image * readImage( char *filename,unsigned int type,char read_only_header);
 int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,unsigned long * mem_size);
+int destroyImage(struct Image * img);
 
 #ifdef __cplusplus
 }

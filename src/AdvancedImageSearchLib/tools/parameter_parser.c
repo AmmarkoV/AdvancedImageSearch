@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include "parameter_parser.h"
 
+#include "../codecs/codecs.h"
+#include "../image_processing/imageResizer.h"
 
 
 static int strcasecmp_internal(char * input1, char * input2)
@@ -62,6 +64,9 @@ void printListOfParametersRecognized()
 
     printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
+
+    printf("-like FILENAME THRESHOLD i.e. -like myphoto.jpg 10\n");
+    printf("Returned images will look like myphoto.jpg with a 10%% threshold \n");
 }
 
 
@@ -138,6 +143,17 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
            if (criteria->colorRangeUsed) {  criteria->criteriaSpecified=1; }
            criteria->colorRange = 50;
         }
+    } else
+   if (strcmp(argv[i],"-like")==0)
+    {
+     if (i+1<argc) {
+                     criteria->similarityUsed=1;
+                     strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
+
+                     struct Image * img = readImage(argv[i+1],0,0);
+                     criteria->similarImage = (void*) resizeImage(img);
+                     criteria->criteriaSpecified=1;
+                   }
     } else
 
    //last argument should be dir!

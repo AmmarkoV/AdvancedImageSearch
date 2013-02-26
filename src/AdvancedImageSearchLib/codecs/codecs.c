@@ -71,3 +71,12 @@ int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,un
 
    return 0;
 }
+
+
+
+int destroyImage(struct Image * img)
+{
+    if (img->pixels!=0) { free(img->pixels); img->pixels=0; }
+    if (img!=0) { free(img); img=0; }
+    return 0;
+}
