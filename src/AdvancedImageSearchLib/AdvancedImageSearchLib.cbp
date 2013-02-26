@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="-histogram 230 0 0 80 /home/ammar/Downloads/" />
+				<Option parameters="-like /home/ammar/Image.jpg /home/ammar/Downloads/" />
 				<Option host_application="/home/ammar/Documents/Programming/AdvancedImageSearch/src/lsimg/lsimg" />
 				<Option run_host_application_in_terminal="1" />
 				<Option createDefFile="1" />
@@ -61,7 +61,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="codecs/ppm.h" />
-		<Unit filename="imageResizer.h" />
 		<Unit filename="image_processing/histograms.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -33,6 +33,7 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
    struct Image * img = 0;
    img = (struct Image *) malloc( sizeof(struct Image) );
    memset(img,0,sizeof(struct Image));
+   img->pixels=0; // :P just to make sure
 
    switch (type)
    {

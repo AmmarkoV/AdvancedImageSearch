@@ -163,7 +163,6 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"-like")==0)
     {
      if (i+2<argc) {
-                     criteria->similarityUsed=1;
                      criteria->similarityPercent=atoi(argv[i+2]);
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
@@ -171,15 +170,18 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      if (img!=0)
                      {
                        struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
-                       WritePPM("test.ppm",rszdImage);
 
-                       if (rszdImage!=img) { //We succesfully resized , we don't need the original any more
-                                             destroyImage(img); }
+                       if (rszdImage!=0)
+                       {
+                         WritePPM("test.ppm",rszdImage);
 
+                         criteria->similarityUsed=1;
+                         criteria->similarImage = (void*) rszdImage;
+                         criteria->criteriaSpecified=1;
+                       }
 
-
-                       criteria->similarImage = (void*) rszdImage;
-                       criteria->criteriaSpecified=1;
+                       //Deallocate initial BIG image , we won't be needing it
+                       destroyImage(img);
                      }
                    }
     } else

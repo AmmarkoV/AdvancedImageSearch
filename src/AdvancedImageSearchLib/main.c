@@ -166,7 +166,7 @@ inline int fileIsImage(char * filename)
 
 
 
-int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria)
+int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchCriteria * criteria)
 {
    if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect image \n");    return 0; }
    if (criteria==0) { fprintf(stderr,"imageFitsCriteria : Incorrect criteria \n"); return 0; }
@@ -212,18 +212,23 @@ int imageFitsCriteria(struct Image * img,struct AISLib_SearchCriteria * criteria
 
     if (criteria->similarityUsed)
     {
+       if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
+
+       fprintf(stderr,"Trying %s \n",filename);
+
+       struct Image * imgThumbnail = resizeImage(img , criteria->comparisonWidth , criteria->comparisonHeight );
        struct Image * referenceImg = (struct Image *) criteria->similarImage;
-       struct Image * imgThumbnail = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
+
+       if(imgThumbnail==0) { return 0; /*Can't resize , Can't compare doesnt fit criteria */ }
 
        if (!compareImages(referenceImg,imgThumbnail, criteria->similarityPercent) )
        {
            WritePPM("succ_comp.ppm",imgThumbnail);
-           if (imgThumbnail!=img) { destroyImage(img);  /*We succesfully resized , we don't need the original any more*/ }
+           destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
            return 0;
        }
 
-       if (imgThumbnail!=img) { destroyImage(img);  /*We succesfully resized , we don't need the original any more*/ }
-
+       destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
     }
 
 
@@ -267,7 +272,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
                  struct Image * img = readImage(fullPath , image_type , searchCriteriaRequireOnlyImageHeaderLoaded(criteria) );
                  if (  img!=0 )
                    {
-                     if (imageFitsCriteria(img,criteria))
+                     if (imageFitsCriteria(epdf->d_name,img,criteria))
                         {
                           ++numberOfResults;
                           printf("%s ",epdf->d_name);

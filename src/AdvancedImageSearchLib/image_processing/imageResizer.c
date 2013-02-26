@@ -8,20 +8,25 @@
 unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
 {
   if (rgb==0) { fprintf(stderr,"Can not increase null image \n");  return 0; }
-  if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { fprintf(stderr,"Can not increase image size\n"); return rgb; }
-  if ( ( resizeHeight == 0 ) || (resizeWidth == 0 ) ) { fprintf(stderr,"Will not resize to 0  \n"); return rgb; }
-  unsigned char * output = (unsigned char *) malloc(resizeWidth*resizeHeight*3);
-  memset(output,0,resizeWidth*resizeHeight*3);
-
-  if ( output == 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return rgb; }
-
-  unsigned int originalScanline = originalWidth * 3;
+  if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { fprintf(stderr,"Can not increase image size\n"); return 0; }
+  if ( ( resizeHeight == 0 ) || (resizeWidth == 0 ) ) { fprintf(stderr,"Will not resize to 0  \n"); return 0; }
 
 
   unsigned int xBlockCount = (unsigned int) originalWidth  / resizeWidth;
   unsigned int yBlockCount = (unsigned int) originalHeight / resizeHeight;
   unsigned int allBlocks = xBlockCount * yBlockCount;
   unsigned int blockScanline = xBlockCount * 3;
+
+  if ( (xBlockCount==0) || (yBlockCount==0)  )  { fprintf(stderr,"Can not resize with a null block size\n"); return 0; }
+
+
+  unsigned char * output = (unsigned char *) malloc(resizeWidth*resizeHeight*3);
+  memset(output,0,resizeWidth*resizeHeight*3);
+
+  if ( output == 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return 0; }
+
+  unsigned int originalScanline = originalWidth * 3;
+
 
   #if DEBUG_RESIZING
   fprintf(stderr,"Resizing a %ux%u image to %ux%u \n",originalWidth,originalHeight,resizeWidth,resizeHeight);
@@ -114,6 +119,9 @@ struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigne
  smallerImg->depth = img->depth;
 
  smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
+
+ if (smallerImg->pixels == 0) { free(smallerImg); smallerImg=0; }
+
 
  return smallerImg;
 }
