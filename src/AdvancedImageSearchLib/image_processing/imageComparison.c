@@ -3,7 +3,7 @@
 #include <string.h>
 #include "imageComparison.h"
 
-#define maxDifferencePerChannel 10
+#define maxDifferencePerChannel 30
 
 int imagesAreSimilar(struct Image * img1,struct Image * img2,float differencePercent)
 {
@@ -17,7 +17,7 @@ int imagesAreSimilar(struct Image * img1,struct Image * img2,float differencePer
  unsigned char *rgb1Limit = rgb1 + img1->width * img1->height * img1->depth;
  unsigned char *rgb2 = img2->pixels;
 
- unsigned int maxDifferentPixels = img1->width * img1->height *  differencePercent;
+ unsigned int maxDifferentPixels =(unsigned int) (img1->width * img1->height *  (differencePercent/100));
  unsigned int differentPixels=0;
  unsigned int diffR=0;
  unsigned int diffG=0;
