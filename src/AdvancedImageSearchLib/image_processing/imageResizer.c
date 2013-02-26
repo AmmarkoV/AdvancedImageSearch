@@ -3,7 +3,7 @@
 #include <string.h>
 #include "imageResizer.h"
 
-
+#define DEBUG_RESIZING 1
 
 unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
 {
@@ -16,6 +16,12 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
   unsigned int xBlockCount = originalWidth  / resizeWidth;
   unsigned int yBlockCount = originalHeight / resizeHeight;
+
+
+  #if DEBUG_RESIZING
+  fprintf(stderr,"Resizing a %ux%u image to %ux%u \n",originalWidth,originalHeight,resizeWidth,resizeHeight);
+  fprintf(stderr,"We have %ux%u blocks\n",xBlockCount,yBlockCount);
+  #endif
 
   unsigned int xBlock=0;
   unsigned int yBlock=0;
@@ -32,21 +38,37 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
       unsigned int valueR = 0;
       unsigned int valueG = 0;
       unsigned int valueB = 0;
-      unsigned char * tmpRGB = rgbIn;
-      unsigned char * tmpRGBLimit = rgbIn + xBlockCount*3;
+
       unsigned int repeatTimes = yBlockCount;
       unsigned int i=0;
+
+      unsigned char * tmpRGB = rgbIn;
+      unsigned char * tmpRGBLimit = rgbIn + xBlockCount*3;
+
+      #if DEBUG_RESIZING
+        fprintf(stderr,"Sum on block : %ux%u \n",xBlock,yBlock);
+     #endif
+
       for (i=0; i<repeatTimes; i++)
       {
+       #if DEBUG_RESIZING
+        fprintf(stderr,"Scanline %u - %p -> %p \n",i,tmpRGB,tmpRGBLimit);
+       #endif
+
         while (tmpRGB<tmpRGBLimit)
         {
-         valueR+= *tmpRGB; ++tmpRGB;
-         valueG+= *tmpRGB; ++tmpRGB;
-         valueR+= *tmpRGB; ++tmpRGB;
+         valueR+= (unsigned int) *tmpRGB; ++tmpRGB;
+         valueG+= (unsigned int) *tmpRGB; ++tmpRGB;
+         valueB+= (unsigned int) *tmpRGB; ++tmpRGB;
         }
 
+       #if DEBUG_RESIZING
+        fprintf(stderr,"raw Sum : R %u G %u B %u \n",valueR,valueG,valueB);
+       #endif
+
         tmpRGB+=originalWidth*3;
-        tmpRGBLimit+=originalWidth*3;
+        tmpRGBLimit=tmpRGB + xBlockCount*3 ;
+
       }
       //Finished
 
@@ -57,7 +79,9 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
       valueB/=xBlockCount*yBlockCount;
       if (valueB>255) { valueB = 255; }
 
-
+      #if DEBUG_RESIZING
+        fprintf(stderr," R %u G %u B %u \n",valueR,valueG,valueB);
+     #endif
 
       *rgbOut = (unsigned char) valueR; ++rgbOut;
       *rgbOut = (unsigned char) valueG; ++rgbOut;
@@ -66,7 +90,7 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
       rgbIn+= xBlockCount*3;
     }
 
-    rgbIn+= originalWidth*3*xBlockCount;
+    rgbIn+= originalWidth*3*yBlockCount;
   }
 
   return output;
