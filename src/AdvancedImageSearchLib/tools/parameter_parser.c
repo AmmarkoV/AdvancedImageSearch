@@ -4,6 +4,44 @@
 #include "parameter_parser.h"
 
 
+
+static int strcasecmp_internal(char * input1, char * input2)
+{
+  #if CASE_SENSITIVE_OBJECT_NAMES
+    return strcmp(input1,input2);
+  #endif
+
+    if ( (input1==0) || (input2==0) )
+     {
+         fprintf(stderr,"Error , calling strcasecmp_internal with null parameters \n");
+         return 1;
+     }
+    unsigned int len1 = strlen(input1);
+    unsigned int len2 = strlen(input2);
+    if (len1!=len2)
+     {
+         //mismatched lengths of strings , they can't be equal..!
+         return 1;
+     }
+
+   char A; //<- character buffer for input1
+   char B; //<- character buffer for input2
+
+   int i=0;
+   while (i<len1) //len1 and len2 are equal
+    {
+       A = toupper(input1[i]);
+       B = toupper(input2[i]);
+       if (A!=B) { return 1; }
+       ++i;
+    }
+  //if we reached this point , there where no reasons
+  //why input1 and input2 could not be equal..
+  return 0;
+}
+
+
+
 void printListOfParametersRecognized()
 {
     printf("Parameters : \n");
@@ -16,6 +54,10 @@ void printListOfParametersRecognized()
 
     printf("-histogram R G B DEVIATION i.e. -histogram 240 240 0 30\n");
     printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n");
+
+    printf("-color COLORNAME i.e. -histogram red\n");
+    printf("Returned images will have a median rgb color close to this color\n");
+    printf("Possible colors : red orange yellow green teal blue purple pink green white gray black brown\n");
 
     printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
@@ -65,7 +107,32 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->colorRange = atoi(argv[i+4]);
                    }
     } else
+   if (strcmp(argv[i],"-color")==0)
+    {
+     if (i+1<argc)
+        {
+           criteria->colorRangeUsed = 1;
+           if (strcasecmp_internal(argv[i+1],"red")==0)    { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 0; } else
+           if (strcasecmp_internal(argv[i+1],"orange")==0) { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 165; criteria->colorRangeSpecificB = 0; } else
+           if (strcasecmp_internal(argv[i+1],"yellow")==0) { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 255; criteria->colorRangeSpecificB = 0; } else
+           if (strcasecmp_internal(argv[i+1],"green")==0)  { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 128; criteria->colorRangeSpecificB = 0; } else
+           if (strcasecmp_internal(argv[i+1],"teal")==0)   { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 128; criteria->colorRangeSpecificB = 128; } else
+           if (strcasecmp_internal(argv[i+1],"blue")==0)   { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 255; } else
+           if (strcasecmp_internal(argv[i+1],"purple")==0) { criteria->colorRangeSpecificR = 128; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 128; } else
+           if (strcasecmp_internal(argv[i+1],"pink")==0)   { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 192; criteria->colorRangeSpecificB = 253; } else
+           if (strcasecmp_internal(argv[i+1],"white")==0)  { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 255; criteria->colorRangeSpecificB = 255; } else
+           if (strcasecmp_internal(argv[i+1],"gray")==0)   { criteria->colorRangeSpecificR = 123; criteria->colorRangeSpecificG = 123; criteria->colorRangeSpecificB = 123; } else
+           if (strcasecmp_internal(argv[i+1],"black")==0)  { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 0; } else
+           if (strcasecmp_internal(argv[i+1],"brown")==0)  { criteria->colorRangeSpecificR = 165; criteria->colorRangeSpecificG = 42; criteria->colorRangeSpecificB = 42; }
+            else
+              {
+                fprintf(stderr,"Could not identify color (%s) , consider running -help for a possible color list\n",argv[i+1]);
+                criteria->colorRangeUsed = 0;
+              }
 
+           criteria->colorRange = 40;
+        }
+    } else
 
    //last argument should be dir!
    if (i==argc-1)
