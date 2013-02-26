@@ -68,6 +68,12 @@ int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria)
        struct Image * img = (struct Image *) criteria->similarImage;
        destroyImage(img);
      }
+  if (criteria->containsImage!=0)
+     {
+       struct Image * img = (struct Image *) criteria->containsImage;
+       destroyImage(img);
+     }
+
   free(criteria);
   return 1;
 }
@@ -221,12 +227,12 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
        if (!imagesAreSimilar(referenceImg,imgThumbnail, criteria->similarityPercent) )
        {
 
-           WritePPM("fail_comp.ppm",imgThumbnail);
+           //WritePPM("fail_comp.ppm",imgThumbnail);
            destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
            return 0;
        }
 
-       WritePPM("succ_comp.ppm",imgThumbnail);
+       //WritePPM("succ_comp.ppm",imgThumbnail);
        destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
     }
 

@@ -185,7 +185,21 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      }
                    }
     } else
+   if (strcmp(argv[i],"-contains")==0)
+    {
+     if (i+2<argc) {
+                     criteria->containsSimilarityPercent=atof(argv[i+2]);
+                     strncpy( criteria->containsImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
+                     struct Image * img = readImage(argv[i+1],JPG_CODEC,0);
+                     if (img!=0)
+                     {
+                         criteria->containsUsed=1;
+                         criteria->containsImage = (void*) img;
+                         criteria->criteriaSpecified=1;
+                     }
+                   }
+    } else
    //last argument should be dir!
    if (i==argc-1)
     {
