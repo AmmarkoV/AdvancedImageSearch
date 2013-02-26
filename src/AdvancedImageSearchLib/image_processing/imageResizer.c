@@ -7,8 +7,8 @@
 
 unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int originalWidth ,unsigned int originalHeight , unsigned int resizeWidth,unsigned int resizeHeight)
 {
-  if (rgb==0) { fprintf(stderr,"Can not increase null image \n");  return 0; }
-  if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { fprintf(stderr,"Can not increase image size\n"); return 0; }
+  if (rgb==0) { fprintf(stderr,"Can not resize null image \n");  return 0; }
+  if ( ( resizeHeight>originalHeight ) || (resizeWidth>originalWidth ) ) { /*fprintf(stderr,"Can not increase image size\n");*/ return 0; }
   if ( ( resizeHeight == 0 ) || (resizeWidth == 0 ) ) { fprintf(stderr,"Will not resize to 0  \n"); return 0; }
 
 
@@ -69,7 +69,7 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
         while (tmpRGB<tmpRGBLimit)
         {
-          if (rgbInLimit>tmpRGB)
+          if (rgbInLimit>tmpRGB+3)
           {
            valueR+= (unsigned int) *tmpRGB; ++tmpRGB;
            valueG+= (unsigned int) *tmpRGB; ++tmpRGB;
@@ -122,7 +122,8 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigned int resizeHeight )
 {
  struct Image * smallerImg  = (struct Image *) malloc(sizeof (struct Image));
- if (smallerImg==0) { fprintf(stderr,"Could not allocate space for smaller image \n"); return img; }
+ if (smallerImg==0) { fprintf(stderr,"Could not allocate space for smaller image \n"); return 0; }
+ if (img->depth!=3) { /*fprintf(stderr,"resizeImage currently handles only 3 channel images\n");*/ return 0; }
 
  smallerImg->width = resizeWidth;
  smallerImg->height = resizeHeight;
