@@ -7,6 +7,9 @@
 #include "../codecs/codecs.h"
 #include "../image_processing/imageResizer.h"
 
+#define comparisonWidth 64
+#define comparisonHeight 64
+
 
 static int strcasecmp_internal(char * input1, char * input2)
 {
@@ -151,7 +154,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
                      struct Image * img = readImage(argv[i+1],0,0);
-                     criteria->similarImage = (void*) resizeImage(img);
+                     criteria->similarImage = (void*) resizeImage(img,comparisonWidth,comparisonHeight);
                      criteria->criteriaSpecified=1;
                    }
     } else
