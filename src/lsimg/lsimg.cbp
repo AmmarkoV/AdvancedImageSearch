@@ -33,7 +33,7 @@
 		</Compiler>
 		<Linker>
 			<Add library="jpeg" />
-			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearchLib.so" />
+			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearch.so" />
 		</Linker>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />

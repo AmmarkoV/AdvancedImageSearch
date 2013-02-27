@@ -5,14 +5,14 @@ sudo echo "Thank you"
 
 make
 
-if [ -e "src/AdvancedImageSearchLib/AdvancedImageSearchLib.so" ]; then
+if [ -e "src/AdvancedImageSearchLib/AdvancedImageSearch.so" ]; then
    echo "fixing temporary cbp2make bug"
-   cp "src/AdvancedImageSearchLib/AdvancedImageSearchLib.so" "src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so" 
+   cp "src/AdvancedImageSearchLib/AdvancedImageSearch.so" "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" 
 fi
 
  
 
-if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so" ]; then
+if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
    echo "Library is OK" 
 else
    echo "The library could not be built , please consider running ./get-dependencies.sh to solve build issues"
@@ -30,11 +30,7 @@ else
    exit 1 
 fi
 
-
-
-
-
-
+ 
 if [ -d "/usr/lib/AdvancedImageSearch" ]; then
 echo "AdvancedImageSearch Library path detected patching it up :)"
 else
@@ -42,7 +38,7 @@ echo "Installing AdvancedImageSearch in the system.. :)"
   sudo mkdir /usr/lib/AdvancedImageSearch
 fi
 
-sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearchLib.so
+sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
 
 scripts/makeSystem.sh
 

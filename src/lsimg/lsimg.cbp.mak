@@ -15,7 +15,7 @@ INC =
 CFLAGS =  -Wall
 RESINC = 
 LIBDIR = 
-LIB =  -ljpeg ../AdvancedImageSearchLib/libAdvancedImageSearchLib.so
+LIB =  -ljpeg ../AdvancedImageSearchLib/libAdvancedImageSearch.so
 LDFLAGS = 
 
 INC_DEBUG =  $(INC)

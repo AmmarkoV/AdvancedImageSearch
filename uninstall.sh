@@ -15,9 +15,9 @@ fi
  
 #first step remove the executables by hand
 
-  if [ -e "/usr/lib/AdvancedImageSearch/libAdvancedImageSearchLib.so"  ]
+  if [ -e "/usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so"  ]
   then
-    sudo rm  "/usr/lib/AdvancedImageSearch/libAdvancedImageSearchLib.so"  
+    sudo rm  "/usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so"  
   else  
     echo "No AdvancedImageSearch Library detected "
   fi
