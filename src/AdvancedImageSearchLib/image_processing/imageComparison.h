@@ -4,6 +4,6 @@
 
 #include "../codecs/codecs.h"
 
-int imagesAreSimilar(struct Image * img1,struct Image * img2,float differencePercent);
+int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDifferencePerChannel,float differencePercent);
 
 #endif // IMAGECOMPARISON_H_INCLUDED

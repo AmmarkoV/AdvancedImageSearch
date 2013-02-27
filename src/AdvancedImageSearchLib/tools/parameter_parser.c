@@ -14,12 +14,9 @@
 
 
 
+
 static int strcasecmp_internal(char * input1, char * input2)
 {
-  #if CASE_SENSITIVE_OBJECT_NAMES
-    return strcmp(input1,input2);
-  #endif
-
     if ( (input1==0) || (input2==0) )
      {
          fprintf(stderr,"Error , calling strcasecmp_internal with null parameters \n");
@@ -49,6 +46,25 @@ static int strcasecmp_internal(char * input1, char * input2)
   return 0;
 }
 
+int colorNameToRGB(char * name,unsigned char * R ,unsigned char * G ,unsigned char * B)
+{
+           if (strcasecmp_internal(name,"red")==0)    { *R=255; *G=0;   *B=0; }   else
+           if (strcasecmp_internal(name,"orange")==0) { *R=255; *G=165; *B=0; }   else
+           if (strcasecmp_internal(name,"yellow")==0) { *R=255; *G=255; *B=0; }   else
+           if (strcasecmp_internal(name,"green")==0)  { *R=0;   *G=128; *B=0; }   else
+           if (strcasecmp_internal(name,"teal")==0)   { *R=0;   *G=128; *B=128; } else
+           if (strcasecmp_internal(name,"blue")==0)   { *R=0;   *G=0;   *B=255; } else
+           if (strcasecmp_internal(name,"purple")==0) { *R=128; *G=0;   *B=128; } else
+           if (strcasecmp_internal(name,"pink")==0)   { *R=255; *G=192; *B=253; } else
+           if (strcasecmp_internal(name,"white")==0)  { *R=255; *G=255; *B=255; } else
+           if (strcasecmp_internal(name,"gray")==0)   { *R=123; *G=123; *B=123; } else
+           if (strcasecmp_internal(name,"black")==0)  { *R=0;   *G=0;   *B=0; }   else
+           if (strcasecmp_internal(name,"brown")==0)  { *R=165; *G=42;  *B=42; }  else
+                                                      { return 0;  }
+  return 1;
+}
+
+
 
 
 void printListOfParametersRecognized()
@@ -71,8 +87,9 @@ void printListOfParametersRecognized()
     printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
 
-    printf("-like FILENAME THRESHOLD i.e. -like myphoto.jpg 10.5\n");
-    printf("Returned images will look like myphoto.jpg with a 10.5%% threshold ( THRESHOLD is a float )\n");
+    printf("-like FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE i.e. -like myphoto.jpg 30 10.5\n");
+    printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
+    printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n");
 }
 
 
@@ -138,19 +155,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
      if (i+1<argc)
         {
            criteria->colorRangeUsed = 1;
-           if (strcasecmp_internal(argv[i+1],"red")==0)    { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 0; } else
-           if (strcasecmp_internal(argv[i+1],"orange")==0) { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 165; criteria->colorRangeSpecificB = 0; } else
-           if (strcasecmp_internal(argv[i+1],"yellow")==0) { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 255; criteria->colorRangeSpecificB = 0; } else
-           if (strcasecmp_internal(argv[i+1],"green")==0)  { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 128; criteria->colorRangeSpecificB = 0; } else
-           if (strcasecmp_internal(argv[i+1],"teal")==0)   { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 128; criteria->colorRangeSpecificB = 128; } else
-           if (strcasecmp_internal(argv[i+1],"blue")==0)   { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 255; } else
-           if (strcasecmp_internal(argv[i+1],"purple")==0) { criteria->colorRangeSpecificR = 128; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 128; } else
-           if (strcasecmp_internal(argv[i+1],"pink")==0)   { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 192; criteria->colorRangeSpecificB = 253; } else
-           if (strcasecmp_internal(argv[i+1],"white")==0)  { criteria->colorRangeSpecificR = 255; criteria->colorRangeSpecificG = 255; criteria->colorRangeSpecificB = 255; } else
-           if (strcasecmp_internal(argv[i+1],"gray")==0)   { criteria->colorRangeSpecificR = 123; criteria->colorRangeSpecificG = 123; criteria->colorRangeSpecificB = 123; } else
-           if (strcasecmp_internal(argv[i+1],"black")==0)  { criteria->colorRangeSpecificR = 0; criteria->colorRangeSpecificG = 0; criteria->colorRangeSpecificB = 0; } else
-           if (strcasecmp_internal(argv[i+1],"brown")==0)  { criteria->colorRangeSpecificR = 165; criteria->colorRangeSpecificG = 42; criteria->colorRangeSpecificB = 42; }
-            else
+           if (!colorNameToRGB(argv[i+1],&criteria->colorRangeSpecificR,&criteria->colorRangeSpecificG,&criteria->colorRangeSpecificB))
               {
                 fprintf(stderr,"Could not identify color (%s) , consider running -help for a possible color list\n",argv[i+1]);
                 criteria->colorRangeUsed = 0;
@@ -162,8 +167,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-like")==0)
     {
-     if (i+2<argc) {
-                     criteria->similarityPercent=atof(argv[i+2]);
+     if (i+3<argc) {
+                     criteria->perPixelThreshold=atoi(argv[i+2]);
+                     criteria->similarityPercent=atof(argv[i+3]);
                      strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
                      struct Image * img = readImage(argv[i+1],JPG_CODEC,0);

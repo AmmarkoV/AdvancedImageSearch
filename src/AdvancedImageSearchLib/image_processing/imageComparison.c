@@ -3,9 +3,7 @@
 #include <string.h>
 #include "imageComparison.h"
 
-#define maxDifferencePerChannel 30
-
-int imagesAreSimilar(struct Image * img1,struct Image * img2,float differencePercent)
+int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDifferencePerChannel,float differencePercent)
 {
  if ( (img1==0) || (img2==0) ) { fprintf(stderr,"Cannot compare images that have not been properly allocated \n"); return 0; }
  if ( (img1->pixels==0) || (img2->pixels==0) ) { fprintf(stderr,"Cannot compare images that do not have a body allocated \n"); return 0; }

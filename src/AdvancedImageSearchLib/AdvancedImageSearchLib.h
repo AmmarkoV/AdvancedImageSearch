@@ -80,6 +80,7 @@ struct AISLib_SearchCriteria
    char similarityUsed;
    char similarImageFilename[MAX_CRITERIA_STRING_SIZE];
    float similarityPercent;
+   unsigned int perPixelThreshold;
    void * similarImage;
 
    char containsUsed;
