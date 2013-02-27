@@ -87,7 +87,10 @@ void printListOfParametersRecognized()
     printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
 
-    printf("-like FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE i.e. -like myphoto.jpg 30 10.5\n");
+    printf("-like FILENAME  i.e. -like myphoto.jpg  \n");
+    printf("Returned images will look like myphoto.jpg with an automatic threshold\n");
+
+    printf("-likeExt FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE i.e. -like myphoto.jpg 30 10.5\n");
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
     printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n");
 }
@@ -167,6 +170,29 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-like")==0)
     {
+     if (i+1<argc) {
+                     criteria->perPixelThreshold=30;
+                     criteria->similarityPercent=60;
+                     strncpy( criteria->similarImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
+
+                     struct Image * img = readImage(argv[i+1],JPG_CODEC,0);
+                     if (img!=0)
+                     {
+                       struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
+                       if (rszdImage!=0)
+                       {
+                         //WritePPM("test.ppm",rszdImage);
+                         criteria->similarityUsed=1;
+                         criteria->similarImage = (void*) rszdImage;
+                         criteria->criteriaSpecified=1;
+                       }
+                       //Deallocate initial BIG image , we won't be needing it
+                       destroyImage(img);
+                     }
+                   }
+    } else
+   if (strcmp(argv[i],"-likeExt")==0)
+    {
      if (i+3<argc) {
                      criteria->perPixelThreshold=atoi(argv[i+2]);
                      criteria->similarityPercent=atof(argv[i+3]);
@@ -176,16 +202,13 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      if (img!=0)
                      {
                        struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
-
                        if (rszdImage!=0)
                        {
                          //WritePPM("test.ppm",rszdImage);
-
                          criteria->similarityUsed=1;
                          criteria->similarImage = (void*) rszdImage;
                          criteria->criteriaSpecified=1;
                        }
-
                        //Deallocate initial BIG image , we won't be needing it
                        destroyImage(img);
                      }
