@@ -173,7 +173,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
                        if (rszdImage!=0)
                        {
-                         WritePPM("test.ppm",rszdImage);
+                         //WritePPM("test.ppm",rszdImage);
 
                          criteria->similarityUsed=1;
                          criteria->similarImage = (void*) rszdImage;
