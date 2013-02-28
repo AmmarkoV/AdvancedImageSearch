@@ -99,14 +99,19 @@ void printListOfParametersRecognized()
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
     printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n");
 
+    #if USE_OPENCV_SURF_DETECTOR
     printf("-contains FILENAME  i.e. -contains object.jpg  \n");
     printf("Returned images will contain a pattern like object.jpg \n");
+    #endif
 
+
+     #if USE_OPENCV_FACEDETECTION
     printf("-minFaces NUMBER i.e. -minFaces 1\n");
     printf("Returned images will have a minimum count of NUMBER faces\n");
 
     printf("-maxFaces NUMBER i.e. -maxFaces 2\n");
     printf("Returned images will have no more than NUMBER faces\n");
+    #endif
 
 }
 
