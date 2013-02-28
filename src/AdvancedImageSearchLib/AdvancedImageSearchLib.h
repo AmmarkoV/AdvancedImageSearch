@@ -44,6 +44,7 @@ enum AISLib_ImageColorRanges
 
 struct AISLib_SearchCriteria
 {
+   char printTimers;
 
    char criteriaSpecified;
    unsigned int limitResults;

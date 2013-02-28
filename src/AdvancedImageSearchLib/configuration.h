@@ -9,4 +9,7 @@
 #define USE_JPG_FILES 1
 
 
+#define USE_TIMERS 1
+
+
 #endif // CONFIGURATION_H_INCLUDED

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "imageComparison.h"
+#include "../tools/timers.h"
 
 int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDifferencePerChannel,float differencePercent)
 {
@@ -9,7 +10,7 @@ int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDif
  if ( (img1->pixels==0) || (img2->pixels==0) ) { fprintf(stderr,"Cannot compare images that do not have a body allocated \n"); return 0; }
  if ( (img1->width!=img2->width) || (img1->height!=img2->height) ) { fprintf(stderr,"Cannot compare images that have different dimensions\n"); return 0; }
 
-
+ StartTimer(IMAGE_COMPARISON_DELAY);
  //We have two images of the same size
  unsigned char *rgb1 = img1->pixels;
  unsigned char *rgb1Limit = rgb1 + img1->width * img1->height * img1->depth;
@@ -35,7 +36,7 @@ int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDif
                                              { ++differentPixels; }
    }
 
-
+  EndTimer(IMAGE_COMPARISON_DELAY);
 
   if (differentPixels<maxDifferentPixels) { return 1; }
   return 0;

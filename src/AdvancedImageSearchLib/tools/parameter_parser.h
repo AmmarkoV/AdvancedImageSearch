@@ -4,6 +4,7 @@
 
 #include "../AdvancedImageSearchLib.h"
 
+void printTimersToStderr();
 void printListOfParametersRecognized();
 char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "imageResizer.h"
+#include "../tools/timers.h"
 
 #define DEBUG_RESIZING 0
 
@@ -121,18 +122,26 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
 struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigned int resizeHeight )
 {
+
  struct Image * smallerImg  = (struct Image *) malloc(sizeof (struct Image));
- if (smallerImg==0) { fprintf(stderr,"Could not allocate space for smaller image \n"); return 0; }
- if (img->depth!=3) { /*fprintf(stderr,"resizeImage currently handles only 3 channel images\n");*/ return 0; }
+ if (smallerImg==0) { fprintf(stderr,"Could not allocate memory for resized image structure\n"); return 0; }
 
- smallerImg->width = resizeWidth;
- smallerImg->height = resizeHeight;
- smallerImg->depth = img->depth;
+ if (img->depth==3)
+ {
+   StartTimer(IMAGE_RESIZE_DELAY);
+   smallerImg->width = resizeWidth;
+   smallerImg->height = resizeHeight;
+   smallerImg->depth = img->depth;
 
- smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
+   smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
 
- if (smallerImg->pixels == 0) { free(smallerImg); smallerImg=0; }
-
+   if (smallerImg->pixels == 0) { free(smallerImg); smallerImg=0; }
+   EndTimer(IMAGE_RESIZE_DELAY);
+ } else
+ {
+   free(smallerImg);
+   smallerImg=0;
+ }
 
  return smallerImg;
 }

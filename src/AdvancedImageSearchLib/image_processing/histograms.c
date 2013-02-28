@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../tools/timers.h"
 
 #define DEBUG_HISTOGRAMS 0
 
@@ -83,8 +84,12 @@ struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width ,
    if (hist==0) { return 0; }
    cleanHistogram(hist);
 
+
+
    if (channels==3)
    {
+    StartTimer(HISTOGRAM_GENERATION_DELAY);
+
     unsigned int overlaps = 0;
     unsigned int rgbPTRIndex=0;
     unsigned int rgbPTRIndexLimit = width*height*channels;
@@ -127,7 +132,7 @@ struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width ,
                         fprintf(stderr,"Had %u overlaps\n",overlaps);
                        #endif
                      }
-
+    EndTimer(HISTOGRAM_GENERATION_DELAY);
    }
     else
     {
@@ -156,6 +161,8 @@ int histogramIsCloseToColor(struct Histogram * hist,unsigned char R,unsigned cha
 {
   if (hist==0) { return 0; }
   if (imageSize==0) { return 0; }
+
+  StartTimer(HISTOGRAM_COMPARISON_DELAY);
 
   unsigned char minR = R; unsigned char maxR = R;
   unsigned char minG = G; unsigned char maxG = G;
@@ -189,6 +196,9 @@ int histogramIsCloseToColor(struct Histogram * hist,unsigned char R,unsigned cha
   #if DEBUG_HISTOGRAMS
     fprintf(stderr,"Our R %0.2f%% G %0.2f%% B %0.2f%% , target %0.2f \n",ourR_Percentage,ourG_Percentage,ourB_Percentage,targetPercentage);
   #endif
+
+  EndTimer(HISTOGRAM_COMPARISON_DELAY);
+
 
   if (
        (ourR_Percentage>=HISTOGRAM_SUCCESS_PERCENTAGE) &&

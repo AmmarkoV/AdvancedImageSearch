@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include "parameter_parser.h"
 
+#include "timers.h"
+
 #include "../configuration.h"
 #include "../codecs/codecs.h"
 
@@ -65,6 +67,25 @@ int colorNameToRGB(char * name,unsigned char * R ,unsigned char * G ,unsigned ch
   return 1;
 }
 
+
+void printTimersToStderr()
+{
+
+
+
+  fprintf(stderr,"Performance report -=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+  fprintf(stderr," FUNCTION             TIME  IN  MICROSECONDS  SAMPLES! !\n");
+  unsigned int i=0;
+  for (i=0; i<TOTAL_TIMERS; i++)
+   {
+     fprintf(stderr," %s , AVERAGE %u , LAST %u , SAMPLES %u \n",timerIDDescription[i],GetAverageTimer(i),GetLastTimer(i),GetTimesTimerTimed(i));
+   }
+  fprintf(stderr,"     -=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+
+}
+
+
+
 void printNotCompiledInSupport(char* whatisnot)
 {
    fprintf(stderr,"Parameter %s is not compiled in this binary of libAdvancedImageSearch\n",whatisnot);
@@ -75,6 +96,10 @@ void printNotCompiledInSupport(char* whatisnot)
 void printListOfParametersRecognized()
 {
     printf("Parameters : \n");
+
+    printf("-report\n");
+    printf("On completion of operations a detailed analysis of how much time elapsed during which\n");
+    printf("operations will be printed on stderr \n");
 
     printf("-minDims MIN_WIDTH MIN_HEIGHT i.e. -minDims 1920 1080\n");
     printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n");
@@ -136,6 +161,10 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"-help")==0)
     {
       criteria->needHelp=1;
+    } else
+   if (strcmp(argv[i],"-report")==0)
+    {
+      criteria->printTimers=1;
     } else
    if (strcmp(argv[i],"-limit")==0)
     {

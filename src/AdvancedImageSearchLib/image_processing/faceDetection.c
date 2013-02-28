@@ -1,5 +1,6 @@
 #include "faceDetection.h"
 #include "../configuration.h"
+#include "../tools/timers.h"
 
 
 
@@ -63,9 +64,13 @@ int openCVFaceDetector(struct Image * img)
 
 int imageHasNFaces(struct Image * img)
 {
+   unsigned int facesDetected = 0;
+   StartTimer(FACE_DETECTION_DELAY);
+
    #if USE_OPENCV_FACEDETECTION
-     return openCVFaceDetector(img);
+     facesDetected = openCVFaceDetector(img);
    #endif // USE_OPENCV
 
-   return 0;
+   EndTimer(FACE_DETECTION_DELAY);
+   return facesDetected;
 }

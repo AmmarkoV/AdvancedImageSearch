@@ -1,6 +1,6 @@
 #include "findObjectsSURF.h"
 #include "../configuration.h"
-
+#include "../tools/timers.h"
 
 #if USE_OPENCV_SURF_DETECTOR
 int openCV_SURFDetector(struct Image * pattern,struct Image * img)

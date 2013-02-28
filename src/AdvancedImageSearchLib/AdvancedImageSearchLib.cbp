@@ -97,6 +97,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="tools/string_extension_scanner.h" />
+		<Unit filename="tools/timers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tools/timers.h" />
 		<Unit filename="version.h" />
 		<Extensions>
 			<envvars />

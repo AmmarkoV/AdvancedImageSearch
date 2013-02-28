@@ -37,6 +37,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
+#include "tools/timers.h"
 
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
 
@@ -265,6 +266,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
   if (dpdf != 0)
    {
+     StartTimer(SEARCH_OPERATION_DELAY);
+
      struct AISLib_SearchResults * sr = createSearchResults(INITIAL_ALLOCATED_MEMORY_FOR_RESULTS);
      if (sr==0) { return 0; }
 
@@ -303,6 +306,9 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
         //Next Filename to check
         epdf = readdir(dpdf);
       }
+
+      EndTimer(SEARCH_OPERATION_DELAY);
+      if (criteria->printTimers) { printTimersToStderr(); }
 
       closedir(dpdf);
       return sr;
