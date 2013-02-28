@@ -58,7 +58,6 @@ int openCVFaceDetector(struct Image * img)
        // r->x , r->y  r->width , r->height
     }*/
 }
-
 #endif
 
 

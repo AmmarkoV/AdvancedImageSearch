@@ -1,5 +1,5 @@
-#ifndef _JPG_H_INCLUDED
-#define _JPG_H_INCLUDED
+#ifndef _JPGINPUT_H_INCLUDED
+#define _JPGINPUT_H_INCLUDED
 
 
 #include "codecs.h"

@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "version.h"
 
 #include "codecs/codecs.h"
-#include "codecs/jpg.h"
-#include "codecs/ppm.h"
+#include "codecs/jpgInput.h"
+#include "codecs/ppmInput.h"
 
 #include "image_processing/histograms.h"
 #include "image_processing/imageResizer.h"

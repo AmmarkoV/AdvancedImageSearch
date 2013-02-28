@@ -11,10 +11,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include "image_storage.h"
 
 #define PNG_DEBUG 3
 #include <png.h>
+#include "pngInput.h"
 
 void abort_(const char * s, ...)
 {
@@ -29,19 +29,17 @@ void abort_(const char * s, ...)
 
 
 
-int ReadPNG(char * filename,struct Image * pic)
+int ReadPNG( char *filename,struct Image * pic,char read_only_header)
 {
   fprintf(stderr,"This needs work :P \n");
   return 0;
-png_byte color_type;
-png_byte bit_depth;
+  png_byte color_type;
+  png_byte bit_depth;
 
-png_structp png_ptr;
-png_infop info_ptr;
-int number_of_passes;
-png_bytep * row_pointers;
-
-unsigned int width, height;
+  png_structp png_ptr;
+  png_infop info_ptr;
+  int number_of_passes;
+  png_bytep * row_pointers;
 
 
    /* pic->pixels pic->size_x pic->size_y */
@@ -76,10 +74,11 @@ unsigned int width, height;
 
         png_read_info(png_ptr, info_ptr);
 
-        width = png_get_image_width(png_ptr, info_ptr);
-        height = png_get_image_height(png_ptr, info_ptr);
+        pic->width = png_get_image_width(png_ptr, info_ptr);
+        pic->height = png_get_image_height(png_ptr, info_ptr);
         color_type = png_get_color_type(png_ptr, info_ptr);
         bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+        pic->depth = bit_depth;
 
         number_of_passes = png_set_interlace_handling(png_ptr);
         png_read_update_info(png_ptr, info_ptr);
@@ -89,9 +88,9 @@ unsigned int width, height;
         if (setjmp(png_jmpbuf(png_ptr)))
                 abort_("[read_png_file] Error during read_image");
 
-        row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+        row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pic->height);
         unsigned int y;
-        for (y=0; y<height; y++)
+        for (y=0; y<pic->height; y++)
              {
                  row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));
              }
@@ -99,8 +98,11 @@ unsigned int width, height;
 
         png_read_image(png_ptr, row_pointers);
 
+        pic->pixels = row_pointers;
+
+
         fclose(fp);
-  return 0;
+  return 1;
 }
 
 int WritePNG(char * filename,struct Image * pic)
@@ -139,20 +141,20 @@ png_init_io(png_ptr, fp);
 /* write header */
 if (setjmp(png_jmpbuf(png_ptr))) { abort_("[write_png_file] Error during writing header"); return 0; }
 
-png_set_IHDR(png_ptr, info_ptr, pic->size_x,pic->size_y,8,PNG_COLOR_TYPE_RGB , PNG_INTERLACE_NONE,PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+png_set_IHDR(png_ptr, info_ptr, pic->width,pic->height,8,PNG_COLOR_TYPE_RGB , PNG_INTERLACE_NONE,PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 png_write_info(png_ptr, info_ptr);
 
 
 /* write bytes */
 if (setjmp(png_jmpbuf(png_ptr))) { abort_("[write_png_file] Error during writing bytes"); return 0; }
-row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pic->size_y);
+row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pic->height);
 char * raw_pixels=pic->pixels;
 
 unsigned int y;
-for (y=0; y<pic->size_y; y++)
+for (y=0; y<pic->height; y++)
  {
    row_pointers[y] = (png_byte*) raw_pixels;
-   raw_pixels+=3*pic->size_x;
+   raw_pixels+=3*pic->width;
  }
 
  png_write_image(png_ptr,row_pointers);

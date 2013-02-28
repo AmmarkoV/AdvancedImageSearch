@@ -8,7 +8,7 @@
 #include "../codecs/codecs.h"
 
 //This can be removed after finished testing with resize function
-#include "../codecs/ppm.h"
+#include "../codecs/ppmInput.h"
 
 
 #include "../image_processing/imageResizer.h"
@@ -231,6 +231,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-contains")==0)
     {
+     #if USE_OPENCV_SURF_DETECTOR
      if (i+2<argc) {
                      criteria->containsSimilarityPercent=atof(argv[i+2]);
                      strncpy( criteria->containsImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
@@ -243,6 +244,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                          criteria->criteriaSpecified=1;
                      }
                    }
+      #else
+       printNotCompiledInSupport(argv[i]);
+     #endif // USE_OPENCV_SURF_DETECTOR
     } else
    if (strcmp(argv[i],"-minFaces")==0)
     {
@@ -268,8 +272,13 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
      #else
        printNotCompiledInSupport(argv[i]);
      #endif // USE_OPENCV_FACEDETECTION
-    } else
+    }
+
+
    //last argument should be dir!
+     else
+
+
    if (i==argc-1)
     {
       //fprintf(stderr,"Found DIR! %s \n",argv[i]);

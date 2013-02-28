@@ -23,8 +23,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "jpg.h"
-#include "ppm.h"
+#include "jpgInput.h"
+#include "pngInput.h"
+#include "ppmInput.h"
 
 #define DEBUG_READING_IMAGES 0
 
@@ -47,6 +48,18 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
 	     WritePPM(ppmfilename,img);
 	    #endif
       break;
+
+      /*
+      case PNG_CODEC :
+       if (!ReadPNG(filename,img,read_only_header)) { free(img); img=0; }
+        #if DEBUG_READING_IMAGES
+	     char ppmfilename[512]={0};
+	     strcpy(ppmfilename,filename);
+	     strcat(ppmfilename,".ppm");
+	     WritePPM(ppmfilename,img);
+	    #endif
+      break;
+      */
 
        case PPM_CODEC :
        if (!ReadPPM(filename,img,read_only_header)) { free(img); img=0; }

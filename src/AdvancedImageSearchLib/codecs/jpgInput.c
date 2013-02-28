@@ -3,7 +3,7 @@
 #include <jpeglib.h>
 #include <stdlib.h>
 #include "codecs.h"
-#include "jpg.h"
+#include "jpgInput.h"
 
 
 /* we will be using this uninitialized pointer later to store raw, uncompressd image */

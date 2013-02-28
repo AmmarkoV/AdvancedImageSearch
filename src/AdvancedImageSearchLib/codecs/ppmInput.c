@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "codecs.h"
-#include "ppm.h"
+#include "ppmInput.h"
 
 #define PPMREADBUFLEN 256
 
