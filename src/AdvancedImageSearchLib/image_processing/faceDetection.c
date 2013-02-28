@@ -7,7 +7,6 @@
 #include <cv.h>
 #include <cxcore.h>
 
-
 CvHaarClassifierCascade *cascade=0;
 CvMemStorage            *storage=0;
 int faceDetectorInitialized=0;

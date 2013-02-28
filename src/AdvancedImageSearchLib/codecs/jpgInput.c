@@ -1,10 +1,12 @@
+#include "jpgInput.h"
+
+#if USE_JPG_FILES
+
 #include <stdio.h>
 #include <string.h>
 #include <jpeglib.h>
 #include <stdlib.h>
 #include "codecs.h"
-#include "jpgInput.h"
-
 
 /* we will be using this uninitialized pointer later to store raw, uncompressd image */
 //unsigned char *raw_image = NULL;
@@ -229,4 +231,5 @@ int jpegtest()
 	return 0;
 }
 
+#endif
 

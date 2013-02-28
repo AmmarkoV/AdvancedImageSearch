@@ -3,8 +3,13 @@
 
 
 #include "codecs.h"
+#include "../configuration.h"
+
+#if USE_JPG_FILES
 
 int ReadJPEG( char *filename,struct Image * pic,char read_only_header);
 int WriteJPEG( char *filename,struct Image * pic,char *mem,unsigned long * mem_size);
+
+#endif
 
 #endif // _JPG_H_INCLUDED

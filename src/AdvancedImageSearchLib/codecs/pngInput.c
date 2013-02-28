@@ -6,6 +6,12 @@
  * ( code has been modified , original file found here http://zarb.org/~gc/html/libpng.html
  */
 
+
+
+#include "pngInput.h"
+
+#if USE_PNG_FILES
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,7 +20,6 @@
 
 #define PNG_DEBUG 3
 #include <png.h>
-#include "pngInput.h"
 
 void abort_(const char * s, ...)
 {
@@ -171,3 +176,5 @@ for (y=0; y<pic->height; y++)
  fclose(fp);
 return 1;
 }
+
+#endif

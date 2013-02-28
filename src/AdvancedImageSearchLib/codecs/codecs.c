@@ -38,9 +38,9 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
 
    switch (type)
    {
+     #if USE_JPG_FILES
       case JPG_CODEC :
        if (!ReadJPEG(filename,img,read_only_header)) { free(img); img=0; }
-
         #if DEBUG_READING_IMAGES
 	     char ppmfilename[512]={0};
 	     strcpy(ppmfilename,filename);
@@ -48,8 +48,9 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
 	     WritePPM(ppmfilename,img);
 	    #endif
       break;
+     #endif
 
-      /*
+     #if USE_PNG_FILES
       case PNG_CODEC :
        if (!ReadPNG(filename,img,read_only_header)) { free(img); img=0; }
         #if DEBUG_READING_IMAGES
@@ -59,7 +60,7 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
 	     WritePPM(ppmfilename,img);
 	    #endif
       break;
-      */
+     #endif
 
        case PPM_CODEC :
        if (!ReadPPM(filename,img,read_only_header)) { free(img); img=0; }
