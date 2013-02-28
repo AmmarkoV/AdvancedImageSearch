@@ -68,6 +68,12 @@ struct AISLib_SearchCriteria
    char categoryUsed;
    unsigned int category;
 
+   char minFacesUsed;
+   unsigned int minimumFaceCount;
+
+   char maxFacesUsed;
+   unsigned int maximumFaceCount;
+
    //Content restrains ( image body required)
    char colorRangeUsed;
    unsigned int colorRange;
@@ -87,8 +93,6 @@ struct AISLib_SearchCriteria
    char containsImageFilename[MAX_CRITERIA_STRING_SIZE];
    float containsSimilarityPercent;
    void * containsImage;
-
-
 
 };
 

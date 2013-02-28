@@ -33,6 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_processing/histograms.h"
 #include "image_processing/imageResizer.h"
 #include "image_processing/imageComparison.h"
+#include "image_processing/faceDetection.h"
 
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
@@ -235,6 +236,15 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
        //WritePPM("succ_comp.ppm",imgThumbnail);
        destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
     }
+
+
+    if ( (criteria->minFacesUsed) || (criteria->maxFacesUsed) )
+    {
+      unsigned int faces = imageHasNFaces(img);
+      if ( ( criteria->minimumFaceCount < faces ) && (criteria->minFacesUsed) ) { return 0; }
+      if ( ( criteria->maximumFaceCount > faces ) && (criteria->maxFacesUsed) ) { return 0; }
+    }
+
 
 
     return 1;

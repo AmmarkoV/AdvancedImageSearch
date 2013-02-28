@@ -93,6 +93,16 @@ void printListOfParametersRecognized()
     printf("-likeExt FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE i.e. -like myphoto.jpg 30 10.5\n");
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
     printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n");
+
+    printf("-contains FILENAME  i.e. -contains object.jpg  \n");
+    printf("Returned images will contain a pattern like object.jpg \n");
+
+    printf("-minFaces NUMBER i.e. -minFaces 1\n");
+    printf("Returned images will have a minimum count of NUMBER faces\n");
+
+    printf("-maxFaces NUMBER i.e. -maxFaces 2\n");
+    printf("Returned images will have no more than NUMBER faces\n");
+
 }
 
 
@@ -227,6 +237,22 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                          criteria->containsImage = (void*) img;
                          criteria->criteriaSpecified=1;
                      }
+                   }
+    } else
+   if (strcmp(argv[i],"-minFaces")==0)
+    {
+     if (i+1<argc) {
+                     criteria->minFacesUsed=1;
+                     criteria->minimumFaceCount = atoi(argv[i+1]);
+                     criteria->criteriaSpecified=1;
+                   }
+    } else
+   if (strcmp(argv[i],"-maxFaces")==0)
+    {
+     if (i+1<argc) {
+                     criteria->maxFacesUsed=1;
+                     criteria->maximumFaceCount = atoi(argv[i+1]);
+                     criteria->criteriaSpecified=1;
                    }
     } else
    //last argument should be dir!
