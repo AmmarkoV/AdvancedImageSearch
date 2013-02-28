@@ -144,5 +144,3 @@ struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigne
 
  return smallerImg;
 }
-
-

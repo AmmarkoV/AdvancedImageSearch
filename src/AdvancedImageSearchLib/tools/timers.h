@@ -23,11 +23,13 @@ typedef unsigned int timerID;
 void initTimers();
 void destroyTimers();
 
-void StartTimer(timerID timer_num );
-unsigned int EndTimer(timerID timer_num );
-unsigned int GetLastTimer(timerID timer_num );
-unsigned int GetAverageTimer(timerID timer_num );
-unsigned int GetTimesTimerTimed(timerID timer_num );
+void StartTimer(timerID timer_num);
+unsigned int EndTimer(timerID timer_num);
+unsigned int GetLastTimer(timerID timer_num);
+unsigned int GetMinimumTimer(timerID timer_num);
+unsigned int GetMaximumTimer(timerID timer_num);
+unsigned int GetAverageTimer(timerID timer_num);
+unsigned int GetTimesTimerTimed(timerID timer_num);
 
 void sleepMilliseconds(unsigned int milliseconds);
 void sleepMicroseconds(unsigned int microseconds);

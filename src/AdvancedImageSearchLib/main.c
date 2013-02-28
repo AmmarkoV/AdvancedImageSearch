@@ -41,16 +41,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
 
-unsigned int countResizes=0;
-unsigned int countCompares=0;
-
 
 const char * AISLib_Version()
 {
   return FULLVERSION_STRING;
 }
 
-
+// Creators / Destructors for CRITERIA
+//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
 struct AISLib_SearchCriteria * AISLib_createCriteria()
 {
    struct AISLib_SearchCriteria * criteria = ( struct AISLib_SearchCriteria *  ) malloc(sizeof(struct AISLib_SearchCriteria));
@@ -82,8 +81,13 @@ int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria)
   free(criteria);
   return 1;
 }
+//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
 
 
+// Creators / Destructors for RESULTS
+//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
 struct AISLib_SearchResults * createSearchResults(unsigned int initialNumberOfResults)
 {
   struct AISLib_SearchResults * sr = (struct AISLib_SearchResults *)  malloc(initialNumberOfResults* sizeof(struct AISLib_SearchResults));
@@ -114,65 +118,27 @@ struct AISLib_SearchResults * addMoreSearchResults(struct AISLib_SearchResults *
   sr->resultsMAX += addedNumberOfResults;
   return sr;
 }
+//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
 
 
 
 void AISLib_printHelp()
 {
+    //Exposes parameters that are recognized by the library
     printListOfParametersRecognized();
 }
 
 char * AISLib_loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria )
 {
- return parseCommandLineParameters(argc,argv,criteria);
+    //Parse argc and argv , populate criteria and return working directory
+    return parseCommandLineParameters(argc,argv,criteria);
 }
-
-
-
-
-
-//This is a more complex check , could use it in the future
-int scanFileForImage(char * filename)
-{
-    char command[1024]={0};
-    strcpy(command,"file \"");
-    strncat(command,filename,1000);
-    strcat(command,"\"");
-
-   FILE *fp=0;
-    /* Open the command for reading. */
-     fp = popen(command, "r");
-     if (fp == 0 )
-       {
-         fprintf(stderr,"Failed to run command\n");
-         return 0;
-       }
-
- /* Read the output a line at a time - output it. */
-  char output[2048]={0};
-  unsigned int size_of_output = 2048;
-
-  unsigned int i=0;
-  while (fgets(output, size_of_output , fp) != 0)
-    {
-        ++i;
-         fprintf(stderr,"\n\nline %u = %s \n",i,output);
-        break;
-    }
-
-  /* close */
-  pclose(fp);
-  return 0;
-}
-
-
 
 inline int fileIsImage(char * filename)
 {
   return scanStringForImageExtensionsSimple(filename);
 }
-
-
 
 int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchCriteria * criteria)
 {
@@ -222,14 +188,11 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     {
        if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
        //fprintf(stderr,"Trying %s \n",filename);
-       ++countResizes;
        struct Image * imgThumbnail = resizeImage(img , criteria->comparisonWidth , criteria->comparisonHeight );
        struct Image * referenceImg = (struct Image *) criteria->similarImage;
 
        if   (imgThumbnail==0)  { return 0; /*Can't resize , Can't compare doesnt fit criteria */ }
 
-
-       ++countCompares;
        unsigned int similar = imagesAreSimilar(referenceImg,imgThumbnail,  criteria->perPixelThreshold , criteria->similarityPercent);
        //WritePPM("fail_comp.ppm",imgThumbnail);
        destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
@@ -308,7 +271,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
       }
 
       EndTimer(SEARCH_OPERATION_DELAY);
-      if (criteria->printTimers) { printTimersToStderr(); fprintf(stderr,"Resizes %u , Compares %u\n",countResizes,countCompares); }
+      if (criteria->printTimers) { printTimersToStderr();  }
       destroyTimers();
 
       closedir(dpdf);

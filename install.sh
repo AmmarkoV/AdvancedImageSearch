@@ -6,8 +6,11 @@ sudo echo "Thank you"
 make
 
 if [ -e "src/AdvancedImageSearchLib/AdvancedImageSearch.so" ]; then
-   echo "fixing temporary cbp2make bug"
-   cp "src/AdvancedImageSearchLib/AdvancedImageSearch.so" "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" 
+   echo "cbp2make bug detected!"
+    if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
+     rm "src/AdvancedImageSearchLib/libAdvancedImageSearch.so"
+    fi
+   mv "src/AdvancedImageSearchLib/AdvancedImageSearch.so" "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" 
 fi
 
  
