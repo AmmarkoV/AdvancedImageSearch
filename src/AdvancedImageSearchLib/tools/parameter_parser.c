@@ -20,27 +20,30 @@
 
 
 
-void RunFastRunTrue()
+void runTurbo()
 {
  //elevate io ops
  pid_t pid;
  if ((pid = getpid()) < 0) { /*Could not get PID */ } else
                            {
-                                char command[129]={0};
-                                sprintf(command,"sudo ionice -c 1 -n 0 -p %u ",pid);
+                                char command[512]={0};
+                                sprintf(command,"sudo ionice -c 1 -n 0 -p %u",pid);
                                 int i=system((char* )command);
                                 if (i==0) { /*SUCCESS*/ }
 
-                                sprintf(command,"sudo renice -n -20 -p %u ",pid);
+                                sprintf(command,"sudo /bin/bash -c 'sudo renice -n -20 -p %u > /dev/null'",pid);
                                 i=system((char* )command);
                                 if (i==0) { /*SUCCESS*/ }
 
-                                  //governor="performance"
-                                  //for CPUFREQ in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-                                  //do
-                                  //[ -f $CPUFREQ ] || continue
-                                  //echo -n $governor > $CPUFREQ
-                                  //done
+
+                                strcpy(command,"sudo /bin/bash -c 'for CPUFREQ in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor\n");
+                                strcat(command,"do\n");
+                                strcat(command,"[ -f $CPUFREQ ] || continue\n");
+                                strcat(command,"echo -n \"performance\" > $CPUFREQ\n");
+                                strcat(command,"done\n");
+                                strcat(command,"exit 0\n' ");
+                                i=system((char* )command);
+                                if (i==0) { /*SUCCESS*/ }
                            }
 
 }
@@ -198,7 +201,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-turbo")==0)
     {
-      RunFastRunTrue();
+      runTurbo();
     } else
    if (strcmp(argv[i],"-limit")==0)
     {
