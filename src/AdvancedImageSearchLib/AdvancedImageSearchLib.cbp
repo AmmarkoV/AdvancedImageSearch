@@ -53,14 +53,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="codecs/codecs.h" />
-		<Unit filename="codecs/jpg.c">
+		<Unit filename="codecs/jpgInput.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="codecs/jpg.h" />
-		<Unit filename="codecs/ppm.c">
+		<Unit filename="codecs/jpgInput.h" />
+		<Unit filename="codecs/pngInput.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="codecs/ppm.h" />
+		<Unit filename="codecs/pngInput.h" />
+		<Unit filename="codecs/ppmInput.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codecs/ppmInput.h" />
 		<Unit filename="configuration.h" />
 		<Unit filename="image_processing/faceDetection.c">
 			<Option compilerVar="CC" />
