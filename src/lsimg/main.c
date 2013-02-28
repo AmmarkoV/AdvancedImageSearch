@@ -5,6 +5,7 @@
 #include "../AdvancedImageSearchLib/AdvancedImageSearchLib.h"
 
 
+
 void displayHelp()
 {
     printf("lsimg written by Ammar Qammaz a.k.a. AmmarkoV , http://ammar.gr\n");
@@ -19,6 +20,7 @@ void displayHelp()
 
 int main(int argc, char *argv[])
 {
+
    char * dirtosearch=0;
    struct AISLib_SearchCriteria * criteria=AISLib_createCriteria();
 

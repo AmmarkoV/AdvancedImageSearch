@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include "parameter_parser.h"
 
 #include "timers.h"
@@ -17,6 +20,30 @@
 
 
 
+void RunFastRunTrue()
+{
+ //elevate io ops
+ pid_t pid;
+ if ((pid = getpid()) < 0) { /*Could not get PID */ } else
+                           {
+                                char command[129]={0};
+                                sprintf(command,"sudo ionice -c 1 -n 0 -p %u ",pid);
+                                int i=system((char* )command);
+                                if (i==0) { /*SUCCESS*/ }
+
+                                sprintf(command,"sudo renice -n -20 -p %u ",pid);
+                                i=system((char* )command);
+                                if (i==0) { /*SUCCESS*/ }
+
+                                  //governor="performance"
+                                  //for CPUFREQ in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+                                  //do
+                                  //[ -f $CPUFREQ ] || continue
+                                  //echo -n $governor > $CPUFREQ
+                                  //done
+                           }
+
+}
 
 static int strcasecmp_internal(char * input1, char * input2)
 {
@@ -101,6 +128,9 @@ void printListOfParametersRecognized()
     printf("On completion of operations a detailed analysis of how much time elapsed during which\n");
     printf("operations will be printed on stderr \n");
 
+    printf("-turbo\n");
+    printf("Requires root , run at top schedule!\n");
+
     printf("-minDims MIN_WIDTH MIN_HEIGHT i.e. -minDims 1920 1080\n");
     printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n");
 
@@ -165,6 +195,10 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"-report")==0)
     {
       criteria->printTimers=1;
+    } else
+   if (strcmp(argv[i],"-turbo")==0)
+    {
+      RunFastRunTrue();
     } else
    if (strcmp(argv[i],"-limit")==0)
     {
