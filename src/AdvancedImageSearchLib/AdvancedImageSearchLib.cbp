@@ -61,6 +61,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="codecs/ppm.h" />
+		<Unit filename="image_processing/faceDetection.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image_processing/faceDetection.h" />
+		<Unit filename="image_processing/findObjectsSURF.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image_processing/findObjectsSURF.h" />
 		<Unit filename="image_processing/histograms.c">
 			<Option compilerVar="CC" />
 		</Unit>
