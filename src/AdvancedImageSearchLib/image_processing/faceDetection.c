@@ -1,17 +1,16 @@
 #include "faceDetection.h"
+#include "../configuration.h"
 
 
-#define USE_OPENCV 0
-int faceDetectorInitialized=0;
 
-
-#if USE_OPENCV
+#if USE_OPENCV_FACEDETECTION
 #include <cv.h>
 #include <cxcore.h>
 
 
 CvHaarClassifierCascade *cascade=0;
 CvMemStorage            *storage=0;
+int faceDetectorInitialized=0;
 
 
 int openCVFaceDetector(struct Image * img)
@@ -19,13 +18,12 @@ int openCVFaceDetector(struct Image * img)
    if (!faceDetectorInitialized)
    {
       char filename[1024]={0};
-      //strcpy (filename,VisCortxENV);
-      strcat (filename,"/usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml");
+      strcpy (filename,"/usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml");
 
-      /* load the classifier note that I put the file in the same directory with this code */
+      // load the classifier note that I put the file in the same directory with this code */
       cascade = ( CvHaarClassifierCascade* ) cvLoad( filename, 0, 0, 0 );
 
-      /* setup memory buffer; needed by the face detector */
+      // setup memory buffer; needed by the face detector
       storage = cvCreateMemStorage( 0 );
    }
 
@@ -41,7 +39,7 @@ int openCVFaceDetector(struct Image * img)
             storage,
             1.1,
             3,
-            0 /*CV_HAAR_DO_CANNY_PRUNNING*/
+            0 //CV_HAAR_DO_CANNY_PRUNNING
             , cvSize( 40, 40 )
             , cvSize( 50, 50 ) // <--- This might have to be commented out if compiled with C++ :P
             );
@@ -59,20 +57,15 @@ int openCVFaceDetector(struct Image * img)
         CvRect *r = ( CvRect* )cvGetSeqElem( faces, i );
        // r->x , r->y  r->width , r->height
     }*/
-
-
 }
 
 #endif
 
 
 
-
-
-
 int imageHasNFaces(struct Image * img)
 {
-   #if USE_OPENCV
+   #if USE_OPENCV_FACEDETECTION
      return openCVFaceDetector(img);
    #endif // USE_OPENCV
 

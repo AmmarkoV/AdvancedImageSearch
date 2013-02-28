@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "parameter_parser.h"
 
+#include "../configuration.h"
 #include "../codecs/codecs.h"
 
 //This can be removed after finished testing with resize function
@@ -64,7 +65,11 @@ int colorNameToRGB(char * name,unsigned char * R ,unsigned char * G ,unsigned ch
   return 1;
 }
 
-
+void printNotCompiledInSupport(char* whatisnot)
+{
+   fprintf(stderr,"Parameter %s is not compiled in this binary of libAdvancedImageSearch\n",whatisnot);
+   fprintf(stderr,"consider altering configuration.h , installing dependencies needed and then recompiling \n");
+}
 
 
 void printListOfParametersRecognized()
@@ -241,19 +246,28 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-minFaces")==0)
     {
+     #if USE_OPENCV_FACEDETECTION
      if (i+1<argc) {
                      criteria->minFacesUsed=1;
                      criteria->minimumFaceCount = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
                    }
+     #else
+       printNotCompiledInSupport(argv[i]);
+     #endif // USE_OPENCV_FACEDETECTION
+
     } else
    if (strcmp(argv[i],"-maxFaces")==0)
     {
+     #if USE_OPENCV_FACEDETECTION
      if (i+1<argc) {
                      criteria->maxFacesUsed=1;
                      criteria->maximumFaceCount = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
                    }
+     #else
+       printNotCompiledInSupport(argv[i]);
+     #endif // USE_OPENCV_FACEDETECTION
     } else
    //last argument should be dir!
    if (i==argc-1)
