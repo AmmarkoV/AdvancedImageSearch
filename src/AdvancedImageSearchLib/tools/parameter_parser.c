@@ -18,8 +18,6 @@
 
 #include "../image_processing/imageResizer.h"
 
-
-
 void runTurbo()
 {
  //elevate io ops
@@ -100,11 +98,8 @@ int colorNameToRGB(char * name,unsigned char * R ,unsigned char * G ,unsigned ch
 
 void printTimersToStderr()
 {
-
-
-
   fprintf(stderr,"Performance report -=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-  fprintf(stderr," FUNCTION             TIME  IN  MICROSECONDS  SAMPLES! !\n");
+  fprintf(stderr," FUNCTION                     TIME  IN  MICROSECONDS  SAMPLES!!\n");
   unsigned int i=0;
   for (i=0; i<TOTAL_TIMERS; i++)
    {

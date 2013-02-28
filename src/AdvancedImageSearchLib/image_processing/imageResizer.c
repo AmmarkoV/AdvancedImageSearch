@@ -22,9 +22,9 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
 
   unsigned char * output = (unsigned char *) malloc(resizeWidth*resizeHeight*3);
+  if ( output == 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return 0; }
   memset(output,0,resizeWidth*resizeHeight*3);
 
-  if ( output == 0 ) { fprintf(stderr,"Could not allocate image for resizing \n"); return 0; }
 
   unsigned int originalScanline = originalWidth * 3;
 
@@ -122,7 +122,6 @@ unsigned char * resizeImageInternal3Bytes(unsigned char * rgb, unsigned int orig
 
 struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigned int resizeHeight )
 {
-
  struct Image * smallerImg  = (struct Image *) malloc(sizeof (struct Image));
  if (smallerImg==0) { fprintf(stderr,"Could not allocate memory for resized image structure\n"); return 0; }
 

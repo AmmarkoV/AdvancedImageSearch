@@ -41,6 +41,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define INITIAL_ALLOCATED_MEMORY_FOR_RESULTS 1000
 
+unsigned int countResizes=0;
+unsigned int countCompares=0;
+
 
 const char * AISLib_Version()
 {
@@ -218,24 +221,19 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     if (criteria->similarityUsed)
     {
        if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
-
        //fprintf(stderr,"Trying %s \n",filename);
-
+       ++countResizes;
        struct Image * imgThumbnail = resizeImage(img , criteria->comparisonWidth , criteria->comparisonHeight );
        struct Image * referenceImg = (struct Image *) criteria->similarImage;
 
-       if(imgThumbnail==0) { return 0; /*Can't resize , Can't compare doesnt fit criteria */ }
+       if   (imgThumbnail==0)  { return 0; /*Can't resize , Can't compare doesnt fit criteria */ }
 
-       if (!imagesAreSimilar(referenceImg,imgThumbnail,  criteria->perPixelThreshold , criteria->similarityPercent ) )
-       {
 
-           //WritePPM("fail_comp.ppm",imgThumbnail);
-           destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
-           return 0;
-       }
-
-       //WritePPM("succ_comp.ppm",imgThumbnail);
+       ++countCompares;
+       unsigned int similar = imagesAreSimilar(referenceImg,imgThumbnail,  criteria->perPixelThreshold , criteria->similarityPercent);
+       //WritePPM("fail_comp.ppm",imgThumbnail);
        destroyImage(imgThumbnail);  /*We succesfully resized , we don't need the original any more*/
+       if (!similar) { return 0; }
     }
 
 
@@ -255,6 +253,8 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
 
 struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria)
 {
+  initTimers();
+
   DIR *dpdf=0;
   unsigned int numberOfResults = 0;
   struct dirent *epdf=0;
@@ -308,7 +308,8 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
       }
 
       EndTimer(SEARCH_OPERATION_DELAY);
-      if (criteria->printTimers) { printTimersToStderr(); }
+      if (criteria->printTimers) { printTimersToStderr(); fprintf(stderr,"Resizes %u , Compares %u\n",countResizes,countCompares); }
+      destroyTimers();
 
       closedir(dpdf);
       return sr;

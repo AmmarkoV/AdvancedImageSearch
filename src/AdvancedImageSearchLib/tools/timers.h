@@ -20,6 +20,8 @@ enum TimerList
 extern char * timerIDDescription[];
 typedef unsigned int timerID;
 
+void initTimers();
+void destroyTimers();
 
 void StartTimer(timerID timer_num );
 unsigned int EndTimer(timerID timer_num );

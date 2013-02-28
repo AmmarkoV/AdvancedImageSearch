@@ -35,7 +35,6 @@ int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDif
          (diffB>=maxDifferencePerChannel) )
                                              { ++differentPixels; }
    }
-
   EndTimer(IMAGE_COMPARISON_DELAY);
 
   if (differentPixels<maxDifferentPixels) { return 1; }
