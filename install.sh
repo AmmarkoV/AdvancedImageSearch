@@ -40,6 +40,9 @@ fi
 
 sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
 
+sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
+
+
 scripts/makeSystem.sh
 
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
