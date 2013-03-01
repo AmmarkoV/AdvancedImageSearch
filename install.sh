@@ -23,7 +23,10 @@ else
    echo "Thank you , and sorry for the inconvinience"
    exit 1
 fi
- 
+
+#make a system specific lsimg 
+scripts/makeSystem.sh
+
 if [ -e "src/lsimg/lsimg" ]; then
    echo "lsimg is OK" 
 else
@@ -32,6 +35,8 @@ else
    echo "Thank you , and sorry for the inconvinience"
    exit 1 
 fi
+
+#everything is ok , copy to system 
 
  
 if [ -d "/usr/lib/AdvancedImageSearch" ]; then
@@ -46,7 +51,6 @@ sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedIm
 sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
 
 
-scripts/makeSystem.sh
 
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
 exit 0
