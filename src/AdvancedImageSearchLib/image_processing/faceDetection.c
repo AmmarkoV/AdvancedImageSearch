@@ -3,7 +3,6 @@
 #include "../tools/timers.h"
 
 
-
 #if USE_OPENCV_FACEDETECTION
 #include <cv.h>
 #include <cxcore.h>
@@ -17,7 +16,7 @@ int openCVFaceDetector(struct Image * img)
 {
    if (img==0) { return 0; }
    if (img->pixels==0) { return 0; }
-   if (img->depth!=3) { return 0; }
+   //if (img->depth!=3) { return 0; }
 
    if (!faceDetectorInitialized)
    {
@@ -32,6 +31,7 @@ int openCVFaceDetector(struct Image * img)
    }
 
 
+   StartTimer(FACE_DETECTION_DELAY);
     IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
     char * opencv_pointer_retainer = image->imageData; // UGLY HACK
     image->imageData = (char*) img->pixels; // UGLY HACK
@@ -51,6 +51,7 @@ int openCVFaceDetector(struct Image * img)
 
     image->imageData = opencv_pointer_retainer; // UGLY HACK
     cvReleaseImage( &image );
+   EndTimer(FACE_DETECTION_DELAY);
 
     return faces->total;
 
@@ -67,12 +68,10 @@ int openCVFaceDetector(struct Image * img)
 int imageHasNFaces(struct Image * img)
 {
    unsigned int facesDetected = 0;
-   StartTimer(FACE_DETECTION_DELAY);
 
    #if USE_OPENCV_FACEDETECTION
      facesDetected = openCVFaceDetector(img);
    #endif // USE_OPENCV
 
-   EndTimer(FACE_DETECTION_DELAY);
    return facesDetected;
 }

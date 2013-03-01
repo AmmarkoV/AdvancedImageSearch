@@ -78,6 +78,7 @@ int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria)
        destroyImage(img);
      }
 
+
   free(criteria);
   return 1;
 }
@@ -202,6 +203,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
 
     if ( (criteria->minFacesUsed) || (criteria->maxFacesUsed) )
     {
+      if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
       unsigned int faces = imageHasNFaces(img);
       if ( ( criteria->minimumFaceCount < faces ) && (criteria->minFacesUsed) ) { return 0; }
       if ( ( criteria->maximumFaceCount > faces ) && (criteria->maxFacesUsed) ) { return 0; }
