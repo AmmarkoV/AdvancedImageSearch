@@ -4,11 +4,17 @@ lsimg for example ( which is the first implemented application ) should be able 
 
 Of course this functionality is highly theoretical for now , but I hope I will have time to implement at least some of them 
 
-
 Requires libjpeg , libpng , gcc to be compiled!
 Requires exif tool ( sudo apt-get install exif ) for JPG exif functionality
 
-./install.sh adds the binaries to the system
+
+To get the project issue 
+git clone git://github.com/AmmarkoV/AdvancedImageSearch.git
+cd AdvancedImageSearch
+
+make will create a local copy of the binaries
+
+./install.sh makes the binaries and then adds them to the system
 
 
 
