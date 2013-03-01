@@ -20,7 +20,6 @@ void displayHelp()
 
 int main(int argc, char *argv[])
 {
-
    char * dirtosearch=0;
    struct AISLib_SearchCriteria * criteria=AISLib_createCriteria();
 

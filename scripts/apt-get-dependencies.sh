@@ -6,7 +6,7 @@ echo "This should install all packages that are needed by this program , if you 
 BUILD_PROJECT="gcc libjpeg-dev libpng12-dev"
 
 #face detection not used yet
-FACE_DETECTION=" "
+FACE_DETECTION="libcv-dev"
 #FACE_DETECTION="libopencv-dev libcv-dev libcvaux-dev libhighgui-dev"
 
 #Runtime Dependencies

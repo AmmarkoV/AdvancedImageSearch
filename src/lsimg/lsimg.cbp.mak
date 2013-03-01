@@ -12,11 +12,11 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS =  -Wall
+CFLAGS =  -Wall `pkg-config --cflags opencv`
 RESINC = 
 LIBDIR = 
 LIB =  -ljpeg -lpng ../AdvancedImageSearchLib/libAdvancedImageSearch.so
-LDFLAGS = 
+LDFLAGS =  `pkg-config --libs opencv`
 
 INC_DEBUG =  $(INC)
 CFLAGS_DEBUG =  $(CFLAGS) -g

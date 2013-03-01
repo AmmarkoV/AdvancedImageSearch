@@ -30,8 +30,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="`pkg-config --cflags opencv`" />
 		</Compiler>
 		<Linker>
+			<Add option="`pkg-config --libs opencv`" />
 			<Add library="jpeg" />
 			<Add library="png" />
 			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearch.so" />

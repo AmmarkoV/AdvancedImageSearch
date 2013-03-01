@@ -15,6 +15,10 @@ int faceDetectorInitialized=0;
 
 int openCVFaceDetector(struct Image * img)
 {
+   if (img==0) { return 0; }
+   if (img->pixels==0) { return 0; }
+   if (img->depth!=3) { return 0; }
+
    if (!faceDetectorInitialized)
    {
       char filename[1024]={0};
@@ -30,7 +34,7 @@ int openCVFaceDetector(struct Image * img)
 
     IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
     char * opencv_pointer_retainer = image->imageData; // UGLY HACK
-    image->imageData=(char*) img->pixels; // UGLY HACK
+    image->imageData = (char*) img->pixels; // UGLY HACK
 
     CvSeq *faces = cvHaarDetectObjects
            (
@@ -53,10 +57,8 @@ int openCVFaceDetector(struct Image * img)
     /* for each face found, draw a red box
     int i;
     for( i = 0 ; i < ( faces ? faces->total : 0 ) ; i++ )
-    {
-        CvRect *r = ( CvRect* )cvGetSeqElem( faces, i );
-       // r->x , r->y  r->width , r->height
-    }*/
+    { CvRect *r = ( CvRect* )cvGetSeqElem( faces, i );
+       // r->x , r->y  r->width , r->height }*/
 }
 #endif
 

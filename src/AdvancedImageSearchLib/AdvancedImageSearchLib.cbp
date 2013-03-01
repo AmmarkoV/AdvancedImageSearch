@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="-report -like ~/IMG_1560mkf-600x678.jpg ~/  Downloads" />
+				<Option parameters="-minFaces 1 -maxFaces 1 ~/ " />
 				<Option host_application="/home/ammar/Documents/Programming/AdvancedImageSearch/src/lsimg/lsimg" />
 				<Option run_host_application_in_terminal="1" />
 				<Option createDefFile="1" />
@@ -43,10 +43,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fPIC" />
+			<Add option="`pkg-config --cflags opencv`" />
 		</Compiler>
 		<Linker>
 			<Add option="-lpng" />
 			<Add option="-ljpeg" />
+			<Add option="`pkg-config --libs opencv`" />
 		</Linker>
 		<Unit filename="AdvancedImageSearchLib.h" />
 		<Unit filename="codecs/codecs.c">

@@ -26,11 +26,14 @@
 #include "jpgInput.h"
 #include "pngInput.h"
 #include "ppmInput.h"
+#include "../tools/timers.h"
 
 #define DEBUG_READING_IMAGES 0
 
 struct Image * readImage( char *filename,unsigned int type,char read_only_header)
 {
+   StartTimer(LOAD_IMAGE_DELAY);
+
    struct Image * img = 0;
    img = (struct Image *) malloc( sizeof(struct Image) );
    memset(img,0,sizeof(struct Image));
@@ -72,6 +75,7 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
       break;
    };
 
+   EndTimer(LOAD_IMAGE_DELAY);
    return img;
 }
 

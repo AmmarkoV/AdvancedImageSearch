@@ -12,11 +12,11 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS =  -Wall -fPIC
+CFLAGS =  -Wall -fPIC `pkg-config --cflags opencv`
 RESINC = 
 LIBDIR = 
 LIB = 
-LDFLAGS =  -lpng -ljpeg
+LDFLAGS =  -lpng -ljpeg `pkg-config --libs opencv`
 
 INC_DEBUG =  $(INC)
 CFLAGS_DEBUG =  $(CFLAGS) -g -fPIC

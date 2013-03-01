@@ -25,10 +25,10 @@ https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
 
 
 --------------- Library Dependencies ---------------
-Requires libjpeg , libpng , gcc to be compiled!
+Requires libjpeg , libpng , opencv and gcc to be compiled!
 Requires exif tool ( sudo apt-get install exif ) for JPG exif functionality
 The project contains a script to solve dependencies using pacman or apt-get as package managers
-You can use it by issuing : ./get-dependencies.sh
+You can perform automatic download of required dependencies by issuing : ./get-dependencies.sh
 
 
 

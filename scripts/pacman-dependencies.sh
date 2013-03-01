@@ -11,7 +11,7 @@ fi
  
 echo "Starting downloads " 
 
-sudo pacman -s gcc libpng libjpeg-turbo
+sudo pacman -s gcc libpng libjpeg-turbo opencv
  
   
 
