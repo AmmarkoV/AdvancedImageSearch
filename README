@@ -7,7 +7,7 @@ The purpose of this library are command line tools that enable content-aware ima
 
 lsimg for example ( which is the first implemented application ) should be able to return images which are larger than a specific resolution , that contain faces , that are similar to another one , that are bright ( histograms ) , that have been taken in a specific Longitude/Latitude ( EXIF ) etc..
 
-Of course this functionality is highly theoretical for now , but I hope I will have time to implement at least some of them 
+Of course some of this functionality is theoretical for now , you can view implemented functionality by issuing "lsimg - help" 
 
 
 To submit bug or feature tickets you can use the github issue system
@@ -19,6 +19,8 @@ To get the project issue
 git clone git://github.com/AmmarkoV/AdvancedImageSearch.git
 cd AdvancedImageSearch
 
+You can also get the project as a zip file by clicking here
+https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
 
 
 
