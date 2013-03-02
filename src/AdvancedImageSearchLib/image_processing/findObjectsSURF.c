@@ -2,20 +2,64 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
+#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
 #include <cv.h>
 #include <cxcore.h>
 
-IplImage* image = 0;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+struct pair
+{
+    float p1;
+    float p2;
+};
+
+struct pairList
+{
+   unsigned int maxItems;
+   unsigned int currentItems;
+   struct pair * item;
+};
+
+
+
+struct pairList * initializePairList(struct pairList * pairs,unsigned int initialItems)
+{
+  struct pairList * newPair = 0 ;
+  if (pairs==0)
+     {
+       newPair= ( struct pairList * ) malloc(sizeof(struct pairList) * initialItems);
+       newPair->maxItems = initialItems;
+       newPair->currentItems = 0;
+     }
+  pairs.currentItems=0;
+  return 1;
+}
+
+
+int clearPairList(struct pairList * pairs)
+{
+  if (pairs==0) { return 0; }
+  pairs.currentItems=0;
+  return 1;
+}
+
+
 
 double
 compareSURFDescriptors( const float* d1, const float* d2, double best, int length )
 {
     double total_cost = 0;
-    assert( length % 4 == 0 );
-    for( int i = 0; i < length; i += 4 )
+    if ( length % 4 != 0 ) { fprintf(stderr,"Cannot compare SURF descriptors \n"); return 0.0; }
+    int i = 0;
+    for( i = 0; i < length; i += 4 )
     {
         double t0 = d1[i  ] - d2[i  ];
         double t1 = d1[i+1] - d2[i+1];
@@ -66,7 +110,7 @@ naiveNearestNeighbor( const float* vec, int laplacian,
 
 void
 findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
-           const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs )
+           const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, struct pairList * ptpairs )
 {
     int i;
     CvSeqReader reader, kreader;
@@ -92,7 +136,7 @@ findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
 
 void
 flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
-           const CvSeq*, const CvSeq* imageDescriptors, vector<int>& ptpairs )
+           const CvSeq*, const CvSeq* imageDescriptors, struct pairList * ptpairs )
 {
 	int length = (int)(objectDescriptors->elem_size/sizeof(float));
 
@@ -187,21 +231,11 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
     return 1;
 }
 
-int main(int argc, char** argv)
+int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 {
-    const char* object_filename = argc == 3 ? argv[1] : "box.png";
-    const char* scene_filename = argc == 3 ? argv[2] : "box_in_scene.png";
 
-    help();
-
-    IplImage* object = cvLoadImage( object_filename, CV_LOAD_IMAGE_GRAYSCALE );
-    IplImage* image = cvLoadImage( scene_filename, CV_LOAD_IMAGE_GRAYSCALE );
-    if( !object || !image )
-    {
-        fprintf( stderr, "Can not load %s and/or %s\n",
-            object_filename, scene_filename );
-        exit(-1);
-    }
+    IplImage* image = 0;
+    //Reminder to make them grayscale!!
 
 
     CvMemStorage* storage = cvCreateMemStorage(0);
@@ -209,18 +243,7 @@ int main(int argc, char** argv)
    // cvNamedWindow("Object", 1);
    // cvNamedWindow("Object Correspond", 1);
 
-    static CvScalar colors[] =
-    {
-        {{0,0,255}},
-        {{0,128,255}},
-        {{0,255,255}},
-        {{0,255,0}},
-        {{255,128,0}},
-        {{255,255,0}},
-        {{255,0,0}},
-        {{255,0,255}},
-        {{255,255,255}}
-    };
+    static CvScalar colors[] = { {{0,0,255}}, {{0,128,255}}, {{0,255,255}}, {{0,255,0}}, {{255,128,0}}, {{255,255,0}}, {{255,0,0}}, {{255,0,255}}, {{255,255,255}} };
 
     IplImage* object_color = cvCreateImage(cvGetSize(object), 8, 3);
     cvCvtColor( object, object_color, CV_GRAY2BGR );
@@ -303,49 +326,6 @@ int main(int argc, char** argv)
 */
     return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int openCV_SURFDetector(struct Image * pattern,struct Image * img)
-{
-  return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif
 
