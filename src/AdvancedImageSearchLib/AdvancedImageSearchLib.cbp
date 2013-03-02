@@ -55,6 +55,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="codecs/codecs.h" />
+		<Unit filename="codecs/jpgExifexternal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codecs/jpgExifexternal.h" />
 		<Unit filename="codecs/jpgInput.c">
 			<Option compilerVar="CC" />
 		</Unit>
