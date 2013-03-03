@@ -2,7 +2,7 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
-#define USE_OPENCV_SURF_DETECTOR 1
+//#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
@@ -62,7 +62,7 @@ struct pairList * initializePairList(struct pairList * pairs,unsigned int initia
         }
      }
   pairs->currentItems=0;
-  return 1;
+  return newPair;
 }
 
 
@@ -80,6 +80,10 @@ int destroyPairList(struct pairList ** pairs)
   *pairs = 0;
   return 1;
 }
+/*
+  -------------------------------------------------------------------------------------------------
+*/
+
 
 
 double
@@ -175,7 +179,7 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
                     const CvSeq* imageKeypoints, const CvSeq* imageDescriptors,
                     const CvPoint src_corners[4], CvPoint dst_corners[4] )
 {
-    /*
+
     double h[9];
     CvMat _h = cvMat(3, 3, CV_64F, h);
 
@@ -189,17 +193,17 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
     if( n < 4 )
         return 0;
 
-    pt1.resize(n);
-    pt2.resize(n);
+   // pt1.resize(n);
+    //pt2.resize(n);
     for( i = 0; i < n; i++ )
     {
-        pt1[i] = ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
-        pt2[i] = ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
+      //  pt1[i] = ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
+      //  pt2[i] = ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
     }
 
-    _pt1 = cvMat(1, n, CV_32FC2, &pt1[0] );
-    _pt2 = cvMat(1, n, CV_32FC2, &pt2[0] );
-    if( !cvFindHomography( &_pt1, &_pt2, &_h, CV_RANSAC, 5 ))
+  //  _pt1 = cvMat(1, n, CV_32FC2, &pt1[0] );
+  //  _pt2 = cvMat(1, n, CV_32FC2, &pt2[0] );
+    if( !cvFindHomography( &_pt1, &_pt2, &_h, CV_RANSAC, 5 , 0 ))
         return 0;
 
     for( i = 0; i < 4; i++ )
@@ -210,12 +214,14 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
         double Y = (h[3]*x + h[4]*y + h[5])*Z;
         dst_corners[i] = cvPoint(cvRound(X), cvRound(Y));
     }
-*/
+
     return 1;
 }
 
 int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 {
+
+   StartTimer(FIND_OBJECTS_DELAY);
 
     IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
     char * opencvImagePointerRetainer = image->imageData; // UGLY HACK
@@ -263,10 +269,6 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
     cvCopy( image, correspond , 0 );
     cvResetImageROI( correspond );
 
-#ifdef USE_FLANN
-   // printf("Using approximate nearest neighbor search\n");
-#endif
-
     if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints,
         imageDescriptors, src_corners, dst_corners ))
     {
@@ -285,7 +287,13 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 
     printf(" Found %u pairs \n",(int) ptpairs->currentItems);
 
+    image->imageData = opencvImagePointerRetainer; // UGLY HACK
+    cvReleaseImage( &image );
 
+    image->imageData = opencvObjectPointerRetainer; // UGLY HACK
+    cvReleaseImage( &object );
+
+    EndTimer(FIND_OBJECTS_DELAY);
 /*
 
     for( i = 0; i < (int)ptpairs->currentItems; i++ )
