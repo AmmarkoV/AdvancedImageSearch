@@ -29,17 +29,39 @@ struct pairList
 };
 
 
+struct pairList * growPairList(struct pairList * pairs,unsigned int addedItems)
+{
+  if (pairs==0) { return 0; }
+  unsigned int itemsByteSize=sizeof(struct pairList) * ( addedItems  + pairs->maxItems);
+  struct pairList * newPair = (struct pairList *) realloc(pairs,itemsByteSize);
+  if (newPair!=0) { pairs->maxItems+=addedItems; }
+  return newPair;
+};
+
 
 struct pairList * initializePairList(struct pairList * pairs,unsigned int initialItems)
 {
+  unsigned int initialItemsByteSize=sizeof(struct pairList) * initialItems;
   struct pairList * newPair = 0 ;
   if (pairs==0)
      {
-       newPair= ( struct pairList * ) malloc(sizeof(struct pairList) * initialItems);
+       newPair= ( struct pairList * ) malloc(initialItemsByteSize);
+       if (newPair == 0 ) { fprintf(stderr,"Could not initialize new pair list"); return 0; }
        newPair->maxItems = initialItems;
-       newPair->currentItems = 0;
+     } else
+     {
+        if (initialItems>newPair->maxItems)
+        {
+          newPair=( struct pairList * ) realloc(pairs,initialItemsByteSize);
+          if (newPair == 0 ) { fprintf(stderr,"Could not reallocate new pair list"); return 0; }
+          newPair->maxItems = initialItems;
+        } else
+        {
+          //we have more space initialized that the initialItems
+          //we don't care
+        }
      }
-  pairs.currentItems=0;
+  pairs->currentItems=0;
   return 1;
 }
 
@@ -47,10 +69,17 @@ struct pairList * initializePairList(struct pairList * pairs,unsigned int initia
 int clearPairList(struct pairList * pairs)
 {
   if (pairs==0) { return 0; }
-  pairs.currentItems=0;
+  pairs->currentItems=0;
   return 1;
 }
 
+int destroyPairList(struct pairList ** pairs)
+{
+  if (*pairs==0) { return 0; }
+  free(*pairs);
+  *pairs = 0;
+  return 1;
+}
 
 
 double
@@ -112,12 +141,15 @@ void
 findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
            const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, struct pairList * ptpairs )
 {
-    int i;
     CvSeqReader reader, kreader;
-    cvStartReadSeq( objectKeypoints, &kreader );
-    cvStartReadSeq( objectDescriptors, &reader );
-    ptpairs.clear();
+    cvStartReadSeq( objectKeypoints, &kreader , 0 );
+    cvStartReadSeq( objectDescriptors, &reader , 0 );
 
+
+    struct pairList * pairs = initializePairList(ptpairs,objectDescriptors->total);
+    if (pairs==0) { fprintf(stderr,"Could not allocate enough memory for pointer pairs\n"); return ; }
+
+    int i;
     for( i = 0; i < objectDescriptors->total; i++ )
     {
         const CvSURFPoint* kp = (const CvSURFPoint*)kreader.ptr;
@@ -127,60 +159,14 @@ findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
         int nearest_neighbor = naiveNearestNeighbor( descriptor, kp->laplacian, imageKeypoints, imageDescriptors );
         if( nearest_neighbor >= 0 )
         {
-            ptpairs.push_back(i);
-            ptpairs.push_back(nearest_neighbor);
+            pairs->item[i].p1 = i;
+            pairs->item[i].p2 = nearest_neighbor;
         }
     }
+
+    destroyPairList(&pairs);
 }
 
-
-void
-flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
-           const CvSeq*, const CvSeq* imageDescriptors, struct pairList * ptpairs )
-{
-	int length = (int)(objectDescriptors->elem_size/sizeof(float));
-
-    cv::Mat m_object(objectDescriptors->total, length, CV_32F);
-	cv::Mat m_image(imageDescriptors->total, length, CV_32F);
-
-
-	// copy descriptors
-    CvSeqReader obj_reader;
-	float* obj_ptr = m_object.ptr<float>(0);
-    cvStartReadSeq( objectDescriptors, &obj_reader );
-    for(int i = 0; i < objectDescriptors->total; i++ )
-    {
-        const float* descriptor = (const float*)obj_reader.ptr;
-        CV_NEXT_SEQ_ELEM( obj_reader.seq->elem_size, obj_reader );
-        memcpy(obj_ptr, descriptor, length*sizeof(float));
-        obj_ptr += length;
-    }
-    CvSeqReader img_reader;
-	float* img_ptr = m_image.ptr<float>(0);
-    cvStartReadSeq( imageDescriptors, &img_reader );
-    for(int i = 0; i < imageDescriptors->total; i++ )
-    {
-        const float* descriptor = (const float*)img_reader.ptr;
-        CV_NEXT_SEQ_ELEM( img_reader.seq->elem_size, img_reader );
-        memcpy(img_ptr, descriptor, length*sizeof(float));
-        img_ptr += length;
-    }
-
-    // find nearest neighbors using FLANN
-    cv::Mat m_indices(objectDescriptors->total, 2, CV_32S);
-    cv::Mat m_dists(objectDescriptors->total, 2, CV_32F);
-    cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4));  // using 4 randomized kdtrees
-    flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); // maximum number of leafs checked
-
-    int* indices_ptr = m_indices.ptr<int>(0);
-    float* dists_ptr = m_dists.ptr<float>(0);
-    for (int i=0;i<m_indices.rows;++i) {
-    	if (dists_ptr[2*i]<0.6*dists_ptr[2*i+1]) {
-    		ptpairs.push_back(i);
-    		ptpairs.push_back(indices_ptr[2*i]);
-    	}
-    }
-}
 
 
 /* a rough implementation for object location */
@@ -189,20 +175,17 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
                     const CvSeq* imageKeypoints, const CvSeq* imageDescriptors,
                     const CvPoint src_corners[4], CvPoint dst_corners[4] )
 {
+    /*
     double h[9];
     CvMat _h = cvMat(3, 3, CV_64F, h);
-    vector<int> ptpairs;
-    vector<CvPoint2D32f> pt1, pt2;
+
+    struct pairList * ptpairs = 0;
     CvMat _pt1, _pt2;
     int i, n;
 
-#ifdef USE_FLANN
-    flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#else
     findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#endif
 
-    n = (int)(ptpairs.size()/2);
+    n = (int)(ptpairs->currentItems/2);
     if( n < 4 )
         return 0;
 
@@ -227,21 +210,28 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
         double Y = (h[3]*x + h[4]*y + h[5])*Z;
         dst_corners[i] = cvPoint(cvRound(X), cvRound(Y));
     }
-
+*/
     return 1;
 }
 
 int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 {
 
-    IplImage* image = 0;
+    IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
+    char * opencvImagePointerRetainer = image->imageData; // UGLY HACK
+    image->imageData = (char*) img->pixels; // UGLY HACK
+    cvCvtColor( image, image, CV_RGB2GRAY);
+
+    IplImage  * object = cvCreateImage( cvSize(pattern->width,pattern->height), IPL_DEPTH_8U, pattern->depth);
+    char * opencvObjectPointerRetainer = object->imageData; // UGLY HACK
+    object->imageData = (char*) pattern->pixels; // UGLY HACK
+    cvCvtColor( object, object, CV_RGB2GRAY);
+
     //Reminder to make them grayscale!!
 
 
     CvMemStorage* storage = cvCreateMemStorage(0);
 
-   // cvNamedWindow("Object", 1);
-   // cvNamedWindow("Object Correspond", 1);
 
     static CvScalar colors[] = { {{0,0,255}}, {{0,128,255}}, {{0,255,255}}, {{0,255,0}}, {{255,128,0}}, {{255,255,0}}, {{255,0,0}}, {{255,0,255}}, {{255,255,255}} };
 
@@ -254,10 +244,11 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
     CvSURFParams params = cvSURFParams(500, 1);
 
     double tt = (double)cvGetTickCount();
-    cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params );
+
+    cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params , 0 );
     //printf("Object Descriptors: %d\n", objectDescriptors->total);
 
-    cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );
+    cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params , 0 );
     //printf("Image Descriptors: %d\n", imageDescriptors->total);
     tt = (double)cvGetTickCount() - tt;
 
@@ -267,9 +258,9 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
     CvPoint dst_corners[4];
     IplImage* correspond = cvCreateImage( cvSize(image->width, object->height+image->height), 8, 1 );
     cvSetImageROI( correspond, cvRect( 0, 0, object->width, object->height ) );
-    cvCopy( object, correspond );
+    cvCopy( object, correspond , 0 );
     cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
-    cvCopy( image, correspond );
+    cvCopy( image, correspond , 0 );
     cvResetImageROI( correspond );
 
 #ifdef USE_FLANN
@@ -284,28 +275,26 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
             CvPoint r1 = dst_corners[i%4];
             CvPoint r2 = dst_corners[(i+1)%4];
             cvLine( correspond, cvPoint(r1.x, r1.y+object->height ),
-                cvPoint(r2.x, r2.y+object->height ), colors[8] );
+                cvPoint(r2.x, r2.y+object->height ), colors[8] , 1 ,8 ,0  );
         }
     }
-    vector<int> ptpairs;
-#ifdef USE_FLANN
-    flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#else
+
+    struct pairList * ptpairs = 0;
     findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-#endif
 
 
-    for( i = 0; i < (int)ptpairs.size(); i += 2 )
+    printf(" Found %u pairs \n",(int) ptpairs->currentItems);
+
+
+/*
+
+    for( i = 0; i < (int)ptpairs->currentItems; i++ )
     {
-        CvSURFPoint* r1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, ptpairs[i] );
-        CvSURFPoint* r2 = (CvSURFPoint*)cvGetSeqElem( imageKeypoints, ptpairs[i+1] );
+        CvSURFPoint* r1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, ptpairs->item[i].p1; );
+        CvSURFPoint* r2 = (CvSURFPoint*)cvGetSeqElem( imageKeypoints,  ptpairs->item[i].p2; );
         cvLine( correspond, cvPointFrom32f(r1->pt),
             cvPoint(cvRound(r2->pt.x), cvRound(r2->pt.y+object->height)), colors[8] );
     }
-
-    //printf(" Found %u pairs \n",(int) ptpairs.size());
-    if ((int) ptpairs.size() > (objectDescriptors->total / 2) ) { return 0; }
-/*
     cvShowImage( "Object Correspond", correspond );
     for( i = 0; i < objectKeypoints->total; i++ )
     {
