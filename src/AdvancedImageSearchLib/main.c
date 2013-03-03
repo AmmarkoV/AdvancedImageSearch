@@ -282,3 +282,12 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
   return 0;
 }
+
+
+int AIS_CompareImages(char * image1,char * image2)
+{
+   return COULD_NOT_PERFORM_COMPARISON;
+}
+
+
+

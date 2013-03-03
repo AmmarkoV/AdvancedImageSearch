@@ -36,6 +36,15 @@ else
    exit 1 
 fi
 
+if [ -e "src/cmpimg/cmpimg" ]; then
+   echo "cmpimg is OK" 
+else
+   echo "The cmpimg binary could not be built , please consider running ./get-dependencies.sh to solve build issues"
+   echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
+   echo "Thank you , and sorry for the inconvinience"
+   exit 1 
+fi
+
 #everything is ok , copy to system 
 
  
@@ -51,6 +60,9 @@ sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedIm
 sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
 
 
-
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
+
+sudo cp src/cmpimg/cmpimg /usr/bin/cmpimg
+
+ 
 exit 0

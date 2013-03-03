@@ -6,7 +6,7 @@
 WRKDIR = `pwd`
 MAKE = make
 
-all: src_advancedimagesearchlib_advancedimagesearchlib src_lsimg_lsimg
+all: src_advancedimagesearchlib_advancedimagesearchlib src_lsimg_lsimg src_cmpimg_cmpimg
 
 src_advancedimagesearchlib_advancedimagesearchlib: 
 	$(MAKE) -C src/AdvancedImageSearchLib all -f AdvancedImageSearchLib.cbp.mak
@@ -14,7 +14,10 @@ src_advancedimagesearchlib_advancedimagesearchlib:
 src_lsimg_lsimg: 
 	$(MAKE) -C src/lsimg all -f lsimg.cbp.mak
 
-clean: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_lsimg_lsimg
+src_cmpimg_cmpimg: 
+	$(MAKE) -C src/cmpimg all -f cmpimg.cbp.mak
+
+clean: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_lsimg_lsimg clean_src_cmpimg_cmpimg
 
 clean_src_advancedimagesearchlib_advancedimagesearchlib: 
 	$(MAKE) -C src/AdvancedImageSearchLib clean -f AdvancedImageSearchLib.cbp.mak
@@ -22,5 +25,8 @@ clean_src_advancedimagesearchlib_advancedimagesearchlib:
 clean_src_lsimg_lsimg: 
 	$(MAKE) -C src/lsimg clean -f lsimg.cbp.mak
 
-.PHONY: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_lsimg_lsimg
+clean_src_cmpimg_cmpimg: 
+	$(MAKE) -C src/cmpimg clean -f cmpimg.cbp.mak
+
+.PHONY: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_lsimg_lsimg clean_src_cmpimg_cmpimg
 

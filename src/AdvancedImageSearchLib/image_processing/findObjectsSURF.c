@@ -2,7 +2,7 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
-//#define USE_OPENCV_SURF_DETECTOR 1
+#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
@@ -12,8 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
 
 struct pair
 {
@@ -39,6 +37,7 @@ struct pairList * growPairList(struct pairList * pairs,unsigned int addedItems)
 };
 
 
+/* ------------------------------------------------------------------------------------------------- */
 struct pairList * initializePairList(struct pairList * pairs,unsigned int initialItems)
 {
   unsigned int initialItemsByteSize=sizeof(struct pairList) * initialItems;
@@ -80,9 +79,7 @@ int destroyPairList(struct pairList ** pairs)
   *pairs = 0;
   return 1;
 }
-/*
-  -------------------------------------------------------------------------------------------------
-*/
+/* ------------------------------------------------------------------------------------------------- */
 
 
 
@@ -182,29 +179,34 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
 
     double h[9];
     CvMat _h = cvMat(3, 3, CV_64F, h);
-
+    // vector<int> ptpairs;
+    // vector<CvPoint2D32f> pt1, pt2;
     struct pairList * ptpairs = 0;
     CvMat _pt1, _pt2;
     int i, n;
 
     findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
 
-    n = (int)(ptpairs->currentItems/2);
+    n = (int)(ptpairs->currentItems);
     if( n < 4 )
         return 0;
 
-   // pt1.resize(n);
-    //pt2.resize(n);
-    for( i = 0; i < n; i++ )
+   struct pair * pairA = (struct pair *) malloc(sizeof(struct pair) * n );
+   struct pair * pairB = (struct pair *) malloc(sizeof(struct pair) * n );
+
+    for( i = 0; i < n; i+=2 )
     {
-      //  pt1[i] = ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
-      //  pt2[i] = ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
+       //   pairA[i].p1 = ptpairs[i].p1; //  ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
+       //   pairA[i].p2 = ptpairs[i].p2; //  ((CvSURFPoint*)cvGetSeqElem(objectKeypoints,ptpairs[i*2]))->pt;
+
+       //   pairB[i].p1 = ptpairs[i+1].p1; //  ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
+       //   pairB[i].p2 = ptpairs[i+1].p2; //  ((CvSURFPoint*)cvGetSeqElem(imageKeypoints,ptpairs[i*2+1]))->pt;
     }
 
-  //  _pt1 = cvMat(1, n, CV_32FC2, &pt1[0] );
-  //  _pt2 = cvMat(1, n, CV_32FC2, &pt2[0] );
-    if( !cvFindHomography( &_pt1, &_pt2, &_h, CV_RANSAC, 5 , 0 ))
-        return 0;
+    _pt1 = cvMat(1, n, CV_32FC2, pairA );
+    _pt2 = cvMat(1, n, CV_32FC2, pairB );
+    if( !cvFindHomography( &_pt1, &_pt2, &_h, CV_RANSAC, 5 , 0 ))  { return 0; }
+
 
     for( i = 0; i < 4; i++ )
     {
@@ -233,12 +235,8 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
     object->imageData = (char*) pattern->pixels; // UGLY HACK
     cvCvtColor( object, object, CV_RGB2GRAY);
 
-    //Reminder to make them grayscale!!
-
 
     CvMemStorage* storage = cvCreateMemStorage(0);
-
-
     static CvScalar colors[] = { {{0,0,255}}, {{0,128,255}}, {{0,255,255}}, {{0,255,0}}, {{255,128,0}}, {{255,255,0}}, {{255,0,0}}, {{255,0,255}}, {{255,255,255}} };
 
     IplImage* object_color = cvCreateImage(cvGetSize(object), 8, 3);
@@ -262,22 +260,21 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 
     CvPoint src_corners[4] = {{0,0}, {object->width,0}, {object->width, object->height}, {0, object->height}};
     CvPoint dst_corners[4];
-    IplImage* correspond = cvCreateImage( cvSize(image->width, object->height+image->height), 8, 1 );
-    cvSetImageROI( correspond, cvRect( 0, 0, object->width, object->height ) );
-    cvCopy( object, correspond , 0 );
-    cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
-    cvCopy( image, correspond , 0 );
-    cvResetImageROI( correspond );
 
-    if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints,
-        imageDescriptors, src_corners, dst_corners ))
+    //IplImage* correspond = cvCreateImage( cvSize(image->width, object->height+image->height), 8, 1 );
+    //cvSetImageROI( correspond, cvRect( 0, 0, object->width, object->height ) );
+    //cvCopy( object, correspond , 0 );
+    //cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
+    //cvCopy( image, correspond , 0 );
+    //cvResetImageROI( correspond );
+
+    if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, src_corners, dst_corners ))
     {
         for( i = 0; i < 4; i++ )
         {
             CvPoint r1 = dst_corners[i%4];
             CvPoint r2 = dst_corners[(i+1)%4];
-            cvLine( correspond, cvPoint(r1.x, r1.y+object->height ),
-                cvPoint(r2.x, r2.y+object->height ), colors[8] , 1 ,8 ,0  );
+            //cvLine( correspond, cvPoint(r1.x, r1.y+object->height ), cvPoint(r2.x, r2.y+object->height ), colors[8] , 1 ,8 ,0  );
         }
     }
 

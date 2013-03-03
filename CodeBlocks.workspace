@@ -2,6 +2,7 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="src/AdvancedImageSearchLib/AdvancedImageSearchLib.cbp" />
+		<Project filename="src/cmpimg/cmpimg.cbp" />
 		<Project filename="src/lsimg/lsimg.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

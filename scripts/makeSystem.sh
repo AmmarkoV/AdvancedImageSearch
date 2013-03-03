@@ -20,4 +20,9 @@ gcc main.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $ALLTHELI
 cd ..
 cd ..
 
+cd src/cmpimg
+gcc cmpimg.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $ALLTHELIBS -o cmpimg
+cd ..
+cd ..
+
 exit 0

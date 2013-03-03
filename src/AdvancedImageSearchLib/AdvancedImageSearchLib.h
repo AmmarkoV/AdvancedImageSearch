@@ -23,7 +23,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define MAX_CRITERIA_STRING_SIZE 1024
 
-enum AISLib_ImageCategories
+
+enum AISLib_ComparisonResultEnum
+{
+  COULD_NOT_PERFORM_COMPARISON=0,
+  DIFFERENT,
+  SIMILAR,
+  IDENTICAL
+};
+
+
+enum AISLib_ImageCategoriesEnum
 {
   NO_IMAGE_CATEGORY=0,
   FACE,
@@ -33,7 +43,7 @@ enum AISLib_ImageCategories
 };
 
 
-enum AISLib_ImageColorRanges
+enum AISLib_ImageColorRangesEnum
 {
   NO_COLOR_RANGE=0,
   FULL_COLOR,
@@ -115,6 +125,6 @@ void AISLib_destroySearchResults(struct AISLib_SearchResults * sr);
 struct AISLib_SearchCriteria * AISLib_createCriteria();
 int AISLib_destroyCriteria(struct AISLib_SearchCriteria * criteria);
 
-
+int AIS_CompareImages(char * image1,char * image2);
 
 #endif // ADVANCEDIMAGESEARCHLIB_H_INCLUDED
