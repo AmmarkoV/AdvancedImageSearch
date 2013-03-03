@@ -286,6 +286,7 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
 int AIS_CompareImages(char * image1,char * image2)
 {
+   //Not implemented yet
    return COULD_NOT_PERFORM_COMPARISON;
 }
 

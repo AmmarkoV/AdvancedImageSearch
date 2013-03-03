@@ -24,7 +24,21 @@ else
    exit 1
 fi
 
-#make a system specific lsimg 
+
+if [ -d "/usr/lib/AdvancedImageSearch" ]; then
+echo "AdvancedImageSearch Library path detected patching it up :)"
+else
+echo "Installing AdvancedImageSearch in the system.. :)"
+  sudo mkdir /usr/lib/AdvancedImageSearch
+fi
+
+sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
+
+sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
+
+ 
+
+#make a system specific lsimg and cmpimg
 scripts/makeSystem.sh
 
 if [ -e "src/lsimg/lsimg" ]; then
@@ -46,20 +60,7 @@ else
 fi
 
 #everything is ok , copy to system 
-
  
-if [ -d "/usr/lib/AdvancedImageSearch" ]; then
-echo "AdvancedImageSearch Library path detected patching it up :)"
-else
-echo "Installing AdvancedImageSearch in the system.. :)"
-  sudo mkdir /usr/lib/AdvancedImageSearch
-fi
-
-sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
-
-sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
-
-
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
 
 sudo cp src/cmpimg/cmpimg /usr/bin/cmpimg

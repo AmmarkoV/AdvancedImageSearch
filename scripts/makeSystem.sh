@@ -12,7 +12,7 @@ else
  OPENCVSTUFF="`pkg-config --cflags --libs opencv`"
 fi
 
-ALLTHELIBS="$OPENCVSTUFF $IMAGE_LIBS"
+ALLTHELIBS=" $IMAGE_LIBS $OPENCVSTUFF"
 
 
 cd src/lsimg

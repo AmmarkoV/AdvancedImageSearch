@@ -2,7 +2,7 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
-#define USE_OPENCV_SURF_DETECTOR 1
+//#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
