@@ -34,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_processing/imageResizer.h"
 #include "image_processing/imageComparison.h"
 #include "image_processing/faceDetection.h"
+#include "image_processing/findObjectsSURF.h"
 
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
@@ -286,7 +287,19 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
 int AIS_CompareImages(char * image1,char * image2)
 {
+   struct Image * img1  = readImage(image1,JPG_CODEC,0);
+   if (img1==0) { return COULD_NOT_PERFORM_COMPARISON ; }
+   struct Image * img2  = readImage(image2,JPG_CODEC,0);
+   if (img2==0) { return COULD_NOT_PERFORM_COMPARISON ; }
+
+
+   findPatternInImage(img1,img2);
    //Not implemented yet
+
+   destroyImage(img1);
+   destroyImage(img2);
+
+
    return COULD_NOT_PERFORM_COMPARISON;
 }
 
