@@ -13,16 +13,18 @@ int main(int argc, char *argv[])
   char * filename1=0;
   unsigned int len1 = strlen(argv[1]);
   if (len1 > MAX_STRING_TO_ACCEPT ) { fprintf(stderr,"Filename 1 is too large\n"); return 1; }
-  filename1 = (char *) malloc(len1);
+  filename1 = (char *) malloc(len1+1);
   strncpy(filename1,argv[1],len1);
+  filename1[len1]=0;
   if (filename1==0) { fprintf(stderr,"Could not allocate enough memory for filename1\n"); return 1; }
 
   //Pass argument 2 to filename2
   char * filename2=0;
   unsigned int len2 = strlen(argv[2]);
   if (len2 > MAX_STRING_TO_ACCEPT ) { fprintf(stderr,"Filename 2 is too large\n"); return 1; }
-  filename2 = (char *) malloc(len2);
+  filename2 = (char *) malloc(len2+1);
   strncpy(filename2,argv[2],len2);
+  filename2[len2]=0;
   if (filename2==0) { fprintf(stderr,"Could not allocate enough memory for filename1\n"); return 1; }
 
   //Compare images
