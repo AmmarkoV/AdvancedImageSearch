@@ -15,8 +15,8 @@ INC =
 CFLAGS =  -Wall
 RESINC = 
 LIBDIR = 
-LIB = 
-LDFLAGS = 
+LIB =  -ljpeg -lpng ../AdvancedImageSearchLib/libAdvancedImageSearch.so
+LDFLAGS =  `pkg-config --libs opencv`
 
 INC_DEBUG =  $(INC)
 CFLAGS_DEBUG =  $(CFLAGS) -g

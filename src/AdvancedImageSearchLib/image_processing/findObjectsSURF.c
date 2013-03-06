@@ -2,7 +2,9 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
-//#define USE_OPENCV_SURF_DETECTOR 1
+#include "../image_processing/filters.h"
+
+#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
@@ -220,20 +222,23 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
     return 1;
 }
 
+
 int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 {
 
    StartTimer(FIND_OBJECTS_DELAY);
 
+    monochrome(img);
     IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
     char * opencvImagePointerRetainer = image->imageData; // UGLY HACK
     image->imageData = (char*) img->pixels; // UGLY HACK
-    cvCvtColor( image, image, CV_RGB2GRAY);
+    //cvCvtColor( image, image, CV_RGB2GRAY);
 
+    monochrome(pattern);
     IplImage  * object = cvCreateImage( cvSize(pattern->width,pattern->height), IPL_DEPTH_8U, pattern->depth);
     char * opencvObjectPointerRetainer = object->imageData; // UGLY HACK
     object->imageData = (char*) pattern->pixels; // UGLY HACK
-    cvCvtColor( object, object, CV_RGB2GRAY);
+    //cvCvtColor( object, object, CV_RGB2GRAY);
 
 
     CvMemStorage* storage = cvCreateMemStorage(0);
@@ -268,6 +273,8 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
     //cvCopy( image, correspond , 0 );
     //cvResetImageROI( correspond );
 
+
+
     if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, src_corners, dst_corners ))
     {
         for( i = 0; i < 4; i++ )
@@ -283,6 +290,8 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 
 
     printf(" Found %u pairs \n",(int) ptpairs->currentItems);
+
+
 
     image->imageData = opencvImagePointerRetainer; // UGLY HACK
     cvReleaseImage( &image );

@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
   fprintf(stderr,"Comparing %s with %s \n",filename1,filename2);
   int result = AIS_CompareImages(filename1,filename2);
 
+
   //Print result
   switch (result)
   {

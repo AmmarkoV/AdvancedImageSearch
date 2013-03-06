@@ -11,8 +11,8 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="-minFaces 1 -maxFaces 1 ~/ " />
-				<Option host_application="/home/ammar/Documents/Programming/AdvancedImageSearch/src/lsimg/lsimg" />
+				<Option parameters="../../samples/pattern.jpg  ../../samples/image.jpg" />
+				<Option host_application="/home/ammar/Documents/Programming/AdvancedImageSearch/src/cmpimg/cmpimg" />
 				<Option run_host_application_in_terminal="1" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
@@ -76,6 +76,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="image_processing/faceDetection.h" />
+		<Unit filename="image_processing/filters.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image_processing/filters.h" />
 		<Unit filename="image_processing/findObjectsSURF.c">
 			<Option compilerVar="CC" />
 		</Unit>
