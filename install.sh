@@ -1,7 +1,19 @@
 #!/bin/bash
+apologize() 
+{
+   echo "The library $1 could not be built , please consider running ./get-dependencies.sh to solve build issues"
+   echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
+   echo "Thank you , and sorry for the inconvinience"
+   exit 1 
+}
+
+
 echo "Copying to system bin directory"
 echo "Installation needs root"
 sudo echo "Thank you"
+
+
+
 
 make
 
@@ -16,12 +28,15 @@ fi
  
 
 if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
-   echo "Library is OK" 
+   echo "Main Library is OK" 
 else
-   echo "The library could not be built , please consider running ./get-dependencies.sh to solve build issues"
-   echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
-   echo "Thank you , and sorry for the inconvinience"
-   exit 1
+   apologize("Main Library"); 
+fi
+
+if [ -e "src/PatternRecognition/libPatternRecognition.so" ]; then
+   echo "Pattern Library is OK" 
+else
+   apologize("Pattern Library"); 
 fi
 
 
@@ -33,6 +48,7 @@ echo "Installing AdvancedImageSearch in the system.. :)"
 fi
 
 sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
+sudo cp src/PatternRecognition/libPatternRecognition.so /usr/lib/AdvancedImageSearch/libPatternRecognition.so
 
 sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
 
@@ -43,20 +59,14 @@ scripts/makeSystem.sh
 
 if [ -e "src/lsimg/lsimg" ]; then
    echo "lsimg is OK" 
-else
-   echo "The lsimg binary could not be built , please consider running ./get-dependencies.sh to solve build issues"
-   echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
-   echo "Thank you , and sorry for the inconvinience"
-   exit 1 
+else 
+   apologize("lsimg"); 
 fi
 
 if [ -e "src/cmpimg/cmpimg" ]; then
    echo "cmpimg is OK" 
-else
-   echo "The cmpimg binary could not be built , please consider running ./get-dependencies.sh to solve build issues"
-   echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
-   echo "Thank you , and sorry for the inconvinience"
-   exit 1 
+else 
+   apologize("cmpimg"); 
 fi
 
 #everything is ok , copy to system 

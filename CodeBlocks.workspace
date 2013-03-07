@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
+		<Project filename="src/PatternRecognition/PatternRecognition.cbp" />
 		<Project filename="src/AdvancedImageSearchLib/AdvancedImageSearchLib.cbp" />
 		<Project filename="src/cmpimg/cmpimg.cbp" />
 		<Project filename="src/lsimg/lsimg.cbp" />

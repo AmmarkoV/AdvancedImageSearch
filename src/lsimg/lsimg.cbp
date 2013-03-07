@@ -37,6 +37,8 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearch.so" />
+			<Add library="/usr/local/lib/libopencv_nonfree.so" />
+			<Add library="../PatternRecognition/libPatternRecognition.so" />
 		</Linker>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />

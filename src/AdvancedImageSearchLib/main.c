@@ -34,7 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_processing/imageResizer.h"
 #include "image_processing/imageComparison.h"
 #include "image_processing/faceDetection.h"
-#include "image_processing/findObjectsSURF.h"
+#include "image_processing/findPatterns.h"
 
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
@@ -293,13 +293,13 @@ int AIS_CompareImages(char * image1,char * image2)
    if (img2==0) { return COULD_NOT_PERFORM_COMPARISON ; }
 
 
-   findPatternInImage(img1,img2);
+   int result = findPatternInImage(img1,img2);
    //Not implemented yet
 
    destroyImage(img1);
    destroyImage(img2);
 
-
+   if (result) { return SIMILAR; }
    return COULD_NOT_PERFORM_COMPARISON;
 }
 

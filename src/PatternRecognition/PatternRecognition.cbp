@@ -2,25 +2,28 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="cmpimg" />
+		<Option title="PatternRecognition" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="cmpimg" prefix_auto="1" extension_auto="1" />
+				<Option output="PatternRecognition" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="cmpimg" prefix_auto="1" extension_auto="1" />
+				<Option output="PatternRecognition" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters=" ../../samples/pattern.jpg  ../../samples/image.jpg  " />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
@@ -31,18 +34,15 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-fPIC" />
+			<Add option="`pkg-config --cflags opencv`" />
 		</Compiler>
 		<Linker>
 			<Add option="`pkg-config --libs opencv`" />
-			<Add library="jpeg" />
-			<Add library="png" />
-			<Add library="../AdvancedImageSearchLib/libAdvancedImageSearch.so" />
-			<Add library="../PatternRecognition/libPatternRecognition.so" />
-			<Add library="/usr/local/lib/libopencv_nonfree.so" />
 		</Linker>
-		<Unit filename="cmpimg.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="PatternRecognition.h" />
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

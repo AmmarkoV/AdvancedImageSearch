@@ -6,7 +6,10 @@
 WRKDIR = `pwd`
 MAKE = make
 
-all: src_advancedimagesearchlib_advancedimagesearchlib src_cmpimg_cmpimg src_lsimg_lsimg
+all: src_patternrecognition_patternrecognition src_advancedimagesearchlib_advancedimagesearchlib src_cmpimg_cmpimg src_lsimg_lsimg
+
+src_patternrecognition_patternrecognition: 
+	$(MAKE) -C src/PatternRecognition all -f PatternRecognition.cbp.mak
 
 src_advancedimagesearchlib_advancedimagesearchlib: 
 	$(MAKE) -C src/AdvancedImageSearchLib all -f AdvancedImageSearchLib.cbp.mak
@@ -17,7 +20,10 @@ src_cmpimg_cmpimg:
 src_lsimg_lsimg: 
 	$(MAKE) -C src/lsimg all -f lsimg.cbp.mak
 
-clean: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_cmpimg_cmpimg clean_src_lsimg_lsimg
+clean: clean_src_patternrecognition_patternrecognition clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_cmpimg_cmpimg clean_src_lsimg_lsimg
+
+clean_src_patternrecognition_patternrecognition: 
+	$(MAKE) -C src/PatternRecognition clean -f PatternRecognition.cbp.mak
 
 clean_src_advancedimagesearchlib_advancedimagesearchlib: 
 	$(MAKE) -C src/AdvancedImageSearchLib clean -f AdvancedImageSearchLib.cbp.mak
@@ -28,5 +34,5 @@ clean_src_cmpimg_cmpimg:
 clean_src_lsimg_lsimg: 
 	$(MAKE) -C src/lsimg clean -f lsimg.cbp.mak
 
-.PHONY: clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_cmpimg_cmpimg clean_src_lsimg_lsimg
+.PHONY: clean_src_patternrecognition_patternrecognition clean_src_advancedimagesearchlib_advancedimagesearchlib clean_src_cmpimg_cmpimg clean_src_lsimg_lsimg
 

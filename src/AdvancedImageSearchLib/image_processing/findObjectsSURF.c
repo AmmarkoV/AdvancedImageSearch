@@ -3,8 +3,8 @@
 #include "../tools/timers.h"
 
 #include "../image_processing/filters.h"
-
-#define USE_OPENCV_SURF_DETECTOR 1
+#include "../../PatternRecognition/PatternRecognition.h"
+//#define USE_OPENCV_SURF_DETECTOR 1
 
 
 #if USE_OPENCV_SURF_DETECTOR
@@ -225,7 +225,6 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
 
 int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 {
-
    StartTimer(FIND_OBJECTS_DELAY);
 
     monochrome(img);
@@ -335,6 +334,8 @@ int openCV_SURFDetector(struct Image * pattern,struct Image * img)
 
 int findPatternInImage(struct Image * pattern,struct Image * img)
 {
+
+   return detectPattern((struct ptrnImage *) pattern,(struct ptrnImage *) img);
     #if USE_OPENCV_SURF_DETECTOR
       return openCV_SURFDetector(pattern,img);
     #endif

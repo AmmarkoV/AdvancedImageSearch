@@ -15,7 +15,7 @@ INC =
 CFLAGS =  -Wall `pkg-config --cflags opencv`
 RESINC = 
 LIBDIR = 
-LIB =  -ljpeg -lpng ../AdvancedImageSearchLib/libAdvancedImageSearch.so
+LIB =  -ljpeg -lpng ../AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/local/lib/libopencv_nonfree.so ../PatternRecognition/libPatternRecognition.so
 LDFLAGS =  `pkg-config --libs opencv`
 
 INC_DEBUG =  $(INC)

@@ -49,6 +49,7 @@
 			<Add option="-lpng" />
 			<Add option="-ljpeg" />
 			<Add option="`pkg-config --libs opencv`" />
+			<Add library="../PatternRecognition/libPatternRecognition.so" />
 		</Linker>
 		<Unit filename="AdvancedImageSearchLib.h" />
 		<Unit filename="codecs/codecs.c">

@@ -2,17 +2,38 @@
 
 IMAGE_LIBS="-ljpeg -lpng"
 
+FACEDETECTOR_USED=`cat src/AdvancedImageSearchLib/configuration.h | grep "#define USE_OPENCV_FACEDETECTION 1"` 
+PATTERN_RECO_USED=`cat src/AdvancedImageSearchLib/configuration.h | grep "#define USE_PATTERN_RECOGNITION 1"` 
+LINKOPENCV=""
 
-OPENCV_USED=`cat src/AdvancedImageSearchLib/configuration.h | grep "#define USE_OPENCV_FACEDETECTION 1"` 
+PATTERNSTUFF=" "
 OPENCVSTUFF=" "
-if [ -z "$OPENCV_USED" ] 
+
+
+if [ -z "$FACEDETECTOR_USED" ] 
 then
- echo "OpenCV not configured for use "   
+ echo "No Face Detection configuration"   
 else
- OPENCVSTUFF="`pkg-config --cflags --libs opencv`"
+ LINKOPENCV="YES"
 fi
 
-ALLTHELIBS=" $IMAGE_LIBS $OPENCVSTUFF"
+if [ -z "$PATTERN_RECO_USED" ] 
+then
+ echo "No Object Detection configuration"   
+else
+ LINKOPENCV="YES"
+ PATTERNSTUFF="/usr/lib/AdvancedImageSearch/libPatternRecognition.so"
+fi
+
+if [ -z "$LINKOPENCV" ] 
+then
+ echo "OpenCV not configured for use "   
+else   
+  OPENCVSTUFF="`pkg-config --cflags --libs opencv` /usr/local/lib/libopencv_nonfree.so" 
+fi
+
+ 
+ALLTHELIBS="$IMAGE_LIBS $OPENCVSTUFF $PATTERNSTUFF"
 
 
 cd src/lsimg
