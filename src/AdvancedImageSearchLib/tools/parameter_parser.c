@@ -298,7 +298,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"-contains")==0)
     {
-     #if USE_OPENCV_SURF_DETECTOR
+     #if USE_PATTERN_RECOGNITION
      if (i+2<argc) {
                      criteria->containsSimilarityPercent=atof(argv[i+2]);
                      strncpy( criteria->containsImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );

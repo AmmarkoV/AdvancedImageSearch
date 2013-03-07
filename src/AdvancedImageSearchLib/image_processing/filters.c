@@ -11,6 +11,8 @@ int monochrome(struct Image * img)
  if (img->pixels==0) { fprintf(stderr,"Function Monochrome given Null Image\n"); return 0; }
  if (img->depth!=3) { fprintf(stderr,"Function Monochrome assumes 3byte array\n"); return 0; }
 
+ if (img->depth==1) { /*Already Monochrome */return 1; }
+
  BYTE * input_frame = img->pixels;
  unsigned int col_med;
  unsigned int image_size= img->width * img->height * img->depth;

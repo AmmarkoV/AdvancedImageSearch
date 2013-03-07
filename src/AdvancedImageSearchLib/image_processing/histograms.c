@@ -1,15 +1,16 @@
-#include "histograms.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "histograms.h"
+
 #include "../tools/timers.h"
 
 #define DEBUG_HISTOGRAMS 0
 
 float HISTOGRAM_SUCCESS_PERCENTAGE = 50;//%
 
-void cleanHistogram ( struct Histogram * hist )
+static void cleanHistogram ( struct Histogram * hist )
 {
     memset(hist , 0 , sizeof(struct Histogram));
     return ;
@@ -21,7 +22,7 @@ void cleanHistogram ( struct Histogram * hist )
 
 
 
-struct Histogram *  generateHistogramPTRS(unsigned char * rgb , unsigned int width , unsigned int height , unsigned int channels )
+static struct Histogram *  generateHistogramPTRS(unsigned char * rgb , unsigned int width , unsigned int height , unsigned int channels )
 {
    fprintf(stderr,"This code compiles incorrectly :P \n");
    return 0;

@@ -16,7 +16,7 @@ sudo echo "Thank you"
 
 
 make
-
+ 
 if [ -e "src/AdvancedImageSearchLib/AdvancedImageSearch.so" ]; then
    echo "cbp2make bug detected!"
     if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
@@ -24,19 +24,25 @@ if [ -e "src/AdvancedImageSearchLib/AdvancedImageSearch.so" ]; then
     fi
    mv "src/AdvancedImageSearchLib/AdvancedImageSearch.so" "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" 
 fi
-
+if [ -e "src/PatternRecognition/PatternRecognition.so" ]; then
+   echo "cbp2make bug detected!"
+    if [ -e "src/PatternRecognition/libPatternRecognition.so" ]; then
+     rm "src/PatternRecognition/libPatternRecognition.so"
+    fi
+   mv "src/PatternRecognition/PatternRecognition.so" "src/PatternRecognition/libPatternRecognition.so" 
+fi
  
 
 if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
    echo "Main Library is OK" 
 else
-   apologize("Main Library"); 
+   apologize "Main Library"
 fi
 
 if [ -e "src/PatternRecognition/libPatternRecognition.so" ]; then
    echo "Pattern Library is OK" 
 else
-   apologize("Pattern Library"); 
+   apologize "Pattern Library" 
 fi
 
 
@@ -47,12 +53,27 @@ echo "Installing AdvancedImageSearch in the system.. :)"
   sudo mkdir /usr/lib/AdvancedImageSearch
 fi
 
-sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
 sudo cp src/PatternRecognition/libPatternRecognition.so /usr/lib/AdvancedImageSearch/libPatternRecognition.so
 
 sudo cp data/haarcascade_frontalface_alt.xml /usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml
 
- 
+
+#Make a /usr/lib specific .so after sattelite sos are copied:(
+CURDIR=`pwd`
+cd src/AdvancedImageSearchLib
+./makeSystem.sh
+cd $CURDIR 
+
+if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
+   echo "libAdvancedImageSearch.so is OK" 
+else 
+   apologize "libAdvancedImageSearch.so"
+fi
+
+
+
+sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so
+
 
 #make a system specific lsimg and cmpimg
 scripts/makeSystem.sh
@@ -60,19 +81,18 @@ scripts/makeSystem.sh
 if [ -e "src/lsimg/lsimg" ]; then
    echo "lsimg is OK" 
 else 
-   apologize("lsimg"); 
+   apologize "lsimg"
 fi
 
 if [ -e "src/cmpimg/cmpimg" ]; then
    echo "cmpimg is OK" 
 else 
-   apologize("cmpimg"); 
+   apologize "cmpimg"
 fi
 
 #everything is ok , copy to system 
  
 sudo cp src/lsimg/lsimg /usr/bin/lsimg 
-
 sudo cp src/cmpimg/cmpimg /usr/bin/cmpimg
 
  

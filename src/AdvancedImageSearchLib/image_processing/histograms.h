@@ -1,14 +1,10 @@
 #ifndef HISTOGRAMS_H_INCLUDED
 #define HISTOGRAMS_H_INCLUDED
 
-
-
 struct histogramChannel
 {
   unsigned int intensity[256];
 };
-
-
 
 struct Histogram
 {

@@ -36,7 +36,9 @@ int monochrome(struct ptrnImage * img)
 {
  if (img==0) { fprintf(stderr,"Function Monochrome given Null Image\n"); return 0; }
  if (img->pixels==0) { fprintf(stderr,"Function Monochrome given Null Image\n"); return 0; }
+ if (img->depth==1) { /*Already Monochrome */return 1; }
  if (img->depth!=3) { fprintf(stderr,"Function Monochrome assumes 3byte array\n"); return 0; }
+
 
  BYTE * input_frame = img->pixels;
  unsigned int col_med;
@@ -250,6 +252,10 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
     if (pattern->pixels==0) {  return 0; }
 
 
+
+    if ( (img->width < pattern->width) && (img->height < pattern->height) ) { return 0; }
+
+
     int result = 0;
 
     cv::initModule_nonfree();
@@ -289,18 +295,19 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
 
     CvSeq* objectKeypoints = 0, *objectDescriptors = 0;
     CvSeq* imageKeypoints = 0, *imageDescriptors = 0;
-    int i;
+
+
     CvSURFParams params = cvSURFParams(500, 1);
 
     double tt = (double)cvGetTickCount();
     cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params );
-    printf("Object Descriptors: %d\n", objectDescriptors->total);
+   // printf("Object Descriptors: %d\n", objectDescriptors->total);
 
     cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );
-    printf("Image Descriptors: %d\n", imageDescriptors->total);
+    //printf("Image Descriptors: %d\n", imageDescriptors->total);
     tt = (double)cvGetTickCount() - tt;
 
-    printf( "Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
+    //printf( "Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
 
     CvPoint src_corners[4] = {{0,0}, {object->width,0}, {object->width, object->height}, {0, object->height}};
     CvPoint dst_corners[4];
@@ -313,7 +320,7 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
     //cvResetImageROI( correspond );
 
 #ifdef USE_FLANN
-    printf("Using approximate nearest neighbor search\n");
+    //printf("Using approximate nearest neighbor search\n");
 #endif
 
     if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints,
@@ -368,7 +375,7 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
     image->imageData = opencvImagePointerRetainer; // UGLY HACK
     cvReleaseImage( &image );
 
-    image->imageData = opencvObjectPointerRetainer; // UGLY HACK
+    object->imageData = opencvObjectPointerRetainer; // UGLY HACK
     cvReleaseImage( &object );
 
 

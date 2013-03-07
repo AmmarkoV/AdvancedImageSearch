@@ -211,6 +211,12 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     }
 
 
+    //This should be the last test since it converts input  image to grayscale
+    //it also converts the pattern to grayscale but only one time!
+    if (criteria->containsUsed)
+    {
+      if (!findPatternInImage(criteria->containsImage,img)) { return 0; }
+    }
 
     return 1;
 }

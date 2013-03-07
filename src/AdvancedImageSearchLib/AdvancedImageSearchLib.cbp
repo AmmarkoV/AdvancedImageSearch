@@ -49,6 +49,7 @@
 			<Add option="-lpng" />
 			<Add option="-ljpeg" />
 			<Add option="`pkg-config --libs opencv`" />
+			<Add option="libPatternRecognition.so" />
 			<Add library="../PatternRecognition/libPatternRecognition.so" />
 		</Linker>
 		<Unit filename="AdvancedImageSearchLib.h" />
@@ -81,10 +82,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="image_processing/filters.h" />
-		<Unit filename="image_processing/findObjectsSURF.c">
+		<Unit filename="image_processing/findPatterns.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="image_processing/findObjectsSURF.h" />
+		<Unit filename="image_processing/findPatterns.h" />
 		<Unit filename="image_processing/histograms.c">
 			<Option compilerVar="CC" />
 		</Unit>
