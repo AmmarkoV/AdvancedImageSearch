@@ -20,7 +20,6 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img);
 
 
 
-
 #ifdef __cplusplus
 }
 #endif

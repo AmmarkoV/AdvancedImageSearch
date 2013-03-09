@@ -14,6 +14,12 @@
  * Author: Liu Liu
  * liuliu.1987+opencv@gmail.com
  */
+
+//This is the main configuration file which controls USE_PATTERN_RECOGNITION switch
+ #include "../AdvancedImageSearchLib/configuration.h"
+
+
+#if USE_PATTERN_RECOGNITION
 #include "opencv2/objdetect/objdetect.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -22,6 +28,7 @@
 #include "opencv2/imgproc/imgproc_c.h"
 #include "opencv2/legacy/legacy.hpp"
 #include "opencv2/legacy/compat.hpp"
+#endif
 
 #include <iostream>
 #include <vector>
@@ -63,6 +70,7 @@ int monochrome(struct ptrnImage * img)
 }
 
 
+#if USE_PATTERN_RECOGNITION
 
 // define whether to use approximate nearest-neighbor search
 #define USE_FLANN
@@ -244,7 +252,7 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
     return 1;
 }
 
-int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
+int detectPatternOpenCV(struct ptrnImage * pattern,struct ptrnImage * img)
 {
     if (img==0) {  return 0; }
     if (img->pixels==0) {  return 0; }
@@ -380,4 +388,15 @@ int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
 
 
     return result;
+}
+
+#endif
+
+
+int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
+{
+  #if USE_PATTERN_RECOGNITION
+    return detectPatternOpenCV(pattern,img);
+  #endif
+  return 0;
 }
