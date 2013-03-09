@@ -15,8 +15,8 @@ INC =
 CFLAGS =  -Wall -fPIC `pkg-config --cflags opencv`
 RESINC = 
 LIBDIR = 
-LIB = 
-LDFLAGS =  -lpng -ljpeg `pkg-config --libs opencv` libPatternRecognition.so
+LIB =  ../PatternRecognition/libPatternRecognition.so
+LDFLAGS =  -lpng -ljpeg `pkg-config --libs opencv`
 
 INC_DEBUG =  $(INC)
 CFLAGS_DEBUG =  $(CFLAGS) -g -fPIC
