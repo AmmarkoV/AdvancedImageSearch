@@ -1,5 +1,22 @@
 #!/bin/bash
 
+
+red=$(printf "\033[31m")
+green=$(printf "\033[32m")
+yellow=$(printf "\033[33m")
+blue=$(printf "\033[34m")
+magenta=$(printf "\033[35m")
+cyan=$(printf "\033[36m")
+white=$(printf "\033[37m")
+normal=$(printf "\033[m")
+ 
+normalChars=$(printf "\033[0m")
+boldChars=$(printf "\033[1m")
+underlinedChars=$(printf "\033[4m")
+blinkingChars=$(printf "\033[5m") 
+
+
+
 TARGET="libAdvancedImageSearch.so"
 
 if [ -e $TARGET ]
@@ -54,7 +71,7 @@ CPU=" "
 if cat /proc/cpuinfo | grep avx
 then
   echo "We appear to be running on an AVX enabled CPU , lets use it"
-  CPU="-fPIC -march=corei7-avx -mtune=corei7-avx -ftree-vectorizer-verbose=1 "
+  CPU="-fPIC -march=corei7-avx -mtune=corei7-avx "
 else
   CPU="-fPIC -march=native -mtune=native" 
 fi
@@ -80,7 +97,6 @@ gcc  $Optimizations $CPU -c codecs/jpgInput.c -o jpgInput.o
 gcc  $Optimizations $CPU -c codecs/pngInput.c -o pngInput.o 
 gcc  $Optimizations $CPU -c codecs/ppmInput.c -o ppmInput.o 
  
-echo "Done with Object Files"
 
 FILESTOLINK="main.o string_extension_scanner.o timers.o parameter_parser.o faceDetection.o filters.o findPatterns.o histograms.o imageComparison.o imageResizer.o codecs.o jpgExifexternal.o jpgInput.o pngInput.o ppmInput.o "
 
@@ -91,9 +107,9 @@ rm $FILESTOLINK
  
 if [ -e $TARGET ]
 then
-  echo "Success building $TARGET.."
+  echo "$green Success building $TARGET.. $normal"
 else
-  echo "Failure building $TARGET.."
+  echo "$red Failure building $TARGET.. $normal"
 fi
 
 exit 0

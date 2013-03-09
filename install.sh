@@ -1,7 +1,22 @@
 #!/bin/bash
+
+red=$(printf "\033[31m")
+green=$(printf "\033[32m")
+yellow=$(printf "\033[33m")
+blue=$(printf "\033[34m")
+magenta=$(printf "\033[35m")
+cyan=$(printf "\033[36m")
+white=$(printf "\033[37m")
+normal=$(printf "\033[m")
+ 
+normalChars=$(printf "\033[0m")
+boldChars=$(printf "\033[1m")
+underlinedChars=$(printf "\033[4m")
+blinkingChars=$(printf "\033[5m") 
+
 apologize() 
 {
-   echo "The library $1 could not be built , please consider running ./get-dependencies.sh to solve build issues"
+   echo "$red The library $1 could not be built $normal , please consider running ./get-dependencies.sh to solve build issues"
    echo "If the problem presists create an issue ticket at https://github.com/AmmarkoV/AdvancedImageSearch/issues" 
    echo "Thank you , and sorry for the inconvinience"
    exit 1 
@@ -34,13 +49,13 @@ fi
  
 
 if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
-   echo "Main Library is OK" 
+   echo "$green Main Library is OK $normal" 
 else
    apologize "Main Library"
 fi
 
 if [ -e "src/PatternRecognition/libPatternRecognition.so" ]; then
-   echo "Pattern Library is OK" 
+   echo "$green Pattern Library is OK $normal" 
 else
    apologize "Pattern Library" 
 fi
@@ -65,7 +80,7 @@ cd src/AdvancedImageSearchLib
 cd $CURDIR 
 
 if [ -e "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" ]; then
-   echo "libAdvancedImageSearch.so is OK" 
+   echo "$green libAdvancedImageSearch.so is OK $normal" 
 else 
    apologize "libAdvancedImageSearch.so"
 fi
@@ -79,13 +94,13 @@ sudo cp src/AdvancedImageSearchLib/libAdvancedImageSearch.so /usr/lib/AdvancedIm
 scripts/makeSystem.sh
 
 if [ -e "src/lsimg/lsimg" ]; then
-   echo "lsimg is OK" 
+   echo "$green lsimg is OK $normal" 
 else 
    apologize "lsimg"
 fi
 
 if [ -e "src/cmpimg/cmpimg" ]; then
-   echo "cmpimg is OK" 
+   echo "$green cmpimg is OK $normal" 
 else 
    apologize "cmpimg"
 fi

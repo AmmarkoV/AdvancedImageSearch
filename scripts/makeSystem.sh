@@ -5,6 +5,23 @@
 #or learn how to configure CBP2MAKE
 
  
+
+red=$(printf "\033[31m")
+green=$(printf "\033[32m")
+yellow=$(printf "\033[33m")
+blue=$(printf "\033[34m")
+magenta=$(printf "\033[35m")
+cyan=$(printf "\033[36m")
+white=$(printf "\033[37m")
+normal=$(printf "\033[m")
+ 
+normalChars=$(printf "\033[0m")
+boldChars=$(printf "\033[1m")
+underlinedChars=$(printf "\033[4m")
+blinkingChars=$(printf "\033[5m") 
+
+
+
 IMAGE_LIBS="-ljpeg -lpng"
 
 FACEDETECTOR_USED=`cat src/AdvancedImageSearchLib/configuration.h | grep "#define USE_OPENCV_FACEDETECTION 1"` 
@@ -36,18 +53,19 @@ else
   OPENCVSTUFF="`pkg-config --cflags --libs opencv` /usr/local/lib/libopencv_nonfree.so" 
 fi
 
- 
+CPU="-s -O3 -fexpensive-optimizations -march=native -mtune=native"
 ALLTHELIBS="$IMAGE_LIBS $OPENCVSTUFF $PATTERNSTUFF"
 
 
 cd src/lsimg
-gcc main.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $ALLTHELIBS -o lsimg
+gcc main.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $CPU $ALLTHELIBS -o lsimg
 cd ..
 cd ..
 
 cd src/cmpimg
-gcc cmpimg.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $ALLTHELIBS -o cmpimg
+gcc cmpimg.c -L.  /usr/lib/AdvancedImageSearch/libAdvancedImageSearch.so $CPU $ALLTHELIBS -o cmpimg
 cd ..
 cd ..
+
 
 exit 0
