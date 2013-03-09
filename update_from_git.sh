@@ -21,6 +21,6 @@ git pull
    fi
 
 echo "Rebuilding a new version of the project"
-./make
+make 
 
 exit 0
