@@ -1,5 +1,7 @@
 #include "jpgInput.h"
 
+#define USE_JPG_FILES 1
+
 #if USE_JPG_FILES
 
 #include <stdio.h>
@@ -37,11 +39,25 @@ int empty_buffer(struct jpeg_compress_struct* cinfo) { return 1; }
 void term_buffer(struct jpeg_compress_struct* cinfo) { return ; }
 
 
+
+int fastJPGHeaderCheck(FILE * file)
+{
+  char a = fgetc (file);
+  char b = fgetc (file);
+  rewind (file);
+  if ( (a==0x89) && (b=0x50) ) { return 1; }
+  return 0;
+}
+
+
+
+
 int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 {
     if (filename==0) { fprintf(stderr,"Cannot load Null filename\n"); return 0; }
     if (pic==0) { fprintf(stderr,"Damaged picture structure , cannot load %s\n",filename); return 0; }
 
+    //fprintf(stderr,"%s\n",filename);
 	/* these are standard libjpeg structures for reading(decompression) */
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -55,7 +71,13 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	if ( !infile )
 	{
 		printf("Error opening jpeg file %s\n!", filename );
-		return -1;
+		return 0;
+	}
+
+	if (!fastJPGHeaderCheck(infile))
+    {
+		fclose(infile);
+		return 0;
 	}
 	/* here we set up the standard libjpeg error handler */
 	cinfo.err = jpeg_std_error( &jerr );
@@ -180,6 +202,9 @@ int WriteJPEG( char *filename,struct Image * pic,char *mem,unsigned long * mem_s
 	    	printf("Error opening output jpeg file %s\n!", filename );
 		    return 0;
 	     }
+
+
+
 	   jpeg_stdio_dest(&cinfo, outfile);
 	 }
 
