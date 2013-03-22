@@ -266,13 +266,29 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
                         {
                           ++numberOfResults;
                           printf("%s ",epdf->d_name);
+                        } else
+                        {
+                          #if PRINT_DEBUG_INFO
+                            fprintf(stderr,"Image doesn't fit criteria %s\n",epdf->d_name);
+                          #endif // PRINT_DEBUG_INFO
                         }
 
                   //fprintf(stderr,"Survived read , I have a %ux%u image ",pic.width,pic.height);
                    destroyImage(img);
                    img=0;
+                  } else
+                  {
+                     #if PRINT_DEBUG_INFO
+                        fprintf(stderr,"Could not readImage %s\n",epdf->d_name);
+                     #endif // PRINT_DEBUG_INFO
                   }
+
                 }
+          } else
+          {
+             #if PRINT_DEBUG_INFO
+               fprintf(stderr,"Image %s is not compatible \n",epdf->d_name);
+             #endif // PRINT_DEBUG_INFO
           }
 
         //Next Filename to check

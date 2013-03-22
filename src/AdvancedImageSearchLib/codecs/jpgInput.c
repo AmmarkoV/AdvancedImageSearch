@@ -42,8 +42,8 @@ void term_buffer(struct jpeg_compress_struct* cinfo) { return ; }
 
 int fastJPGHeaderCheck(FILE * file)
 {
-  char a = fgetc (file);
-  char b = fgetc (file);
+  unsigned char a = fgetc (file);
+  unsigned char b = fgetc (file);
   rewind (file);
   if ( (a==0x89) && (b=0x50) ) { return 1; }
   return 0;

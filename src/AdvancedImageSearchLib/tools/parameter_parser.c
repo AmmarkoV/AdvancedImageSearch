@@ -139,7 +139,7 @@ void printListOfParametersRecognized()
     printf("-histogram R G B DEVIATION i.e. -histogram 240 240 0 30\n");
     printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n");
 
-    printf("-color COLORNAME i.e. -histogram red\n");
+    printf("-color COLORNAME i.e. -color red\n");
     printf("Returned images will have a median rgb color close to this color\n");
     printf("Possible colors : red orange yellow green teal blue purple pink green white gray black brown\n");
 

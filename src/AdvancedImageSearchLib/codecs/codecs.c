@@ -28,6 +28,9 @@
 #include "ppmInput.h"
 #include "../tools/timers.h"
 
+#include "../configuration.h"
+
+
 #define DEBUG_READING_IMAGES 0
 
 struct Image * readImage( char *filename,unsigned int type,char read_only_header)
@@ -84,8 +87,13 @@ int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,un
 {
    switch (type)
    {
+     #if USE_JPG_FILES
       case JPG_CODEC :
        return WriteJPEG(filename,pic,mem,mem_size);
+     #endif // USE_JPG_FILES
+
+      default :
+        break;
    };
 
    return 0;
