@@ -45,7 +45,8 @@ int fastJPGHeaderCheck(FILE * file)
   unsigned char a = fgetc (file);
   unsigned char b = fgetc (file);
   rewind (file);
-  if ( (a==0x89) && (b=0x50) ) { return 1; }
+  if ( (a==0xFF) && (b=0xD8) ) { return 1; }
+  //if ( (a==0x89) && (b=0x50) ) { return 1; }
   return 0;
 }
 
@@ -65,12 +66,9 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 	JSAMPROW row_pointer[1];
 
 	FILE *infile = fopen( filename, "rb" );
-	unsigned long location = 0;
-	unsigned int i = 0;
-
-	if ( !infile )
+	if ( infile==0 )
 	{
-		printf("Error opening jpeg file %s\n!", filename );
+		fprintf(stderr,"Error opening jpeg file %s\n!", filename );
 		return 0;
 	}
 
@@ -79,6 +77,10 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 		fclose(infile);
 		return 0;
 	}
+
+	unsigned long location = 0;
+	unsigned int i = 0;
+
 	/* here we set up the standard libjpeg error handler */
 	cinfo.err = jpeg_std_error( &jerr );
 	/* setup decompression process and source, then read JPEG header */

@@ -1,1 +1,9 @@
 # depslib dependency file v1.0
+1362350648 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/lsimg/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../AdvancedImageSearchLib/AdvancedImageSearchLib.h"
+
+1362351059 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/AdvancedImageSearchLib.h
+
