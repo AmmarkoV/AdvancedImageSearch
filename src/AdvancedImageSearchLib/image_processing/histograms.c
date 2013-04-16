@@ -35,6 +35,9 @@ static struct Histogram *  generateHistogramPTRS(unsigned char * rgb , unsigned 
 
    if (channels==3)
    {
+    hist->width=width;
+    hist->height=width;
+
     unsigned int overlaps = 0;
     unsigned int rgbPTRIndex=0;
     while (rgbPTR<rgbLimit)
@@ -90,6 +93,9 @@ struct Histogram *  generateHistogram(unsigned char * rgb , unsigned int width ,
    if (channels==3)
    {
     StartTimer(HISTOGRAM_GENERATION_DELAY);
+
+    hist->width=width;
+    hist->height=width;
 
     unsigned int overlaps = 0;
     unsigned int rgbPTRIndex=0;

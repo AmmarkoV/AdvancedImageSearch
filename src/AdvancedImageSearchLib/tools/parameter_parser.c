@@ -247,7 +247,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
               }
 
            if (criteria->colorRangeUsed) {  criteria->criteriaSpecified=1; }
-           criteria->colorRange = 50;
+           criteria->colorRange = 60;
         }
     } else
    if (strcmp(argv[i],"-like")==0)

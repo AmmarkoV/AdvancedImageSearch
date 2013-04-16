@@ -69,6 +69,11 @@ It will move all images suitable for wallpaper that are "red" ( larger than 1680
 
 Find all images like ~/me.jpg in ~/Downloads direcotry 
 lsimg -like ~/me.jpg ~/Downloads/
+
+Open all the "green" images with gpicview
+cd ~/Downloads
+lsimg -color green ./ | xargs -n 1 gpicview #
+
 ------------------------------          ------------------------------
 
 

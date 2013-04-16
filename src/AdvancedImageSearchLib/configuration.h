@@ -11,6 +11,8 @@
 
 #define USE_TIMERS 1
 
+#define USE_CACHING 1
+
 #define PRINT_DEBUG_INFO 0
 
 

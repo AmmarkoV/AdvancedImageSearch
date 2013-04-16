@@ -36,6 +36,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_processing/faceDetection.h"
 #include "image_processing/findPatterns.h"
 
+#include "caching/resultbank.h"
+
+
 #include "tools/string_extension_scanner.h"
 #include "tools/parameter_parser.h"
 #include "tools/timers.h"
@@ -162,7 +165,8 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
       //Ready to discard for violation of histogram
       if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
 
-      struct Histogram * histogram = generateHistogram( (unsigned char * ) img->pixels , img->width , img->height , img->depth );
+      struct Histogram * histogram = request_generateHistogram( filename , img );
+
       if ( histogram!=0 )
       {
          if (! histogramIsCloseToColor(histogram,  criteria->colorRangeSpecificR  ,
@@ -205,7 +209,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     if ( (criteria->minFacesUsed) || (criteria->maxFacesUsed) )
     {
       if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
-      unsigned int faces = imageHasNFaces(img);
+      unsigned int faces = request_imageHasNFaces(filename, img);
       if ( ( criteria->minimumFaceCount < faces ) && (criteria->minFacesUsed) ) { return 0; }
       if ( ( criteria->maximumFaceCount > faces ) && (criteria->maxFacesUsed) ) { return 0; }
     }
@@ -215,7 +219,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     //it also converts the pattern to grayscale but only one time!
     if (criteria->containsUsed)
     {
-      if (!findPatternInImage(criteria->containsImage,img)) { return 0; }
+      if (!request_findPatternInImage(filename , criteria->containsImageFilename , criteria->containsImage,img)) { return 0; }
     }
 
     return 1;
