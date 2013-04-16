@@ -88,7 +88,9 @@ gcc  $Optimizations $CPU -c image_processing/filters.c -o filters.o
 gcc  $Optimizations $CPU $PATTERNSTUFF -c image_processing/findPatterns.c -o findPatterns.o
 gcc  $Optimizations $CPU -c image_processing/histograms.c -o histograms.o
 gcc  $Optimizations $CPU -c image_processing/imageComparison.c -o imageComparison.o
-gcc  $Optimizations $CPU -c image_processing/imageResizer.c -o imageResizer.o
+gcc  $Optimizations $CPU -c image_processing/imageResizer.c -o imageResizer.o 
+#Image Processing
+gcc  $Optimizations $CPU -c caching/resultbank.c -o resultbank.o
 #Codecs
 #Future Addition gcc  $Optimizations $CPU -c codecs/jpgExiforient_embed.c -o jpgExiforient_embed.o 
 gcc  $Optimizations $CPU -c codecs/codecs.c -o codecs.o 
@@ -98,7 +100,7 @@ gcc  $Optimizations $CPU -c codecs/pngInput.c -o pngInput.o
 gcc  $Optimizations $CPU -c codecs/ppmInput.c -o ppmInput.o 
  
 
-FILESTOLINK="main.o string_extension_scanner.o timers.o parameter_parser.o faceDetection.o filters.o findPatterns.o histograms.o imageComparison.o imageResizer.o codecs.o jpgExifexternal.o jpgInput.o pngInput.o ppmInput.o "
+FILESTOLINK="main.o string_extension_scanner.o timers.o parameter_parser.o faceDetection.o filters.o findPatterns.o histograms.o imageComparison.o imageResizer.o resultbank.o codecs.o jpgExifexternal.o jpgInput.o pngInput.o ppmInput.o "
 
 g++ -shared $FILESTOLINK -o $TARGET $ALLTHELIBS 
 

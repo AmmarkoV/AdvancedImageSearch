@@ -52,6 +52,10 @@
 			<Add library="../PatternRecognition/libPatternRecognition.so" />
 		</Linker>
 		<Unit filename="AdvancedImageSearchLib.h" />
+		<Unit filename="caching/resultbank.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="caching/resultbank.h" />
 		<Unit filename="codecs/codecs.c">
 			<Option compilerVar="CC" />
 		</Unit>

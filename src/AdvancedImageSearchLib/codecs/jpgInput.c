@@ -51,8 +51,6 @@ int fastJPGHeaderCheck(FILE * file)
 }
 
 
-
-
 int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 {
     if (filename==0) { fprintf(stderr,"Cannot load Null filename\n"); return 0; }
