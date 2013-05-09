@@ -20,12 +20,13 @@ unsigned long hash(unsigned char *str)
         return hash;
     }
 
-
+// ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
 
 
 int request_findPatternInImage(char * filename , char * patternname,  struct Image * pattern,struct Image * img)
 {
    #if USE_CACHING
+    //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE THE PATTERN IN FILENAME
     return findPatternInImage(pattern,img);
    #else
     return findPatternInImage(pattern,img);
@@ -36,6 +37,7 @@ int request_findPatternInImage(char * filename , char * patternname,  struct Ima
 int request_imageHasNFaces(char * filename , struct Image * img)
 {
    #if USE_CACHING
+    //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE A LIST OF FACES IN IMAGE
     return imageHasNFaces(img);
    #else
     return imageHasNFaces(img);
@@ -46,6 +48,7 @@ int request_imageHasNFaces(char * filename , struct Image * img)
 struct Histogram *  request_generateHistogram(char * filename , struct Image * img)
 {
    #if USE_CACHING
+    //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE A PRECALCULATED HISTOGRAM
     return generateHistogram(img->pixels , img->width , img->height , img->depth );
    #else
     return generateHistogram(img->pixels , img->width , img->height , img->depth );
