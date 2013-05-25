@@ -157,7 +157,7 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
  * \param *filename char string specifying the file name to save to
  *
  */
-int WriteJPEG( char *filename,struct Image * pic,char *mem,unsigned long * mem_size)
+int WriteJPEGInternal( char *filename,struct Image * pic,char *mem,unsigned long * mem_size)
 {
     fprintf(stderr,"WriteJPEG(%s,%p,%p,%p); called \n",filename,pic,mem,mem_size);
 
@@ -242,6 +242,18 @@ int WriteJPEG( char *filename,struct Image * pic,char *mem,unsigned long * mem_s
 	return 1;
 }
 
+int WriteJPEGFile(struct Image * pic,char *filename)
+{
+    return WriteJPEGInternal(filename,pic,0,0);
+}
+
+
+int WriteJPEGMemory(struct Image * pic,char *mem,unsigned long * mem_size)
+{
+    return WriteJPEGInternal(0,pic,mem,mem_size);
+}
+
+
 int jpegtest()
 {
 	char *infilename = (char*) "test.jpg", *outfilename = (char*) "test_out.jpg";
@@ -250,7 +262,7 @@ int jpegtest()
 	if( ReadJPEG( infilename , 0  , 0 ) > 0 )
 	{
 		/* then copy it to another file */
-		if( WriteJPEG( outfilename ,0 ,0,0 ) < 0 ) return -1;
+		if( WriteJPEGFile( 0 , outfilename ) < 0 ) return -1;
 	}
 	else return -1;
 	return 0;

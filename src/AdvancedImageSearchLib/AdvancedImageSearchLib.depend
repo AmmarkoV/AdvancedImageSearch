@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1363996290 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
+1369490780 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -10,9 +10,9 @@
 	"../tools/timers.h"
 	"../configuration.h"
 
-1361879712 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
+1369490801 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
 
-1362075427 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
+1369490555 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
 	"codecs.h"
 	"../configuration.h"
 
@@ -35,7 +35,7 @@
 
 1362261546 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.h
 
-1365779316 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
+1369490902 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
 	"jpgInput.h"
 	<stdio.h>
 	<string.h>
@@ -1632,4 +1632,24 @@
 	<stdlib.h>
 	<string.h>
 	<unistd.h>
+
+1366117467 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<sys/types.h>
+	<unistd.h>
+	"parameter_parser.h"
+	"timers.h"
+	"../configuration.h"
+	"../codecs/codecs.h"
+	"../codecs/ppmInput.h"
+	"../image_processing/imageResizer.h"
+
+1366122159 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.c
+	"resultbank.h"
+	"../image_processing/findPatterns.h"
+	"../image_processing/faceDetection.h"
+	"../image_processing/histograms.h"
 

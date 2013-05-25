@@ -83,13 +83,13 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
 }
 
 
-int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,unsigned long * mem_size)
+int writeImageFile(struct Image * pic,unsigned int type,char *filename)
 {
    switch (type)
    {
      #if USE_JPG_FILES
       case JPG_CODEC :
-       return WriteJPEG(filename,pic,mem,mem_size);
+       return WriteJPEGFile(pic,filename);
      #endif // USE_JPG_FILES
 
       default :
@@ -99,6 +99,22 @@ int writeImage( char *filename,unsigned int type,struct Image * pic,char *mem,un
    return 0;
 }
 
+
+int writeImageMemory(struct Image * pic,unsigned int type,char *mem,unsigned long * mem_size)
+{
+   switch (type)
+   {
+     #if USE_JPG_FILES
+      case JPG_CODEC :
+       return WriteJPEGMemory(pic,mem,mem_size);
+     #endif // USE_JPG_FILES
+
+      default :
+        break;
+   };
+
+   return 0;
+}
 
 
 int destroyImage(struct Image * img)

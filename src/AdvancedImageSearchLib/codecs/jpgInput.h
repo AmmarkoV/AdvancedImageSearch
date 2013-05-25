@@ -8,7 +8,9 @@
 #if USE_JPG_FILES
 
 int ReadJPEG( char *filename,struct Image * pic,char read_only_header);
-int WriteJPEG( char *filename,struct Image * pic,char *mem,unsigned long * mem_size);
+
+int WriteJPEGFile(struct Image * pic,char *filename);
+int WriteJPEGMemory(struct Image * pic,char *mem,unsigned long * mem_size);
 
 #endif
 
