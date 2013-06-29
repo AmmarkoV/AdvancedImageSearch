@@ -125,12 +125,13 @@ struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigne
  struct Image * smallerImg  = (struct Image *) malloc(sizeof (struct Image));
  if (smallerImg==0) { fprintf(stderr,"Could not allocate memory for resized image structure\n"); return 0; }
 
- if (img->depth==3)
+ if (img->channels==3)
  {
    StartTimer(IMAGE_RESIZE_DELAY);
    smallerImg->width = resizeWidth;
    smallerImg->height = resizeHeight;
-   smallerImg->depth = img->depth;
+   smallerImg->channels = img->channels;
+   smallerImg->bitsperpixel = img->bitsperpixel;
 
    smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
 

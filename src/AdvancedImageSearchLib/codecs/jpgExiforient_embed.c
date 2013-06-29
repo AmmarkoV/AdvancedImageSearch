@@ -34,7 +34,7 @@
  * 88          88  888888  888888
  *
  */
-#include "jpegexiforient_embed.h"
+#include "jpgExiforient_embed.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,14 +85,14 @@ unsigned int GetJPGOrientationOfFile(char * filename)
 {
   read_byte_error_while_reading=0;
   myfile=0;
-  int n_flag=0 , set_flag=0;
+  int set_flag=0;
   unsigned int length=0, i=0;
   int is_motorola=0; /* Flag for byte order */
   unsigned int offset=0, number_of_tags=0, tagnum=0;
 
 
 
-  n_flag = 0; set_flag = 0;
+   set_flag = 0;
 
   i = 1;
   myfile = fopen(filename, "rb");

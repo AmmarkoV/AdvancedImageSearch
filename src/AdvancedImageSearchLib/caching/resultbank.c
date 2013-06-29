@@ -51,6 +51,6 @@ struct Histogram *  request_generateHistogram(char * filename , struct Image * i
     //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE A PRECALCULATED HISTOGRAM
     return generateHistogram(img->pixels , img->width , img->height , img->depth );
    #else
-    return generateHistogram(img->pixels , img->width , img->height , img->depth );
+    return generateHistogram(img->pixels , img->width , img->height , img->channels );
    #endif
 }

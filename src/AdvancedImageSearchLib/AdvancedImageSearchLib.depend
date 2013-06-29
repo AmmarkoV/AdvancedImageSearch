@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1369490780 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
+1372536983 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -7,20 +7,16 @@
 	"jpgInput.h"
 	"pngInput.h"
 	"ppmInput.h"
-	"../tools/timers.h"
-	"../configuration.h"
 
-1369490801 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
+1372536973 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
 
-1369490555 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
+1372525293 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
 	"codecs.h"
-	"../configuration.h"
 
 1366115167 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/configuration.h
 
-1362075452 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
+1372525298 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
 	"codecs.h"
-	"../configuration.h"
 
 1362071985 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.h
 	"codecs.h"
@@ -43,7 +39,7 @@
 	<stdlib.h>
 	"codecs.h"
 
-1362075463 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
+1372539992 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
 	"pngInput.h"
 	<unistd.h>
 	<stdlib.h>
@@ -52,7 +48,7 @@
 	<stdarg.h>
 	<png.h>
 
-1362071946 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
+1372537406 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -1535,7 +1531,7 @@
 	"opencv2/core/core_c.h"
 	"opencv2/core/core.hpp"
 
-1362688370 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
+1372540111 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
 	"filters.h"
 	<stdio.h>
 	<stdlib.h>
@@ -1563,7 +1559,7 @@
 
 1366115516 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
 
-1362085413 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.c
+1372540145 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -1573,7 +1569,7 @@
 1361983164 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.h
 	"../codecs/codecs.h"
 
-1362092039 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.c
+1372540161 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -1583,7 +1579,7 @@
 1362092042 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.h
 	"../codecs/codecs.h"
 
-1366115116 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/main.c
+1372540178 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/main.c
 	"AdvancedImageSearchLib.h"
 	<stdio.h>
 	<stdlib.h>
@@ -1647,7 +1643,7 @@
 	"../codecs/ppmInput.h"
 	"../image_processing/imageResizer.h"
 
-1366122159 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.c
+1372540244 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.c
 	"resultbank.h"
 	"../image_processing/findPatterns.h"
 	"../image_processing/faceDetection.h"

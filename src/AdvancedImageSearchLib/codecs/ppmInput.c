@@ -8,6 +8,18 @@
 #define PPMREADBUFLEN 256
 
 
+unsigned int simplePow(unsigned int base,unsigned int exp)
+{
+    if (exp==0) return 1;
+    unsigned int retres=base;
+    unsigned int i=0;
+    for (i=0; i<exp-1; i++)
+    {
+        retres*=base;
+    }
+    return retres;
+}
+
 int ReadPPM(char * filename,struct Image * pic,char read_only_header)
 {
     FILE *pf=0;
@@ -35,7 +47,8 @@ int ReadPPM(char * filename,struct Image * pic,char read_only_header)
 
         pic->width=w;
         pic->height=h;
-        pic->depth=3;
+        pic->channels=3;
+        pic->bitsperpixel=8;
 
         if (read_only_header) { fclose(pf); return 1; }
 
@@ -60,7 +73,7 @@ int ReadPPM(char * filename,struct Image * pic,char read_only_header)
   return 0;
 }
 
-int WritePPM(char * filename,struct Image * pic)
+int WritePPMOld(char * filename,struct Image * pic)
 {
 
     FILE *fd=0;
@@ -83,3 +96,56 @@ int WritePPM(char * filename,struct Image * pic)
 
   return 0;
 }
+
+
+
+
+int WritePPM(char * filename,struct Image * pic)
+{
+    //fprintf(stderr,"saveRawImageToFile(%s) called\n",filename);
+    if (pic==0) { return 0; }
+    if ( (pic->width==0) || (pic->height==0) || (pic->channels==0) || (pic->bitsperpixel==0) ) { fprintf(stderr,"saveRawImageToFile(%s) called with zero dimensions\n",filename); return 0;}
+    if(pic->pixels==0) { fprintf(stderr,"saveRawImageToFile(%s) called for an unallocated (empty) frame , will not write any file output\n",filename); return 0; }
+    if (pic->bitsperpixel>16) { fprintf(stderr,"PNM does not support more than 2 bytes per pixel..!\n"); return 0; }
+
+    FILE *fd=0;
+    fd = fopen(filename,"wb");
+
+    if (fd!=0)
+    {
+        unsigned int n;
+        if (pic->channels==3) fprintf(fd, "P6\n");
+        else if (pic->channels==1) fprintf(fd, "P5\n");
+        else
+        {
+            fprintf(stderr,"Invalid channels arg (%u) for SaveRawImageToFile\n",pic->channels);
+            fclose(fd);
+            return 1;
+        }
+
+        fprintf(fd, "%d %d\n%u\n", pic->width, pic->height , simplePow(2 ,pic->bitsperpixel)-1);
+
+        float tmp_n = (float) pic->bitsperpixel/ 8;
+        tmp_n = tmp_n *  pic->width * pic->height * pic->channels ;
+        n = (unsigned int) tmp_n;
+
+        fwrite(pic->pixels, 1 , n , fd);
+        fflush(fd);
+        fclose(fd);
+        return 1;
+    }
+    else
+    {
+        fprintf(stderr,"SaveRawImageToFile could not open output file %s\n",filename);
+        return 0;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+

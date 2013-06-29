@@ -13,7 +13,7 @@ int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDif
  StartTimer(IMAGE_COMPARISON_DELAY);
  //We have two images of the same size
  unsigned char *rgb1 = img1->pixels;
- unsigned char *rgb1Limit = rgb1 + img1->width * img1->height * img1->depth;
+ unsigned char *rgb1Limit = rgb1 + img1->width * img1->height * img1->channels * (img1->bitsperpixel/8);
  unsigned char *rgb2 = img2->pixels;
 
  unsigned int maxDifferentPixels =(unsigned int) (img1->width * img1->height *  (differencePercent/100));

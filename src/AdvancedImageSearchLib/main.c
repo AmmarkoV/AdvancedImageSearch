@@ -173,7 +173,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
                                                    criteria->colorRangeSpecificG  ,
                                                    criteria->colorRangeSpecificB,
                                                    criteria->colorRange,
-                                                   img->width * img->height * img->depth ,
+                                                   img->width * img->height * img->channels * (img->bitsperpixel/8),
                                                    30.0 ) )
                                                    {
                                                     free(histogram);

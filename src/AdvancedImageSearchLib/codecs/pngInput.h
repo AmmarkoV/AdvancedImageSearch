@@ -2,7 +2,6 @@
 #define _PNGINPUT_H_INCLUDED
 
 #include "codecs.h"
-#include "../configuration.h"
 
 #if USE_PNG_FILES
 

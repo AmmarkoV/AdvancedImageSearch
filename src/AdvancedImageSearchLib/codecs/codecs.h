@@ -27,6 +27,10 @@ extern "C"
 #endif
 
 
+#define USE_JPG_FILES 1
+#define USE_PNG_FILES 1
+
+
 #define READ_CREATES_A_NEW_PIXEL_BUFFER 1
 
 enum codecTypeList
@@ -34,6 +38,7 @@ enum codecTypeList
    NO_CODEC = 0,
    JPG_CODEC ,
    PPM_CODEC ,
+   PNM_CODEC ,
    PNG_CODEC
 };
 
@@ -42,7 +47,8 @@ struct Image
   unsigned char * pixels;
   unsigned int width;
   unsigned int height;
-  unsigned int depth;
+  unsigned int channels;
+  unsigned int bitsperpixel;
   unsigned int image_size;
 };
 

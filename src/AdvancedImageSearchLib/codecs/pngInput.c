@@ -5,7 +5,7 @@
  * of the X11 license.
  * ( code has been modified , original file found here http://zarb.org/~gc/html/libpng.html
  */
-
+#define USE_PNG_FILES 1
 
 
 #include "pngInput.h"
@@ -32,83 +32,139 @@ void abort_(const char * s, ...)
 }
 
 
-
-
-int ReadPNG( char *filename,struct Image * pic,char read_only_header)
+int ReadPNG(char *filename,struct Image * pic,char read_only_header)
 {
-  fprintf(stderr,"This needs work :P \n");
-  return 0;
-  png_byte color_type;
-  png_byte bit_depth;
+    png_byte header[8];
 
-  png_structp png_ptr;
-  png_infop info_ptr;
-  int number_of_passes;
-  png_bytep * row_pointers;
+    FILE *fp = fopen(filename, "rb");
+    if (fp == 0)
+    {
+        perror(filename);
+        return 0;
+    }
 
+    // read the header
+    fread(header, 1, 8, fp);
 
-   /* pic->pixels pic->size_x pic->size_y */
-       char header[8];    // 8 is the maximum size that can be checked
-
-        /* open file and test for it being a png */
-        FILE *fp = fopen(filename, "rb");
-        if (!fp)
-                abort_("[read_png_file] File %s could not be opened for reading", filename);
-        int i=fread(header, 1, 8, fp);
-        if (i!=8) { fprintf(stderr,"error reading png header..\n"); }
-
-        if (png_sig_cmp((png_byte*) header, 0, 8))
-                abort_("[read_png_file] File %s is not recognized as a PNG file", filename);
-
-
-        /* initialize stuff */
-        png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-
-        if (!png_ptr)
-                abort_("[read_png_file] png_create_read_struct failed");
-
-        info_ptr = png_create_info_struct(png_ptr);
-        if (!info_ptr)
-                abort_("[read_png_file] png_create_info_struct failed");
-
-        if (setjmp(png_jmpbuf(png_ptr)))
-                abort_("[read_png_file] Error during init_io");
-
-        png_init_io(png_ptr, fp);
-        png_set_sig_bytes(png_ptr, 8);
-
-        png_read_info(png_ptr, info_ptr);
-
-        pic->width = png_get_image_width(png_ptr, info_ptr);
-        pic->height = png_get_image_height(png_ptr, info_ptr);
-        color_type = png_get_color_type(png_ptr, info_ptr);
-        bit_depth = png_get_bit_depth(png_ptr, info_ptr);
-        pic->depth = bit_depth;
-
-        number_of_passes = png_set_interlace_handling(png_ptr);
-        png_read_update_info(png_ptr, info_ptr);
-
-
-        /* read file */
-        if (setjmp(png_jmpbuf(png_ptr)))
-                abort_("[read_png_file] Error during read_image");
-
-        row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pic->height);
-        unsigned int y;
-        for (y=0; y<pic->height; y++)
-             {
-                 row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));
-             }
-
-
-        png_read_image(png_ptr, row_pointers);
-
-        pic->pixels = row_pointers;
-
-
+    if (png_sig_cmp(header, 0, 8))
+    {
+        fprintf(stderr, "error: %s is not a PNG.\n", filename);
         fclose(fp);
-  return 1;
+        return 0;
+    }
+
+    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!png_ptr)
+    {
+        fprintf(stderr, "error: png_create_read_struct returned 0.\n");
+        fclose(fp);
+        return 0;
+    }
+
+    // create png info struct
+    png_infop info_ptr = png_create_info_struct(png_ptr);
+    if (!info_ptr)
+    {
+        fprintf(stderr, "error: png_create_info_struct returned 0.\n");
+        png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+        fclose(fp);
+        return 0;
+    }
+
+    // create png info struct
+    png_infop end_info = png_create_info_struct(png_ptr);
+    if (!end_info)
+    {
+        fprintf(stderr, "error: png_create_info_struct returned 0.\n");
+        png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
+        fclose(fp);
+        return 0;
+    }
+
+    // the code in this if statement gets called if libpng encounters an error
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        fprintf(stderr, "error from libpng\n");
+        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+        fclose(fp);
+        return 0;
+    }
+
+    // init png reading
+    png_init_io(png_ptr, fp);
+
+    // let libpng know you already read the first 8 bytes
+    png_set_sig_bytes(png_ptr, 8);
+
+    // read all the info up to the image data
+    png_read_info(png_ptr, info_ptr);
+
+    pic->width = png_get_image_width(png_ptr, info_ptr);
+    pic->height = png_get_image_height(png_ptr, info_ptr);
+    pic->channels = png_get_channels(png_ptr, info_ptr);
+    pic->bitsperpixel = png_get_bit_depth(png_ptr, info_ptr);
+
+    // variables to pass to get info
+    int bit_depth, color_type;
+    png_uint_32 temp_width, temp_height;
+
+    // get info about png
+    png_get_IHDR(png_ptr, info_ptr, &temp_width, &temp_height, &bit_depth, &color_type,
+        NULL, NULL, NULL);
+
+
+    // Update the png info struct.
+    png_read_update_info(png_ptr, info_ptr);
+
+    // Row size in bytes.
+    int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+
+    // glTexImage2d requires rows to be 4-byte aligned
+    rowbytes += 3 - ((rowbytes-1) % 4);
+
+    // Allocate the image_data as a big block, to be given to opengl
+    png_byte * image_data;
+    image_data = malloc(rowbytes * temp_height * sizeof(png_byte)+15);
+    if (image_data == NULL)
+    {
+        fprintf(stderr, "error: could not allocate memory for PNG image data\n");
+        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+        fclose(fp);
+        return 0;
+    }
+
+    // row_pointers is for pointing to image_data for reading the png with libpng
+    png_bytep * row_pointers = malloc(temp_height * sizeof(png_bytep));
+    if (row_pointers == NULL)
+    {
+        fprintf(stderr, "error: could not allocate memory for PNG row pointers\n");
+        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+        free(image_data);
+        fclose(fp);
+        return 0;
+    }
+
+    // set the individual row_pointers to point at the correct offsets of image_data
+    int i;
+    for (i = 0; i < temp_height; i++)
+    {
+//  INVERT Y row_pointers[pic->height - 1 - i] = image_data + i * rowbytes;
+             row_pointers[i] = image_data + i * rowbytes;
+    }
+
+    // read the png into image_data through row_pointers
+    png_read_image(png_ptr, row_pointers);
+
+
+        pic->pixels = image_data;
+
+    // clean up
+    png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+    free(row_pointers);
+    fclose(fp);
+
+    return 1;
 }
+
 
 int WritePNG(char * filename,struct Image * pic)
 {
@@ -153,6 +209,7 @@ png_write_info(png_ptr, info_ptr);
 /* write bytes */
 if (setjmp(png_jmpbuf(png_ptr))) { abort_("[write_png_file] Error during writing bytes"); return 0; }
 row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pic->height);
+if (row_pointers==0) { abort_("Could not allocate enough memory to hold the image \n"); return 0; }
 char * raw_pixels=pic->pixels;
 
 unsigned int y;

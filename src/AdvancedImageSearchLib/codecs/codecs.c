@@ -26,16 +26,13 @@
 #include "jpgInput.h"
 #include "pngInput.h"
 #include "ppmInput.h"
-#include "../tools/timers.h"
 
-#include "../configuration.h"
 
 
 #define DEBUG_READING_IMAGES 0
 
 struct Image * readImage( char *filename,unsigned int type,char read_only_header)
 {
-   StartTimer(LOAD_IMAGE_DELAY);
 
    struct Image * img = 0;
    img = (struct Image *) malloc( sizeof(struct Image) );
@@ -78,7 +75,6 @@ struct Image * readImage( char *filename,unsigned int type,char read_only_header
       break;
    };
 
-   EndTimer(LOAD_IMAGE_DELAY);
    return img;
 }
 
@@ -91,6 +87,14 @@ int writeImageFile(struct Image * pic,unsigned int type,char *filename)
       case JPG_CODEC :
        return WriteJPEGFile(pic,filename);
      #endif // USE_JPG_FILES
+
+
+      case PPM_CODEC :
+      case PNM_CODEC :
+       WritePPM(filename,pic);
+      break;
+
+
 
       default :
         break;

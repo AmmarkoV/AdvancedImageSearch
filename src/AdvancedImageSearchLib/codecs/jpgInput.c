@@ -116,10 +116,10 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
     memset(raw_image,0,img_size);
 
     float get_channels = (float) cinfo.output_width*cinfo.output_height*cinfo.num_components / cinfo.image_width * cinfo.image_height;
-	pic->depth=cinfo.out_color_components;
+	pic->channels=cinfo.out_color_components;
 
-    if (get_channels < pic->depth)
-          { fprintf(stderr,"Picture %s has incorrect filesize allocated for its channels ( %u vs %0.2f) ..!\n",filename , pic->depth , get_channels); }
+    if (get_channels < pic->channels)
+          { fprintf(stderr,"Picture %s has incorrect filesize allocated for its channels ( %u vs %0.2f) ..!\n",filename , pic->channels , get_channels); }
 
 	/* now actually read the jpeg into the raw buffer */
 	row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );
