@@ -187,7 +187,11 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
  int i=0;
  for (i=0; i<argc; i++)
  {
-   if (strcmp(argv[i],"-help")==0)
+   if (
+       (strcmp(argv[i],"-h")==0) ||
+       (strcmp(argv[i],"-help")==0) ||
+       (strcmp(argv[i],"--help")==0)
+      )
     {
       criteria->needHelp=1;
     } else
