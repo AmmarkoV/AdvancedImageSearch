@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc<3) {  fprintf(stderr,"cmpimg called with not enough parameters\n"); return 1; }
+  if (argc<3) {  fprintf(stderr,"cmpimg called with not enough parameters , usage : cmpimg filenameA filenameB\n"); return 1; }
 
   //Pass argument 1 to filename1
   char * filename1=0;
