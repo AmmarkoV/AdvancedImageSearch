@@ -184,7 +184,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
 
  char * outdir=0;
- int i=0;
+ unsigned int i=0 , finalArgument=0;
  for (i=0; i<argc; i++)
  {
    if (
@@ -198,38 +198,48 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    if (strcmp(argv[i],"--report")==0)
     {
       criteria->printTimers=1;
+      finalArgument=i+1;
     } else
    if (strcmp(argv[i],"--turbo")==0)
     {
       runTurbo();
+      finalArgument=i+1;
     } else
    if (strcmp(argv[i],"--limit")==0)
     {
+     finalArgument=i+1;
      if (i+1<argc) {
                      criteria->limitResults = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
+                     finalArgument=i+2;
+
                    }
     } else
    if (strcmp(argv[i],"--minDims")==0)
     {
+     finalArgument=i+1;
      if (i+2<argc) {
                      criteria->minDimensionsUsed = 1;
                      criteria->minWidth = atoi(argv[i+1]);
                      criteria->minHeight = atoi(argv[i+2]);
                      criteria->criteriaSpecified=1;
+                     finalArgument=i+3;
                    }
     } else
    if (strcmp(argv[i],"--maxDims")==0)
     {
+     finalArgument=i+1;
      if (i+2<argc) {
                      criteria->maxDimensionsUsed = 1;
                      criteria->maxWidth = atoi(argv[i+1]);
                      criteria->maxHeight = atoi(argv[i+2]);
                      criteria->criteriaSpecified=1;
+                     finalArgument=i+3;
                    }
     } else
    if (strcmp(argv[i],"--histogram")==0)
     {
+     finalArgument=i+1;
      if (i+4<argc) {
                      criteria->colorRangeUsed = 1;
                      criteria->colorRangeSpecificR = atoi(argv[i+1]);
@@ -237,10 +247,12 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->colorRangeSpecificB = atoi(argv[i+3]);
                      criteria->colorRange = atoi(argv[i+4]);
                      criteria->criteriaSpecified=1;
+                     finalArgument=i+5;
                    }
     } else
    if (strcmp(argv[i],"--color")==0)
     {
+     finalArgument=i+1;
      if (i+1<argc)
         {
            criteria->colorRangeUsed = 1;
@@ -252,10 +264,12 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
            if (criteria->colorRangeUsed) {  criteria->criteriaSpecified=1; }
            criteria->colorRange = 60;
+           finalArgument=i+2;
         }
     } else
    if (strcmp(argv[i],"--like")==0)
     {
+     finalArgument=i+1;
      if (i+1<argc) {
                      criteria->perPixelThreshold=30;
                      criteria->similarityPercent=60;
@@ -275,10 +289,12 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                        //Deallocate initial BIG image , we won't be needing it
                        destroyImage(img);
                      }
+                    finalArgument=i+2;
                    }
     } else
    if (strcmp(argv[i],"--likeExt")==0)
     {
+     finalArgument=i+1;
      if (i+3<argc) {
                      criteria->perPixelThreshold=atoi(argv[i+2]);
                      criteria->similarityPercent=atof(argv[i+3]);
@@ -298,12 +314,14 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                        //Deallocate initial BIG image , we won't be needing it
                        destroyImage(img);
                      }
+                     finalArgument=i+4;
                    }
     } else
    if (strcmp(argv[i],"--contains")==0)
     {
-     #if USE_PATTERN_RECOGNITION
+     finalArgument=i+1;
      if (i+2<argc) {
+                     #if USE_PATTERN_RECOGNITION
                      criteria->containsSimilarityPercent=atof(argv[i+2]);
                      strncpy( criteria->containsImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
 
@@ -314,35 +332,42 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                          criteria->containsImage = (void*) img;
                          criteria->criteriaSpecified=1;
                      }
+                     #else
+                      printNotCompiledInSupport(argv[i]);
+                     #endif // USE_OPENCV_SURF_DETECTOR
+
+                     finalArgument=i+1;
                    }
-      #else
-       printNotCompiledInSupport(argv[i]);
-     #endif // USE_OPENCV_SURF_DETECTOR
     } else
    if (strcmp(argv[i],"--minFaces")==0)
     {
-     #if USE_OPENCV_FACEDETECTION
+     finalArgument=i+1;
      if (i+1<argc) {
+                     #if USE_OPENCV_FACEDETECTION
                      criteria->minFacesUsed=1;
                      criteria->minimumFaceCount = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
+                     #else
+                      printNotCompiledInSupport(argv[i]);
+                     #endif // USE_OPENCV_FACEDETECTION
+
+                     finalArgument=i+2;
                    }
-     #else
-       printNotCompiledInSupport(argv[i]);
-     #endif // USE_OPENCV_FACEDETECTION
 
     } else
    if (strcmp(argv[i],"--maxFaces")==0)
     {
-     #if USE_OPENCV_FACEDETECTION
+     finalArgument=i+1;
      if (i+1<argc) {
+                     #if USE_OPENCV_FACEDETECTION
                      criteria->maxFacesUsed=1;
                      criteria->maximumFaceCount = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
+                     #else
+                      printNotCompiledInSupport(argv[i]);
+                     #endif // USE_OPENCV_FACEDETECTION
+                     finalArgument=i+2;
                    }
-     #else
-       printNotCompiledInSupport(argv[i]);
-     #endif // USE_OPENCV_FACEDETECTION
     }
 
 
@@ -350,7 +375,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
      else
 
 
-   if (i==argc-1)
+   if ( (i==argc-1) && (finalArgument<argc) )
     {
       //fprintf(stderr,"Found DIR! %s \n",argv[i]);
       outdir = ( char* ) malloc((strlen(argv[i])+1) *(sizeof(char) )); //+1 for null termination!
