@@ -195,22 +195,22 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     {
       criteria->needHelp=1;
     } else
-   if (strcmp(argv[i],"-report")==0)
+   if (strcmp(argv[i],"--report")==0)
     {
       criteria->printTimers=1;
     } else
-   if (strcmp(argv[i],"-turbo")==0)
+   if (strcmp(argv[i],"--turbo")==0)
     {
       runTurbo();
     } else
-   if (strcmp(argv[i],"-limit")==0)
+   if (strcmp(argv[i],"--limit")==0)
     {
      if (i+1<argc) {
                      criteria->limitResults = atoi(argv[i+1]);
                      criteria->criteriaSpecified=1;
                    }
     } else
-   if (strcmp(argv[i],"-minDims")==0)
+   if (strcmp(argv[i],"--minDims")==0)
     {
      if (i+2<argc) {
                      criteria->minDimensionsUsed = 1;
@@ -219,7 +219,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->criteriaSpecified=1;
                    }
     } else
-   if (strcmp(argv[i],"-maxDims")==0)
+   if (strcmp(argv[i],"--maxDims")==0)
     {
      if (i+2<argc) {
                      criteria->maxDimensionsUsed = 1;
@@ -228,7 +228,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->criteriaSpecified=1;
                    }
     } else
-   if (strcmp(argv[i],"-histogram")==0)
+   if (strcmp(argv[i],"--histogram")==0)
     {
      if (i+4<argc) {
                      criteria->colorRangeUsed = 1;
@@ -239,7 +239,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      criteria->criteriaSpecified=1;
                    }
     } else
-   if (strcmp(argv[i],"-color")==0)
+   if (strcmp(argv[i],"--color")==0)
     {
      if (i+1<argc)
         {
@@ -254,7 +254,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
            criteria->colorRange = 60;
         }
     } else
-   if (strcmp(argv[i],"-like")==0)
+   if (strcmp(argv[i],"--like")==0)
     {
      if (i+1<argc) {
                      criteria->perPixelThreshold=30;
@@ -277,7 +277,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      }
                    }
     } else
-   if (strcmp(argv[i],"-likeExt")==0)
+   if (strcmp(argv[i],"--likeExt")==0)
     {
      if (i+3<argc) {
                      criteria->perPixelThreshold=atoi(argv[i+2]);
@@ -300,7 +300,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      }
                    }
     } else
-   if (strcmp(argv[i],"-contains")==0)
+   if (strcmp(argv[i],"--contains")==0)
     {
      #if USE_PATTERN_RECOGNITION
      if (i+2<argc) {
@@ -319,7 +319,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
        printNotCompiledInSupport(argv[i]);
      #endif // USE_OPENCV_SURF_DETECTOR
     } else
-   if (strcmp(argv[i],"-minFaces")==0)
+   if (strcmp(argv[i],"--minFaces")==0)
     {
      #if USE_OPENCV_FACEDETECTION
      if (i+1<argc) {
@@ -332,7 +332,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
      #endif // USE_OPENCV_FACEDETECTION
 
     } else
-   if (strcmp(argv[i],"-maxFaces")==0)
+   if (strcmp(argv[i],"--maxFaces")==0)
     {
      #if USE_OPENCV_FACEDETECTION
      if (i+1<argc) {
