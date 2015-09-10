@@ -371,19 +371,25 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     }
 
 
-   //last argument should be dir!
-     else
-
-
-   if ( (i==argc-1) && (finalArgument<argc) )
-    {
-      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
-      outdir = ( char* ) malloc((strlen(argv[i])+1) *(sizeof(char) )); //+1 for null termination!
-      if (outdir!=0) {   strcpy(outdir,argv[i]);  }
-
-    }
 
  }
+
+
+
+    //last argument should be dir!
+   if ( finalArgument<argc  )
+    {
+      //fprintf(stderr,"Found an input directory..!\n");
+      //fprintf(stderr,"Found DIR! %s \n",argv[i]);
+      outdir = ( char* ) malloc((strlen(argv[finalArgument])+1) *(sizeof(char) )); //+1 for null termination!
+      if (outdir!=0) {   strcpy(outdir,argv[finalArgument]);  }
+
+    } else
+    {
+       //fprintf(stderr,"Could not find an input directory ( argc = %u , final argument = %u ) ..!\n",argc,finalArgument);
+    }
+
+
  return outdir;
 }
 

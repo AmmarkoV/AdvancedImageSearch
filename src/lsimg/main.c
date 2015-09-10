@@ -24,7 +24,12 @@ int main(int argc, char *argv[])
    if ( argc ==1 )        { /* fprintf(stderr,"No arguments supplied\n"); return 1;*/ } else
    /*We have arguments*/ { dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,criteria); }
 
-   if (dirtosearch==0) { fprintf(stderr,"Directory is not specified assuming current directory \n"); }
+   if (dirtosearch==0)
+    {
+      //fprintf(stderr,"Directory is not specified assuming current directory \n");
+      dirtosearch = (char * ) malloc (sizeof(char)*5);
+      snprintf(dirtosearch,4,".");
+    }
 
    if (criteria->needHelp)
     {
