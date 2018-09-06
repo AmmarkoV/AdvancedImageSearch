@@ -4,6 +4,8 @@
 #include "imageComparison.h"
 #include "../tools/timers.h"
 
+
+
 int imagesAreSimilar(struct Image * img1,struct Image * img2,unsigned int maxDifferencePerChannel,float differencePercent)
 {
  if ( (img1==0) || (img2==0) ) { fprintf(stderr,"Cannot compare images that have not been properly allocated \n"); return 0; }

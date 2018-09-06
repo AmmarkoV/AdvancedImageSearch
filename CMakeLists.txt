@@ -32,8 +32,12 @@ add_subdirectory (src/cmpimg)
 INSTALL(PROGRAMS "src/lsimg/lsimg" DESTINATION "/usr/bin" ) 
 INSTALL(PROGRAMS "src/cmpimg/cmpimg" DESTINATION "/usr/bin" ) 
 
+
+IF( ENABLE_OPENCV )
 INSTALL(PROGRAMS "src/PatternRecognition/libPatternRecognition.so" DESTINATION "/usr/lib/AdvancedImageSearch" )
-INSTALL(PROGRAMS "src/AdvancedImageSearchLib/libAdvancedImageSearch.so" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
+ENDIF( ENABLE_OPENCV )
+
+INSTALL(PROGRAMS "src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
 
 INSTALL(FILES "data/haarcascade_frontalface_alt.xml" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
 

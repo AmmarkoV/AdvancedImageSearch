@@ -18,6 +18,17 @@
 
 #include "../image_processing/imageResizer.h"
 
+
+#define NORMAL   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE "\033[37m" /* White */
+
 void runTurbo()
 {
  //elevate io ops
@@ -123,48 +134,58 @@ void printListOfParametersRecognized()
 {
     printf("Parameters : \n");
 
-    printf("-report\n");
+    printf(GREEN "--report\n" NORMAL);
     printf("On completion of operations a detailed analysis of how much time elapsed during which\n");
-    printf("operations will be printed on stderr \n");
+    printf("operations will be printed on stderr \n\n");
 
-    printf("-turbo\n");
-    printf("Requires root , run at top schedule!\n");
+    printf(GREEN "--turbo\n" NORMAL);
+    printf("Requires root , run at top schedule!\n\n");
 
-    printf("-minDims MIN_WIDTH MIN_HEIGHT i.e. -minDims 1920 1080\n");
-    printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n");
+    printf(GREEN "--minDims MIN_WIDTH MIN_HEIGHT " NORMAL);
+    printf(" i.e. -minDims 1920 1080\n");
+    printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n\n");
 
-    printf("-maxDims MAX_WIDTH MAX_HEIGHT i.e. -maxDims 1920 1080\n");
-    printf("Returned images will have a maximum dimension specified by MAX_WIDTH and MAX_HEIGHT\n");
+    printf(GREEN "--maxDims MAX_WIDTH MAX_HEIGHT " NORMAL);
+    printf(" i.e. -maxDims 1920 1080\n");
+    printf("Returned images will have a maximum dimension specified by MAX_WIDTH and MAX_HEIGHT\n\n");
 
-    printf("-histogram R G B DEVIATION i.e. -histogram 240 240 0 30\n");
-    printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n");
+    printf(GREEN "--histogram R G B DEVIATION " NORMAL);
+    printf(" i.e. -histogram 240 240 0 30\n");
+    printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n\n");
 
-    printf("-color COLORNAME i.e. -color red\n");
+    printf(GREEN "--color COLORNAME " NORMAL);
+    printf(" i.e. -color red\n");
     printf("Returned images will have a median rgb color close to this color\n");
-    printf("Possible colors : red orange yellow green teal blue purple pink green white gray black brown\n");
+    printf("Possible colors : red orange yellow green teal blue purple pink green white gray black brown\n\n");
 
-    printf("-limit NUMBER_OF_RESULTS i.e. -limit 10\n");
-    printf("Returned images will be no more than NUMBER_OF_RESULTS\n");
+    printf(GREEN "--limit NUMBER_OF_RESULTS " NORMAL);
+    printf("i.e. -limit 10\n");
+    printf("Returned images will be no more than NUMBER_OF_RESULTS\n\n");
 
-    printf("-like FILENAME  i.e. -like myphoto.jpg  \n");
-    printf("Returned images will look like myphoto.jpg with an automatic threshold\n");
+    printf(GREEN "--like FILENAME " NORMAL);
+    printf(" i.e. -like myphoto.jpg  \n");
+    printf("Returned images will look like myphoto.jpg with an automatic threshold\n\n");
 
-    printf("-likeExt FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE i.e. -like myphoto.jpg 30 10.5\n");
+    printf(GREEN "--likeExt FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE " NORMAL);
+    printf(" i.e. -like myphoto.jpg 30 10.5\n");
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
-    printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n");
+    printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n\n");
 
     #if USE_OPENCV_SURF_DETECTOR
-    printf("-contains FILENAME  i.e. -contains object.jpg  \n");
-    printf("Returned images will contain a pattern like object.jpg \n");
+    printf(GREEN "--contains FILENAME " NORMAL);
+    printf(" i.e. -contains object.jpg  \n");
+    printf("Returned images will contain a pattern like object.jpg \n\n");
     #endif
 
 
      #if USE_OPENCV_FACEDETECTION
-    printf("-minFaces NUMBER i.e. -minFaces 1\n");
-    printf("Returned images will have a minimum count of NUMBER faces\n");
+    printf(GREEN "--minFaces NUMBER " NORMAL);
+    printf(" i.e. -minFaces 1\n");
+    printf("Returned images will have a minimum count of NUMBER faces\n\n");
 
-    printf("-maxFaces NUMBER i.e. -maxFaces 2\n");
-    printf("Returned images will have no more than NUMBER faces\n");
+    printf(GREEN "--maxFaces NUMBER " NORMAL);
+    printf(" i.e. -maxFaces 2\n");
+    printf("Returned images will have no more than NUMBER faces\n\n");
     #endif
 
 }
@@ -188,6 +209,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
  for (i=0; i<argc; i++)
  {
    if (
+       (strcmp(argv[i],"-?")==0) ||
        (strcmp(argv[i],"-h")==0) ||
        (strcmp(argv[i],"-help")==0) ||
        (strcmp(argv[i],"--help")==0)
@@ -369,9 +391,6 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+2;
                    }
     }
-
-
-
  }
 
 
