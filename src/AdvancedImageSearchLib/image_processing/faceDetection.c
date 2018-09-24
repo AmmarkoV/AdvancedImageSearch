@@ -31,8 +31,8 @@ int openCVFaceDetector(struct Image * img)
    }
 
 
-   StartTimer(FACE_DETECTION_DELAY);
-    IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->depth);
+    StartTimer(FACE_DETECTION_DELAY);
+    IplImage  * image = cvCreateImage( cvSize(img->width,img->height), IPL_DEPTH_8U, img->channels);
     char * opencv_pointer_retainer = image->imageData; // UGLY HACK
     image->imageData = (char*) img->pixels; // UGLY HACK
 

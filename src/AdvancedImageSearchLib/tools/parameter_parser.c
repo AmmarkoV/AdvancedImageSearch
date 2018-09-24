@@ -142,49 +142,49 @@ void printListOfParametersRecognized()
     printf("Requires root , run at top schedule!\n\n");
 
     printf(GREEN "--minDims MIN_WIDTH MIN_HEIGHT " NORMAL);
-    printf(" i.e. -minDims 1920 1080\n");
+    printf("(i.e. -minDims 1920 1080)\n");
     printf("Returned images will have a minimum dimension specified by MIN_WIDTH and MIN_HEIGHT\n\n");
 
     printf(GREEN "--maxDims MAX_WIDTH MAX_HEIGHT " NORMAL);
-    printf(" i.e. -maxDims 1920 1080\n");
+    printf("(i.e. -maxDims 1920 1080)\n");
     printf("Returned images will have a maximum dimension specified by MAX_WIDTH and MAX_HEIGHT\n\n");
 
     printf(GREEN "--histogram R G B DEVIATION " NORMAL);
-    printf(" i.e. -histogram 240 240 0 30\n");
+    printf("(i.e. -histogram 240 240 0 30)\n");
     printf("Returned images will have a median rgb color close to this (+-DEVIATION for every channel value)\n\n");
 
     printf(GREEN "--color COLORNAME " NORMAL);
-    printf(" i.e. -color red\n");
+    printf("(i.e. -color red)\n");
     printf("Returned images will have a median rgb color close to this color\n");
     printf("Possible colors : red orange yellow green teal blue purple pink green white gray black brown\n\n");
 
     printf(GREEN "--limit NUMBER_OF_RESULTS " NORMAL);
-    printf("i.e. -limit 10\n");
+    printf("(i.e. -limit 10)\n");
     printf("Returned images will be no more than NUMBER_OF_RESULTS\n\n");
 
     printf(GREEN "--like FILENAME " NORMAL);
-    printf(" i.e. -like myphoto.jpg  \n");
+    printf("(i.e. -like myphoto.jpg)\n");
     printf("Returned images will look like myphoto.jpg with an automatic threshold\n\n");
 
     printf(GREEN "--likeExt FILENAME PIXEL_THRESHOLD MAX_DIFFERENCE " NORMAL);
-    printf(" i.e. -like myphoto.jpg 30 10.5\n");
+    printf("(i.e. -like myphoto.jpg 30 10.5)\n");
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
     printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n\n");
 
     #if USE_OPENCV_SURF_DETECTOR
     printf(GREEN "--contains FILENAME " NORMAL);
-    printf(" i.e. -contains object.jpg  \n");
+    printf("(i.e. -contains object.jpg)\n");
     printf("Returned images will contain a pattern like object.jpg \n\n");
     #endif
 
 
      #if USE_OPENCV_FACEDETECTION
     printf(GREEN "--minFaces NUMBER " NORMAL);
-    printf(" i.e. -minFaces 1\n");
+    printf("(i.e. -minFaces 1)\n");
     printf("Returned images will have a minimum count of NUMBER faces\n\n");
 
     printf(GREEN "--maxFaces NUMBER " NORMAL);
-    printf(" i.e. -maxFaces 2\n");
+    printf("(i.e. -maxFaces 2)\n");
     printf("Returned images will have no more than NUMBER faces\n\n");
     #endif
 

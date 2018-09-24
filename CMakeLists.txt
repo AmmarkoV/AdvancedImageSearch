@@ -8,6 +8,8 @@ set(CMAKE_C_FLAGS "-fPIC -march=native -mtune=native -O3 -fexpensive-optimizatio
       
 
 OPTION (ENABLE_FACEDETECTION OFF)
+OPTION (ENABLE_PATTERNRECOGNITION OFF)
+
 
 #----
 find_package(OpenCV)
@@ -20,8 +22,13 @@ ENDIF(OpenCV_FOUND)
 #----
 
 
+if (ENABLE_PATTERNRECOGNITION)
+ add_definitions(-DUSE_PATTERN_RECOGNITION)
+ENDIF(ENABLE_PATTERNRECOGNITION)
+
 IF( ENABLE_OPENCV )
- add_subdirectory (src/PatternRecognition)
+ add_subdirectory (src/PatternRecognition) 
+ #add_definitions(-DUSE_OPENCV_FACEDETECTION)
 ENDIF( ENABLE_OPENCV )
 
 
