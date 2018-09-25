@@ -149,6 +149,7 @@ static Mat drawGoodMatches(
         good_matches.push_back( matches[i] );
     }
 
+
     #if DEBUG_OUTPUT
     //std::cerr << "\nMax distance: " << maxDist << std::endl;
     //std::cerr << "Min distance: " << minDist << std::endl;
@@ -205,21 +206,58 @@ static Mat drawGoodMatches(
 
 int isHomographyGood(cv::Mat H)
 {
-    cv::Mat upperH = cv::Mat::ones(2,2,CV_32F);
-    upperH.data[0] = (float) H.data[0];
-    upperH.data[1] = (float) H.data[1];
-    upperH.data[2] = (float) H.data[3];
-    upperH.data[3] = (float) H.data[4];
+ cv::Rect upperMatrix(0, 0, 2, 2);
+ cv::Mat upperH = H(upperMatrix);
 
+ //cerr<<"H(type "<<H.type()<<"): "<<H<<"\n";
+ //cerr<<"upperH(type "<<upperH.type()<<") : "<<upperH<<"\n";
 
-    cerr<<"H : "<<H<<"\n";
-    cerr<<"upperH : "<<upperH<<"\n";
+ float det = cv::determinant(upperH);
+ //std::cerr << "\ndet(" << det << ") ";
 
-    float det = cv::determinant(upperH);
-    std::cerr << "det(" << det << ") ";
+ float detabs = abs(det);
 
-    return ( abs(det-0.0) > 1 );
+ return ( ( 2.0 > detabs ) && ( detabs > 0.1 ) );
 }
+
+
+
+float distPoints(cv::Point2f a , cv::Point2f b)
+{
+  return sqrt( (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y) );
+
+
+}
+
+
+int isCornersGood(std::vector<Point2f> corner)
+{
+    /*
+ std::cerr << "corners( "<<corner[0].x<<","<<corner[0].y<<" ";
+ std::cerr << " "<<corner[1].x<<","<<corner[1].y<<" ";
+ std::cerr << " "<<corner[2].x<<","<<corner[2].y<<" ";
+ std::cerr << " "<<corner[3].x<<","<<corner[3].y<<" ) ";*/
+
+ float distAB = distPoints(corner[0],corner[1]);
+ float distBC = distPoints(corner[1],corner[2]);
+ float distCD = distPoints(corner[2],corner[3]);
+ float distDA = distPoints(corner[3],corner[0]);
+
+ std::cerr << "dist( "<<distAB<<","<<distBC<<","<<distCD<<","<<distDA<<")\n";
+
+  std::cerr << "distR( "<<distAB/distBC<<","<<distBC/distCD<<","<<distCD/distDA<<")\n";
+
+ return (
+          (distAB>20) && (distAB/distBC<3) &&
+          (distBC>20) && (distBC/distCD<3) &&
+          (distCD>20) && (distCD/distDA<3) &&
+          (distDA>20)
+         );
+}
+
+
+
+
 
 ////////////////////////////////////////////////////
 // This program demonstrates the usage of SURF_OCL.
@@ -288,17 +326,18 @@ int doMatching(cv::Mat needle,cv::Mat haystack,float similarity, unsigned int fo
     std::vector<Point2f> corner;
     Mat img_matches = drawGoodMatches(img1.getMat(ACCESS_READ), img2.getMat(ACCESS_READ), keypoints1, keypoints2, matches, corner , H);
 
-    if (isHomographyGood(H))
+    if (isCornersGood(corner))
+    //if (isHomographyGood(H))
     {
     double minDist = matches.front().distance;
     double maxDist = matches.back().distance;
 
     similarity = (float) similarity/100;
 
-    std::cerr << "\nMax(" << maxDist << ") > ";
-    std::cerr << "similarity(" << similarity << ") > ";
-    std::cerr << "Min(" << minDist <<")"<< std::endl;
-    if (maxDist>similarity)
+    //std::cerr << " Max(" << maxDist << ") > ";
+    //std::cerr << "similarity(" << similarity << ") > ";
+    //std::cerr << "Min(" << minDist <<")"<< std::endl;
+    //if (maxDist>similarity)
     {
       found=1;
     }
