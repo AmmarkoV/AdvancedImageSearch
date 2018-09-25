@@ -16,7 +16,7 @@ struct ptrnImage
 };
 
 
-int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img);
+int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img,float similarity);
 
 
 

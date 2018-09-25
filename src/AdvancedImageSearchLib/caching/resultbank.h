@@ -3,7 +3,7 @@
 
 #include "../codecs/codecs.h"
 
-int request_findPatternInImage(char * filename , char * patternname , struct Image * pattern,struct Image * img);
+int request_findPatternInImage(char * filename , char * patternname , struct Image * pattern,struct Image * img,float similarity);
 int request_imageHasNFaces(char * filename , struct Image * img);
 struct Histogram *  request_generateHistogram(char * filename , struct Image * img);
 

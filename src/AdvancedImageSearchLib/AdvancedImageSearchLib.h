@@ -119,7 +119,7 @@ const char * AISLib_Version();
 void AISLib_printHelp();
 char * AISLib_loadDirAndCriteriaFromArgs(int argc, char *argv[], struct AISLib_SearchCriteria * criteria );
 
-struct AISLib_SearchResults *  AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria);
+struct AISLib_SearchResults *  AISLib_Search(const char * directory,struct AISLib_SearchCriteria * criteria);
 void AISLib_destroySearchResults(struct AISLib_SearchResults * sr);
 
 struct AISLib_SearchCriteria * AISLib_createCriteria();

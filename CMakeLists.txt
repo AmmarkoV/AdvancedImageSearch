@@ -24,6 +24,8 @@ ENDIF(OpenCV_FOUND)
 
 if (ENABLE_PATTERNRECOGNITION)
  add_definitions(-DUSE_PATTERN_RECOGNITION)
+
+ set(PatternRecognitionParts PatternRecognition )
 ENDIF(ENABLE_PATTERNRECOGNITION)
 
 IF( ENABLE_OPENCV )

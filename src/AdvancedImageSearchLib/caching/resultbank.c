@@ -4,7 +4,7 @@
 #include "../image_processing/faceDetection.h"
 #include "../image_processing/histograms.h"
 
-
+#include <stdio.h>
 
 /* djb2
 this algorithm (k=33) was first reported by dan bernstein many years ago in comp.lang.c. another version of this algorithm (now favored by bernstein) uses xor: hash(i) = hash(i - 1) * 33 ^ str[i]; the magic of number 33 (why it works better than many other constants, prime or not) has never been adequately explained.
@@ -23,13 +23,14 @@ unsigned long hash(unsigned char *str)
 // ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
 
 
-int request_findPatternInImage(char * filename , char * patternname,  struct Image * pattern,struct Image * img)
+int request_findPatternInImage(char * filename , char * patternname,  struct Image * pattern,struct Image * img , float similarity)
 {
+   //fprintf(stderr,"request_findPatternInImage");
    #if USE_CACHING
     //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE THE PATTERN IN FILENAME
-    return findPatternInImage(pattern,img);
+    return findPatternInImage(pattern,img,similarity);
    #else
-    return findPatternInImage(pattern,img);
+    return findPatternInImage(pattern,img,similarity);
    #endif
 }
 

@@ -20,8 +20,9 @@ int main(int argc, char *argv[])
 {
    char * dirtosearch=0;
    struct AISLib_SearchCriteria * criteria=AISLib_createCriteria();
+
    if ( argc <1 )        { fprintf(stderr,"Argument zero should be executable path :S \n"); return 1; } else
-   if ( argc ==1 )        { /* fprintf(stderr,"No arguments supplied\n"); return 1;*/ } else
+   if ( argc ==1 )       {  fprintf(stderr,"No arguments supplied\n"); return 1; } else
    /*We have arguments*/ { dirtosearch = AISLib_loadDirAndCriteriaFromArgs(argc,argv,criteria); }
 
    if (dirtosearch==0)

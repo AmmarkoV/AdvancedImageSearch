@@ -147,6 +147,7 @@ inline int fileIsImage(char * filename)
 
 int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchCriteria * criteria)
 {
+   //fprintf(stderr,"imageFitsCriteria..");
    if (img==0) { fprintf(stderr,"imageFitsCriteria : Incorrect image \n");    return 0; }
    if (criteria==0) { fprintf(stderr,"imageFitsCriteria : Incorrect criteria \n"); return 0; }
 
@@ -214,12 +215,12 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
       if ( ( criteria->maximumFaceCount > faces ) && (criteria->maxFacesUsed) ) { return 0; }
     }
 
-
+    //fprintf(stderr,"Reached contains..");
     //This should be the last test since it converts input  image to grayscale
     //it also converts the pattern to grayscale but only one time!
     if (criteria->containsUsed)
     {
-      if (!request_findPatternInImage(filename , criteria->containsImageFilename , criteria->containsImage,img)) { return 0; }
+      if (!request_findPatternInImage(filename , criteria->containsImageFilename , criteria->containsImage,img , criteria->containsSimilarityPercent)) { return 0; }
     }
 
     return 1;
@@ -227,7 +228,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
 
 
 
-struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_SearchCriteria * criteria)
+struct AISLib_SearchResults * AISLib_Search(const char * directory,struct AISLib_SearchCriteria * criteria)
 {
   initTimers();
 
@@ -305,6 +306,9 @@ struct AISLib_SearchResults * AISLib_Search(char * directory,struct AISLib_Searc
 
       closedir(dpdf);
       return sr;
+    } else
+    {
+      fprintf(stderr,"Unable to open directory `%s`\n",directory);
     }
 
   return 0;
@@ -319,7 +323,7 @@ int AIS_CompareImages(char * image1,char * image2)
    if (img2==0) { return COULD_NOT_PERFORM_COMPARISON ; }
 
 
-   int result = findPatternInImage(img1,img2);
+   int result = findPatternInImage(img1,img2,50);
    //Not implemented yet
 
    destroyImage(img1);

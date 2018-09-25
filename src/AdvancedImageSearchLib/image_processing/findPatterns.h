@@ -4,6 +4,6 @@
 
 #include "../codecs/codecs.h"
 
-int findPatternInImage(struct Image * pattern,struct Image * img);
+int findPatternInImage(struct Image * pattern,struct Image * img,float similarity);
 
 #endif // FINDOBJECTSSURF_H_INCLUDED

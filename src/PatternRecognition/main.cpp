@@ -38,6 +38,9 @@
 
 #include "PatternRecognition.h"
 
+#define DEBUG_OUTPUT 1
+
+
 using namespace std;
 
 typedef unsigned char BYTE;
@@ -74,8 +77,6 @@ int monochrome(struct ptrnImage * img)
 
 
 #if USE_PATTERN_RECOGNITION
-
-
 using namespace cv;
 using namespace cv::xfeatures2d;
 
@@ -132,7 +133,8 @@ static Mat drawGoodMatches(
     const std::vector<KeyPoint>& keypoints1,
     const std::vector<KeyPoint>& keypoints2,
     std::vector<DMatch>& matches,
-    std::vector<Point2f>& scene_corners_
+    std::vector<Point2f>& scene_corners_,
+    cv::Mat & H
     )
 {
     //-- Sort matches and preserve top 10% matches
@@ -146,10 +148,13 @@ static Mat drawGoodMatches(
     {
         good_matches.push_back( matches[i] );
     }
-    std::cout << "\nMax distance: " << maxDist << std::endl;
-    std::cout << "Min distance: " << minDist << std::endl;
 
-    std::cout << "Calculating homography using " << ptsPairs << " point pairs." << std::endl;
+    #if DEBUG_OUTPUT
+    //std::cerr << "\nMax distance: " << maxDist << std::endl;
+    //std::cerr << "Min distance: " << minDist << std::endl;
+
+    //std::cerr << "Calculating homography using " << ptsPairs << " point pairs." << std::endl;
+    #endif // DEBUG_OUTPUT
 
     // drawing the results
     Mat img_matches;
@@ -176,7 +181,7 @@ static Mat drawGoodMatches(
     obj_corners[3] = Point( 0, img1.rows );
     std::vector<Point2f> scene_corners(4);
 
-    Mat H = findHomography( obj, scene, RANSAC );
+    H = findHomography( obj, scene, RANSAC );
     perspectiveTransform( obj_corners, scene_corners, H);
 
     scene_corners_ = scene_corners;
@@ -197,53 +202,54 @@ static Mat drawGoodMatches(
     return img_matches;
 }
 
+
+int isHomographyGood(cv::Mat H)
+{
+    cv::Mat upperH = cv::Mat::ones(2,2,CV_32F);
+    upperH.data[0] = (float) H.data[0];
+    upperH.data[1] = (float) H.data[1];
+    upperH.data[2] = (float) H.data[3];
+    upperH.data[3] = (float) H.data[4];
+
+
+    cerr<<"H : "<<H<<"\n";
+    cerr<<"upperH : "<<upperH<<"\n";
+
+    float det = cv::determinant(upperH);
+    std::cerr << "det(" << det << ") ";
+
+    return ( abs(det-0.0) > 1 );
+}
+
 ////////////////////////////////////////////////////
 // This program demonstrates the usage of SURF_OCL.
 // use cpu findHomography interface to calculate the transformation matrix
-int main(int argc, char* argv[])
+int doMatching(cv::Mat needle,cv::Mat haystack,float similarity, unsigned int forceCPU)
 {
-    const char* keys =
-        "{ h help     |                  | print help message  }"
-        "{ l left     | box.png          | specify left image  }"
-        "{ r right    | box_in_scene.png | specify right image }"
-        "{ o output   | SURF_output.jpg  | specify output save path }"
-        "{ m cpu_mode |                  | run without OpenCL }";
+    int found = 0;
 
-    CommandLineParser cmd(argc, argv, keys);
-    if (cmd.has("help"))
-    {
-        std::cout << "Usage: surf_matcher [options]" << std::endl;
-        std::cout << "Available options:" << std::endl;
-        cmd.printMessage();
-        return EXIT_SUCCESS;
-    }
-    if (cmd.has("cpu_mode"))
+    if (forceCPU)
     {
         ocl::setUseOpenCL(false);
-        std::cout << "OpenCL was disabled" << std::endl;
+        std::cerr << "OpenCL was disabled" << std::endl;
     }
 
     UMat img1, img2;
 
-    std::string outpath = cmd.get<std::string>("o");
-
-    std::string leftName = cmd.get<std::string>("l");
-    imread(leftName, IMREAD_GRAYSCALE).copyTo(img1);
+    img1 = needle.getUMat(cv::ACCESS_READ);
     if(img1.empty())
     {
-        std::cout << "Couldn't load " << leftName << std::endl;
-        cmd.printMessage();
-        return EXIT_FAILURE;
+        std::cerr << "Couldn't load needle" << std::endl;
+        return 0;
     }
 
-    std::string rightName = cmd.get<std::string>("r");
-    imread(rightName, IMREAD_GRAYSCALE).copyTo(img2);
+    img2 = haystack.getUMat(cv::ACCESS_READ);
     if(img2.empty())
     {
-        std::cout << "Couldn't load " << rightName << std::endl;
-        cmd.printMessage();
-        return EXIT_FAILURE;
+        std::cerr << "Couldn't load haystack" <<std::endl;
+        return 0;
     }
+
 
     double surf_time = 0.;
 
@@ -261,7 +267,6 @@ int main(int argc, char* argv[])
     SURFMatcher<BFMatcher> matcher;
 
     //-- start of timing section
-
     for (int i = 0; i <= LOOP_NUM; i++)
     {
         if(i == 1) workBegin();
@@ -270,30 +275,57 @@ int main(int argc, char* argv[])
         matcher.match(descriptors1, descriptors2, matches);
     }
     workEnd();
-    std::cout << "FOUND " << keypoints1.size() << " keypoints on first image" << std::endl;
-    std::cout << "FOUND " << keypoints2.size() << " keypoints on second image" << std::endl;
-
-    surf_time = getTime();
-    std::cout << "SURF run time: " << surf_time / LOOP_NUM << " ms" << std::endl<<"\n";
 
 
+
+    cv::Mat H;
+
+     //std::cerr << "FOUND " << keypoints1.size() << " keypoints on first image" << std::endl;
+     //std::cerr << "FOUND " << keypoints2.size() << " keypoints on second image" << std::endl;
+
+    //surf_time = getTime();
+    //std::cerr << "SURF run time: " << surf_time / LOOP_NUM << " ms" << std::endl<<"\n";
     std::vector<Point2f> corner;
-    Mat img_matches = drawGoodMatches(img1.getMat(ACCESS_READ), img2.getMat(ACCESS_READ), keypoints1, keypoints2, matches, corner);
+    Mat img_matches = drawGoodMatches(img1.getMat(ACCESS_READ), img2.getMat(ACCESS_READ), keypoints1, keypoints2, matches, corner , H);
 
+    if (isHomographyGood(H))
+    {
+    double minDist = matches.front().distance;
+    double maxDist = matches.back().distance;
+
+    similarity = (float) similarity/100;
+
+    std::cerr << "\nMax(" << maxDist << ") > ";
+    std::cerr << "similarity(" << similarity << ") > ";
+    std::cerr << "Min(" << minDist <<")"<< std::endl;
+    if (maxDist>similarity)
+    {
+      found=1;
+    }
+
+
+
+    }
+
+
+
+
+    #if DEBUG_OUTPUT
     //-- Show detected matches
 
     namedWindow("surf matches", 0);
     imshow("surf matches", img_matches);
-    imwrite(outpath, img_matches);
+    //imwrite("dbg.png", img_matches);
 
-    waitKey(0);
-    return EXIT_SUCCESS;
+    cv::waitKey(1);
+    #endif // DEBUG_OUTPUT
+    return found ;
 }
 
 
 
 
-int detectPatternOpenCV(struct ptrnImage * pattern,struct ptrnImage * img)
+int detectPatternOpenCV(struct ptrnImage * pattern,struct ptrnImage * img,float similarity)
 {
     if (img==0) {  return 0; }
     if (img->pixels==0) {  return 0; }
@@ -315,7 +347,9 @@ int detectPatternOpenCV(struct ptrnImage * pattern,struct ptrnImage * img)
     char * opencvImagePointerRetainer = image->imageData; // UGLY HACK
     image->imageData = (char*) img->pixels; // UGLY HACK
     */
-    cv::Mat imgMat(img->height,img->width,CV_8UC3,(void*) img->pixels , img->depth * img->width * sizeof(unsigned char));
+    cv::Mat imgMat(img->height,img->width,CV_8UC1,(void*) img->pixels , img->depth * img->width * sizeof(unsigned char));
+    //cv::imshow("haystack",imgMat);
+
 
     monochrome(pattern);
     /*
@@ -323,24 +357,24 @@ int detectPatternOpenCV(struct ptrnImage * pattern,struct ptrnImage * img)
     char * opencvObjectPointerRetainer = object->imageData; // UGLY HACK
     object->imageData = (char*) pattern->pixels; // UGLY HACK
     */
-    cv::Mat patternMat(pattern->height,pattern->width,CV_8UC3,(void*) pattern->pixels , pattern->depth * pattern->width * sizeof(unsigned char));
+    cv::Mat patternMat(pattern->height,pattern->width,CV_8UC1,(void*) pattern->pixels , pattern->depth * pattern->width * sizeof(unsigned char));
+    //cv::imshow("needle",patternMat);
 
 
+    //cv::waitKey(0);
+    //fprintf(stderr,"Images ready..\n");
+
+    return doMatching(patternMat,imgMat,similarity,0);
 
 }
-
-
-
-
-
-
 #endif
 
 
-int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img)
+int detectPattern(struct ptrnImage * pattern,struct ptrnImage * img,float similarity)
 {
   #if USE_PATTERN_RECOGNITION
-    return detectPatternOpenCV(pattern,img);
+    return detectPatternOpenCV(pattern,img,similarity);
   #endif
+  fprintf(stderr,"Detect Pattern not built in this build check your CMake configuration..\n");
   return 0;
 }

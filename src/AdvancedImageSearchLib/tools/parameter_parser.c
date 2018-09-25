@@ -171,10 +171,12 @@ void printListOfParametersRecognized()
     printf("Returned images will look like myphoto.jpg with a 30 pixel threshold per pixel and\n");
     printf("a maximum of 10.5%% different pixels ( MAX_DIFFERENCE is a float )\n\n");
 
-    #if USE_OPENCV_SURF_DETECTOR
-    printf(GREEN "--contains FILENAME " NORMAL);
-    printf("(i.e. -contains object.jpg)\n");
-    printf("Returned images will contain a pattern like object.jpg \n\n");
+    #if USE_PATTERN_RECOGNITION
+    printf(GREEN "--contains FILENAME SIMILARITY" NORMAL);
+    printf("(i.e. --contains object.jpg 50)\n");
+    printf("Returned images will contain a pattern 50%% like object.jpg \n\n");
+    #else
+    printf(RED "--contains FILENAME SIMILARITY not supported\n" NORMAL);
     #endif
 
 
@@ -341,6 +343,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"--contains")==0)
     {
+     //fprintf(stderr,"Contains..\n");
      finalArgument=i+1;
      if (i+2<argc) {
                      #if USE_PATTERN_RECOGNITION
@@ -353,12 +356,18 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                          criteria->containsUsed=1;
                          criteria->containsImage = (void*) img;
                          criteria->criteriaSpecified=1;
+                     } else
+                     {
+                       fprintf(stderr,"Failed to open pattern to search for (%s)..\n",argv[i+1]);
                      }
                      #else
                       printNotCompiledInSupport(argv[i]);
-                     #endif // USE_OPENCV_SURF_DETECTOR
+                     #endif
 
-                     finalArgument=i+1;
+                     finalArgument=i+3;
+                   } else
+                   {
+                       fprintf(stderr,"Not enough arguments..\n");
                    }
     } else
    if (strcmp(argv[i],"--minFaces")==0)
@@ -419,7 +428,7 @@ char searchCriteriaRequireOnlyImageHeaderLoaded(struct AISLib_SearchCriteria * c
 {
    if (criteria->colorRangeUsed) { return 0; }
    if (criteria->similarityUsed) { return 0; }
-   if (criteria->containsUsed) { return 0; }
+   if (criteria->containsUsed)   { return 0; }
    if ( (criteria->minFacesUsed)||(criteria->maxFacesUsed) ) { return 0; }
    return 1;
 }

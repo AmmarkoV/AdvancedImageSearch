@@ -45,7 +45,8 @@ cmake_minimum_required( VERSION 2.8.7 )
               )
   
     add_library(AdvancedImageSearchLib SHARED ${ADV_IMG_LIB_INGREDIENTS} ) 
-    target_link_libraries(AdvancedImageSearchLib rt dl m ) 
+    target_link_libraries(AdvancedImageSearchLib rt dl m  ${PatternRecognitionParts} ) 
+    add_dependencies(AdvancedImageSearchLib ${PatternRecognitionParts} )  
  
  
 
