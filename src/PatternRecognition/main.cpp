@@ -243,9 +243,8 @@ int isCornersGood(std::vector<Point2f> corner)
  float distCD = distPoints(corner[2],corner[3]);
  float distDA = distPoints(corner[3],corner[0]);
 
- std::cerr << "dist( "<<distAB<<","<<distBC<<","<<distCD<<","<<distDA<<")\n";
-
-  std::cerr << "distR( "<<distAB/distBC<<","<<distBC/distCD<<","<<distCD/distDA<<")\n";
+ //std::cerr << "dist( "<<distAB<<","<<distBC<<","<<distCD<<","<<distDA<<")\n";
+ //std::cerr << "distR( "<<distAB/distBC<<","<<distBC/distCD<<","<<distCD/distDA<<")\n";
 
  return (
           (distAB>20) && (distAB/distBC<3) &&
