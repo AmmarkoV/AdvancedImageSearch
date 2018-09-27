@@ -9,6 +9,7 @@ set(CMAKE_C_FLAGS "-fPIC -march=native -mtune=native -O3 -fexpensive-optimizatio
 
 OPTION (ENABLE_FACEDETECTION OFF)
 OPTION (ENABLE_PATTERNRECOGNITION OFF)
+OPTION (ENABLE_DARKNET OFF)
 
 
 #----
@@ -33,6 +34,10 @@ IF( ENABLE_OPENCV )
  #add_definitions(-DUSE_OPENCV_FACEDETECTION)
 ENDIF( ENABLE_OPENCV )
 
+IF( ENABLE_DARKNET )
+ add_definitions(-DUSE_DARKNET)
+ add_subdirectory (src/DarknetProcessor) 
+ENDIF( ENABLE_DARKNET )
 
 add_subdirectory (src/AdvancedImageSearchLib)
 add_subdirectory (src/lsimg)

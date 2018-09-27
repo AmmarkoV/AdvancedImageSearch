@@ -7,7 +7,7 @@
 #include "recordOutput.h"
 
 //This is only used for the drawRectangleRGB, if you remove it it is not needed..
-#include "../../tools/Drawing/drawing.h"
+#include "..//Drawing/drawing.h"
 
 //if define GPU 1 is not used then nothing will work as it is supposed to be if we are doing a GPU build..
 #define GPU 1
