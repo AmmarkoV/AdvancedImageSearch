@@ -149,9 +149,9 @@ int internalDarknetInitialization(
      if (options!=0)
      {
       classes     = option_find_int(options, "classes", 20);
-      
+
       if (forbidNameListChange)
-      { 
+      {
        //FORBID NAMELISTCHANGES TO NOT BREAK ON DIFFERENT DIRS..
        fprintf(stderr,"\nNames list Source change forbidden\n");
       } else
@@ -253,7 +253,7 @@ int initArgs_DarknetProcessor(int argc, char *argv[])
    fprintf(stderr,"Processor is compiled without GPU define, if Darknet is compiled WITH it you may experience crazy problems since ");
    fprintf(stderr,"Darknet ABI changes depending on this flag..!\n");
  #endif // GPU
- 
+
 if (mode==0)
  {
  framesProcessed=resumeFrameOutput();
@@ -462,7 +462,7 @@ int doDetector(image * im, layer * l ,  void * data, unsigned int width, unsigne
 
 int doClassifier(image * im, layer * l ,  float *predictions, void * data, unsigned int width, unsigned int height)
 {
-fprintf(stderr,"doClassifier..\n");
+ //fprintf(stderr,"doClassifier..\n");
  #ifdef GPU
         cuda_pull_array(l->output_gpu, l->output, l->outputs);
  #endif
@@ -485,11 +485,11 @@ fprintf(stderr,"doClassifier..\n");
         int *indexes = calloc(detectorReturnTopNResults, sizeof(int));
 
         top_predictions(dc.net, detectorReturnTopNResults, indexes);
-        printf("Predicted \n");
+        //fprintf(stderr,"Predicted\n");
         for(i = 0; i < detectorReturnTopNResults; ++i)
         {
             int index = indexes[i];
-            printf("%s: %f\n", dc.names[index], predictions[index]);
+            //fprintf(stderr,"%s: %f\n", dc.names[index], predictions[index]);
             snprintf(detectorResults[i].label,128,"%s",dc.names[index]);
             detectorResults[i].probability = predictions[index];
         }
@@ -518,7 +518,7 @@ float getDetectionProbability_DarknetProcessor(unsigned int detectionNumber)
 
 int addDataInput_DarknetProcessor(unsigned int stream , void * data, unsigned int width, unsigned int height,unsigned int channels,unsigned int bitsperpixel)
 {
-fprintf(stderr,"addDataInput_DarknetProcessor called...\n");
+ //fprintf(stderr,"addDataInput_DarknetProcessor called...\n");
  if (!haveInitialization)
     {
       fprintf(stderr,"Darknet Processor was not initialized properly and will not do anything..\n");
@@ -528,12 +528,12 @@ fprintf(stderr,"addDataInput_DarknetProcessor called...\n");
  //fprintf(stderr,"addDataInput_DarknetProcessor %u (%ux%u) channels=%u\n" , stream , width, height,channels);
  if (stream==0)
  {
-fprintf(stderr,"convertBufferToImage..\n");
+    //fprintf(stderr,"convertBufferToImage..\n");
     //This is the original input image that was given to addDataInput_DarknetProcessor
     image im=convertBufferToImage(data, width, height, channels);
 
 
-fprintf(stderr,"resize_image..\n");
+    //fprintf(stderr,"resize_image..\n");
     //We might want to resize the image to make it 448x448
     image sized = resize_image(im, dc.net->w, dc.net->h);
 
@@ -547,12 +547,12 @@ fprintf(stderr,"resize_image..\n");
     //This is the final layer of the net
     layer l = dc.net->layers[dc.net->n-1];
 
-fprintf(stderr,"network_predict..\n");
+    //fprintf(stderr,"network_predict..\n");
     //Detecting happens here
     float *prediction = network_predict(dc.net /*Neural Net*/, sized.data /*Search Image*/);
 
 
-fprintf(stderr," if (prediction!=0)..\n");
+   //fprintf(stderr," if (prediction!=0)..\n");
     if (prediction!=0)
     {
       switch (mode)

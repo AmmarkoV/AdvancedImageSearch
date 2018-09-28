@@ -18,6 +18,7 @@
 
 #include "../image_processing/imageResizer.h"
 
+#define RESIZE_INPUTS 0
 
 #define NORMAL   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -190,6 +191,13 @@ void printListOfParametersRecognized()
     printf("Returned images will have no more than NUMBER faces\n\n");
     #endif
 
+    #if USE_DARKNET
+    printf(GREEN "--semantics FILENAME SIMILARITY" NORMAL);
+    printf("(i.e. --semantics object.jpg 50)\n");
+    printf("Returned images will contain semantics contained in object.jpg \n\n");
+    #else
+    printf(RED "--semantics FILENAME SIMILARITY not supported\n" NORMAL);
+    #endif
 }
 
 
@@ -218,6 +226,11 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
       )
     {
       criteria->needHelp=1;
+    } else
+   if (strcmp(argv[i],"-v")==0)
+    {
+      visualization=1;
+      finalArgument=i+1;
     } else
    if (strcmp(argv[i],"--report")==0)
     {
@@ -302,6 +315,13 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      struct Image * img = readImage(argv[i+1],JPG_CODEC,0);
                      if (img!=0)
                      {
+                       if (!RESIZE_INPUTS)
+                         {
+                           criteria->similarityUsed=1;
+                           criteria->similarImage = (void*) img;
+                           criteria->criteriaSpecified=1;
+                         } else
+                         {
                        struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
                        if (rszdImage!=0)
                        {
@@ -312,6 +332,8 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                        }
                        //Deallocate initial BIG image , we won't be needing it
                        destroyImage(img);
+
+                         }
                      }
                     finalArgument=i+2;
                    }
@@ -358,20 +380,28 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      {
                        printImage("Original Image",img);
                        //WritePPM("testOriginal.ppm",img);
-                       struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
-                       if (rszdImage!=0)
+                       if (!RESIZE_INPUTS)
                        {
-                         printImage("Resized Image",rszdImage);
-                         //WritePPM("testResized.ppm",rszdImage);
                          criteria->semanticsUsed=1;
-                         criteria->semanticsImage = (void*) rszdImage;
+                         criteria->semanticsImage = (void*) img;
                          criteria->criteriaSpecified=1;
-                       }else
+                       } else
                        {
-                         fprintf(stderr,"Failed to open pattern to search for (%s)..\n",criteria->semanticsImageFilename);
+                         struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
+                         if (rszdImage!=0)
+                          {
+                           printImage("Resized Image",rszdImage);
+                           //WritePPM("testResized.ppm",rszdImage);
+                           criteria->semanticsUsed=1;
+                           criteria->semanticsImage = (void*) rszdImage;
+                           criteria->criteriaSpecified=1;
+                          }else
+                          {
+                           fprintf(stderr,"Failed to open pattern to search for (%s)..\n",criteria->semanticsImageFilename);
+                          }
+                          //Deallocate initial BIG image , we won't be needing it
+                         destroyImage(img);
                        }
-                       //Deallocate initial BIG image , we won't be needing it
-                       destroyImage(img);
                      }
 
                      #else

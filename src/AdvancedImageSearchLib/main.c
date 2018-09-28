@@ -26,6 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <dirent.h>
 #include "version.h"
 
+#include "configuration.h"
+int visualization=0;
+
 #include "codecs/codecs.h"
 #include "codecs/jpgInput.h"
 #include "codecs/ppmInput.h"

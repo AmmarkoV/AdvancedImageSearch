@@ -12,4 +12,5 @@
 #define PRINT_DEBUG_INFO 0
 
 
+extern int visualization;
 #endif // CONFIGURATION_H_INCLUDED
