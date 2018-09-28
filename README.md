@@ -1,7 +1,7 @@
-![Advanced Image Search for Linux](https://raw.githubusercontent.com/AmmarkoV/AdvancedImageSearch/master/data/logoSml.jpg)
+![Advanced Image Search for GNU/Linux](https://raw.githubusercontent.com/AmmarkoV/AdvancedImageSearch/master/data/logoSml.jpg)
 
-# Advanced Image Search for Linux
-## Enabling content aware image search for linux using computer vision
+# Advanced Image Search for GNU/Linux
+## Enabling content aware image search for GNU/Linux using computer vision
 ------------------------------------------------------------------ 
 The purpose of this library is to provide command line tools that enable content-aware image browsing from the CLI..
 
@@ -90,13 +90,13 @@ It will move all images suitable for wallpaper that are "red" ( larger than 1680
  mv `lsimg --color red --minDims 1680 1050 /home/me/Downloads/` /home/me/Pictures/Wallpapers/Red/
 ```
 
-Find all images like ~/me.jpg in ~/Downloads direcotry 
+Find all images like ~/me.jpg in ~/Downloads directory 
 ```
 lsimg --like ~/me.jpg ~/Downloads/
 ```
 
 
-Find all images containing the same contents as ~/camel.jpg in ~/Downloads direcotry 
+Find all images containing the same contents as ~/camel.jpg in ~/Downloads directory 
 ```
 lsimg --semantics ~/camel.jpg 10 ~/Downloads/
 ```
