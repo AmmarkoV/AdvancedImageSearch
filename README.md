@@ -75,24 +75,36 @@ mkdir build && cd build &&  cmake .. && sudo make install
 Sample usage of lsimg :
 
 It will move all images smaller than 640x480 to the subdir small!
+```
  mv `lsimg --maxDims 640 480 /home/me/Pictures/Wallpapers/Raw` Small/
+```
  
 It will move all images suitable for wallpaper ( larger than 1680x1050 ) to the wallpaper dir!
+```
  mv `lsimg --minDims 1680 1050 /home/me/Downloads/` /home/me/Pictures/Wallpapers/Raw/
+```
  
 It will move all images suitable for wallpaper that are "red" ( larger than 1680x1050 ) to the red wallpaper dir!
+```
  mv `lsimg --color red --minDims 1680 1050 /home/me/Downloads/` /home/me/Pictures/Wallpapers/Red/
+```
 
 Find all images like ~/me.jpg in ~/Downloads direcotry 
+```
 lsimg --like ~/me.jpg ~/Downloads/
+```
 
 
 Find all images containing the same contents as ~/camel.jpg in ~/Downloads direcotry 
+```
 lsimg --semantics ~/camel.jpg 10 ~/Downloads/
+```
 
 Open all the "green" images with gpicview
+```
 cd ~/Downloads
 lsimg --color green ./ | xargs -n 1 gpicview #
+```
  
 
 
