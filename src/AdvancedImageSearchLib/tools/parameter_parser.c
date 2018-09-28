@@ -218,6 +218,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
  unsigned int i=0 , finalArgument=0;
  for (i=0; i<argc; i++)
  {
+   /* ------------------
+      Help functionality
+      ------------------  */
    if (
        (strcmp(argv[i],"-?")==0) ||
        (strcmp(argv[i],"-h")==0) ||
@@ -227,21 +230,33 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     {
       criteria->needHelp=1;
     } else
+   /* --------------------------
+      Enable debug visualization
+      --------------------------  */
    if (strcmp(argv[i],"-v")==0)
     {
       visualization=1;
       finalArgument=i+1;
     } else
+   /* ---------------------------
+      Generate performance report
+      ---------------------------  */
    if (strcmp(argv[i],"--report")==0)
     {
       criteria->printTimers=1;
       finalArgument=i+1;
     } else
+   /* ------------------------------
+      Make program increase priority
+      ------------------------------  */
    if (strcmp(argv[i],"--turbo")==0)
     {
       runTurbo();
       finalArgument=i+1;
     } else
+   /* ----------------------------------
+      Limit results to a specific number
+      ---------------------------------- */
    if (strcmp(argv[i],"--limit")==0)
     {
      finalArgument=i+1;
@@ -252,6 +267,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
                    }
     } else
+   /* ----------------------------------
+       Minimum acceptable dimensions
+      ---------------------------------- */
    if (strcmp(argv[i],"--minDims")==0)
     {
      finalArgument=i+1;
@@ -263,6 +281,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+3;
                    }
     } else
+   /* ----------------------------------
+       Maximum acceptable dimensions
+      ---------------------------------- */
    if (strcmp(argv[i],"--maxDims")==0)
     {
      finalArgument=i+1;
@@ -274,6 +295,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+3;
                    }
     } else
+   /* ----------------------------------
+           Compare to histogram
+      ---------------------------------- */
    if (strcmp(argv[i],"--histogram")==0)
     {
      finalArgument=i+1;
@@ -287,6 +311,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+5;
                    }
     } else
+   /* ----------------------------------
+               Compare to color
+      ---------------------------------- */
    if (strcmp(argv[i],"--color")==0)
     {
      finalArgument=i+1;
@@ -304,6 +331,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
            finalArgument=i+2;
         }
     } else
+   /* ----------------------------------
+          Compare to an other image
+      ---------------------------------- */
    if (strcmp(argv[i],"--like")==0)
     {
      finalArgument=i+1;
@@ -338,6 +368,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                     finalArgument=i+2;
                    }
     } else
+   /* ----------------------------------
+      Advanced compare to an other image
+      ---------------------------------- */
    if (strcmp(argv[i],"--likeExt")==0)
     {
      finalArgument=i+1;
@@ -363,6 +396,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+4;
                    }
     } else
+   /* ----------------------------------
+         Compare using neural network
+      ---------------------------------- */
    if (strcmp(argv[i],"--semantics")==0)
    {
      finalArgument=i+1;
@@ -411,9 +447,10 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                    {
                        fprintf(stderr,"Not enough arguments..\n");
                    }
-    }
-
-
+    } else
+   /* ----------------------------------
+         Check if image is contained
+      ---------------------------------- */
    if (strcmp(argv[i],"--contains")==0)
     {
      finalArgument=i+1;
@@ -442,6 +479,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                        fprintf(stderr,"Not enough arguments..\n");
                    }
     } else
+   /* ----------------------------------
+            Minimum faces allowed
+      ---------------------------------- */
    if (strcmp(argv[i],"--minFaces")==0)
     {
      finalArgument=i+1;
@@ -458,6 +498,9 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                    }
 
     } else
+   /* ----------------------------------
+            Maximum faces allowed
+      ---------------------------------- */
    if (strcmp(argv[i],"--maxFaces")==0)
     {
      finalArgument=i+1;
