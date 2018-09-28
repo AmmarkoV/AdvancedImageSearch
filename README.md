@@ -1,7 +1,7 @@
 ![Advanced Image Search for Linux](https://raw.githubusercontent.com/AmmarkoV/AdvancedImageSearch/master/data/logoSml.jpg)
 
-#Advanced Image Search for Linux
-##Enabling content aware image search for linux using computer vision
+# Advanced Image Search for Linux
+## Enabling content aware image search for linux using computer vision
 ------------------------------------------------------------------ 
 The purpose of this library are command line tools that enable content-aware image browsing from the CLI..
 
@@ -14,7 +14,7 @@ To submit bug or feature tickets you can use the github issue system
 https://github.com/AmmarkoV/AdvancedImageSearch/issues 
 
 
-##Getting the project
+## Getting the project
 ------------------------------------------------------------------ 
 To get the project issue 
 git clone git://github.com/AmmarkoV/AdvancedImageSearch.git
@@ -25,7 +25,7 @@ https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
 
 
 
-##Library Dependencies
+## Library Dependencies
 ------------------------------------------------------------------ 
 Requires libjpeg , libpng , opencv and gcc to be compiled!
 OpenCV should be a version after 2.4 since nonfree components of it got seperated from the main library and we use them in this lib..
@@ -45,7 +45,7 @@ It will create a local copy of the binaries
 
 
 
-##Installation of current version
+## Installation of current version
 ------------------------------------------------------------------ 
 In order to install lsimg and the AdvancedImageSearch to your system you can do it
 issuing 
@@ -56,12 +56,12 @@ In order to remove the project you can use the uninstall script by issuing
 ./uninstall.sh
 
 
-##Installation of OpenCV3.2 and Darknet
+## Installation of OpenCV3.2 and Darknet
 ------------------------------------------------------------------ 
 In order to install dependencies you can use the script 3dparty/get_third_party_libs.sh 
 
 
-##Examples
+## Examples
 ------------------------------------------------------------------ 
 Sample usage of lsimg :
 
