@@ -13,6 +13,8 @@ add_library(DarknetProcessor SHARED DarknetProcessor.h DarknetProcessor.c record
 target_link_libraries(DarknetProcessor Darknet rt dl m pthread cuda cudart cublas curand stdc++) 
  
 
+#target_compile_definitions(DarknetProcessor PRIVATE FOO=1 BAR=1)
+
 set_target_properties(DarknetProcessor PROPERTIES 
                        #DEBUG_POSTFIX "D"
                        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"

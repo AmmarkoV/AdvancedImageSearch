@@ -36,6 +36,7 @@ ENDIF( ENABLE_OPENCV )
 
 IF( ENABLE_DARKNET )
  add_definitions(-DUSE_DARKNET)
+ add_definitions(-DDARKNET_PATH="${CMAKE_SOURCE_DIR}/3dparty/darknet/")
  add_subdirectory (src/DarknetProcessor) 
  set(NeuralNetworkParts DarknetProcessor )
 ENDIF( ENABLE_DARKNET )

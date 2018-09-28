@@ -4,6 +4,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include <limits.h>
 
 
@@ -22,26 +23,29 @@ struct detectorResult
 struct detectorResult patternResults[detectorReturnTopNResults]={0};
 struct detectorResult haystackResults[detectorReturnTopNResults]={0};
 
+int haveInit=0;
+
 #if USE_DARKNET
 #include "../../DarknetProcessor/DarknetProcessor.h"
-#endif // USE_DARKNET
+const char darknetPath[]={DARKNET_PATH};
 
-int haveInit=0;
 int argc=7;
 char * argv[]={
                 "dummy",
-                "/home/ammar/Documents/Programming/RGBDAcquisition/3dparty/darknet/darknet19.weights" ,
-                "/home/ammar/Documents/Programming/RGBDAcquisition/3dparty/darknet/cfg/darknet19.cfg" ,
-                "/home/ammar/Documents/Programming/RGBDAcquisition/3dparty/darknet/cfg/imagenet1k.data" ,
-                "/home/ammar/Documents/Programming/RGBDAcquisition/3dparty/darknet/data/imagenet.names" ,
+                DARKNET_PATH "/darknet19.weights" ,
+                DARKNET_PATH "/cfg/darknet19.cfg" ,
+                DARKNET_PATH "/cfg/imagenet1k.data" ,
+                DARKNET_PATH "/data/imagenet.names" ,
                 "--classifier",
                 "--forbidNameListChange",
                 "dummy",
                 "dummy"
                 };
+
+#endif // USE_DARKNET
+
 char cwd[PATH_MAX];
 
-const char darknetPath[]={"/home/ammar/Documents/Programming/RGBDAcquisition/3dparty/darknet"};
 
 
 int isItAMatch(struct detectorResult * needle,struct detectorResult * haystack,float similarity)
@@ -97,7 +101,10 @@ int findSemanticsOfImage(struct Image * pattern,struct Image * img,float similar
 {
    int result = 0;
    #if USE_DARKNET
-  if(!haveInit)
+
+   //fprintf(stderr,"DARKNET_PATH=%s\n",darknetPath);
+
+   if(!haveInit)
    {
     if (getcwd(cwd, sizeof(cwd)) != NULL) { }
 
@@ -108,7 +115,7 @@ int findSemanticsOfImage(struct Image * pattern,struct Image * img,float similar
 
     if (haveInit)
     {
-    fprintf(stderr,"initialized and now searching for pattern..\n");
+    //fprintf(stderr,"initialized and now searching for pattern..\n");
     if (
         addDataInput_DarknetProcessor(
                                       0,
@@ -120,7 +127,7 @@ int findSemanticsOfImage(struct Image * pattern,struct Image * img,float similar
                                      )
        )
      {
-      fprintf(stderr,"getting back results..\n");
+      //fprintf(stderr,"getting back results..\n");
       for (unsigned int i=0; i<detectorReturnTopNResults; i++)
       {
        snprintf(patternResults[i].label,128,"%s", getDetectionLabel_DarknetProcessor(i));
