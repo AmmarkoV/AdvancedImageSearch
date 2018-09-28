@@ -19,8 +19,6 @@ echo "Will pick 32bit binaries"
 fi
 
 
- 
-
 # ---------------------------------------------------------------------
 if [ -d darknet ]
 then
@@ -43,7 +41,22 @@ else
   fi
 fi
  
-
+# ---------------------------------------------------------------------
+if [ -d opencv-3.2.0 ]
+then
+echo "OpenCV3.2 appears to already exist .."
+else
+  echo "Do you want to download OpenCV3.2 ? " 
+  echo
+  echo -n " (Y/N)?"
+  read answer
+  if test "$answer" != "N" -a "$answer" != "n";
+  then  
+      cd "$DIR"
+       ./getOpenCV3.2.sh
+      cd ..
+  fi
+fi
 
  
 cd "$STARTDIR"
