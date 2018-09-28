@@ -28,6 +28,8 @@ or
 
 ```
 wget https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
+unzip master
+cd AdvancedImageSearch-master
 ```
 
 
