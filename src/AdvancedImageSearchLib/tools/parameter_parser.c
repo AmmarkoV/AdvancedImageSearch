@@ -378,7 +378,7 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      struct Image * img = readImage(criteria->semanticsImageFilename,JPG_CODEC,0);
                      if (img!=0)
                      {
-                       printImage("Original Image",img);
+                       //printImage("Original Image",img);
                        //WritePPM("testOriginal.ppm",img);
                        if (!RESIZE_INPUTS)
                        {
