@@ -7,7 +7,7 @@ The purpose of this library is to provide command line tools that enable content
 
 lsimg for example ( which is the first implemented application ) should be able to return images which are larger than a specific resolution , that contain faces , that are similar to another one , that are bright ( histograms ) , that have been taken in a specific Longitude/Latitude ( EXIF ) or the same content as some other image file etc..
 
-You can view implemented functionality by issuing "lsimg - help" 
+You can view implemented functionality by issuing "lsimg --help" 
 
 
 To submit bug or feature tickets you can use the github issue system
@@ -55,13 +55,14 @@ In order to run the script and assuming you are on the main directory issuing th
 will download these dependencies and guide you through the procedure, you should also enable the correct CMake switches afterwards. This can be done using console ( cmake -DENABLE_DARKNET=ON -DENABLE_FACEDETECTION=ON -DENABLE_OPENCV=ON -DENABLE_PATTERNRECOGNITION=ON .. )  or a GUI like cmake-gui 
 
 
-## Building
+## How to build
 ------------------------------------------------------------------ 
-In order to make the project go to the Project root directory and simply issue
+In order to make a local copy of the project go to the Project root directory and simply issue
 ```
 mkdir build && cd build &&  cmake .. && make
 ```
-It will create a local copy of the binaries, if you wish to make a system persistent installation just issue
+
+If you wish to make a system persistent installation just issue
 
 ```
 mkdir build && cd build &&  cmake .. && sudo make install
@@ -105,6 +106,16 @@ Open all the "green" images with gpicview
 cd ~/Downloads
 lsimg --color green ./ | xargs -n 1 gpicview #
 ```
+
+Open all the images with exactly 3 faces with gpicview
+```
+./lsimg --minFaces 3 --maxFaces 3 . | xargs -n 1 gpicview 
+```
+
+
+
+
+
  
 
 

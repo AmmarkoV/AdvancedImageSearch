@@ -2,6 +2,8 @@
 #include "../configuration.h"
 #include "../tools/timers.h"
 
+#include <stdio.h>
+
 
 #if USE_OPENCV_FACEDETECTION
 #include <cv.h>
@@ -36,6 +38,7 @@ int openCVFaceDetector(struct Image * img)
     char * opencv_pointer_retainer = image->imageData; // UGLY HACK
     image->imageData = (char*) img->pixels; // UGLY HACK
 
+
     CvSeq *faces = cvHaarDetectObjects
            (
             image,
@@ -47,7 +50,7 @@ int openCVFaceDetector(struct Image * img)
             , cvSize( 40, 40 )
             , cvSize( 50, 50 ) // <--- This might have to be commented out if compiled with C++ :P
             );
-
+    //fprintf(stderr,"cvHaarDetectObjects returned %u\n",faces->total);
 
     image->imageData = opencv_pointer_retainer; // UGLY HACK
     cvReleaseImage( &image );
@@ -71,6 +74,8 @@ int imageHasNFaces(struct Image * img)
 
    #if USE_OPENCV_FACEDETECTION
      facesDetected = openCVFaceDetector(img);
+   #else
+    fprintf(stderr,"imageHasNFaces not built in this build..\n");
    #endif // USE_OPENCV
 
    return facesDetected;

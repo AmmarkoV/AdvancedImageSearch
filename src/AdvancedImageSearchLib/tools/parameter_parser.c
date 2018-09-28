@@ -126,8 +126,8 @@ void printTimersToStderr()
 
 void printNotCompiledInSupport(char* whatisnot)
 {
-   fprintf(stderr,"Parameter %s is not compiled in this binary of libAdvancedImageSearch\n",whatisnot);
-   fprintf(stderr,"consider altering configuration.h , installing dependencies needed and then recompiling \n");
+   fprintf(stderr,RED "Parameter %s is not compiled in this binary of libAdvancedImageSearch\n",whatisnot);
+   fprintf(stderr,"consider altering configuration.h , installing dependencies needed and then recompiling \n" NORMAL);
 }
 
 
@@ -365,7 +365,6 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
     } else
    if (strcmp(argv[i],"--semantics")==0)
    {
-     //fprintf(stderr,"semantics..\n");
      finalArgument=i+1;
      if (i+2<argc) {
                      #if USE_DARKNET
@@ -403,7 +402,6 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                          destroyImage(img);
                        }
                      }
-
                      #else
                       printNotCompiledInSupport(argv[i]);
                      #endif
@@ -418,7 +416,6 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
 
    if (strcmp(argv[i],"--contains")==0)
     {
-     //fprintf(stderr,"Contains..\n");
      finalArgument=i+1;
      if (i+2<argc) {
                      #if USE_PATTERN_RECOGNITION

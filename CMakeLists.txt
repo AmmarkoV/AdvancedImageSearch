@@ -31,7 +31,7 @@ ENDIF(ENABLE_PATTERNRECOGNITION)
 
 IF( ENABLE_OPENCV )
  add_subdirectory (src/PatternRecognition) 
- #add_definitions(-DUSE_OPENCV_FACEDETECTION)
+ add_definitions(-DUSE_OPENCV_FACEDETECTION)
 ENDIF( ENABLE_OPENCV )
 
 IF( ENABLE_DARKNET )
@@ -39,6 +39,7 @@ IF( ENABLE_DARKNET )
  add_definitions(-DDARKNET_PATH="${CMAKE_SOURCE_DIR}/3dparty/darknet/")
  add_subdirectory (src/DarknetProcessor) 
  set(NeuralNetworkParts DarknetProcessor )
+ INSTALL(PROGRAMS "src/DarknetProcessor/libDarknetProcessor.so" DESTINATION "/usr/lib/AdvancedImageSearch" )
 ENDIF( ENABLE_DARKNET )
 
 add_subdirectory (src/AdvancedImageSearchLib)

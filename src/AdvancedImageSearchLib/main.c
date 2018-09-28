@@ -213,7 +213,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
 
     if ( (criteria->minFacesUsed) || (criteria->maxFacesUsed) )
     {
-      if (img->pixels==0) { return 0; } // No pixels , no histogram , no success
+      if (img->pixels==0) { return 0; } // No pixels , don't do anything
       unsigned int faces = request_imageHasNFaces(filename, img);
       if ( ( criteria->minimumFaceCount < faces ) && (criteria->minFacesUsed) ) { return 0; }
       if ( ( criteria->maximumFaceCount > faces ) && (criteria->maxFacesUsed) ) { return 0; }
