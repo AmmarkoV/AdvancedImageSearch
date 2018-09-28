@@ -27,20 +27,32 @@ https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
 
 ## Library Dependencies
 ------------------------------------------------------------------ 
-Requires libjpeg , libpng , opencv and gcc to be compiled!
-OpenCV should be a version after 2.4 since nonfree components of it got seperated from the main library and we use them in this lib..
-In case you run into problems with lib dependencies or don't want them at all in your system consider deactivating the features you don't want by switching them off from src/AdvancedImageSearchLib/configuration.h
+The program requires libjpeg , libpng , opencv , darknet and gcc to enable all features! It can also operate without problems without darknet and/or opencv but some advanced functionality will not be available.
+It also requires exif tool ( sudo apt-get install exif ) for JPG exif functionality that greatly speeds up some operations by just scanning JPEG headers.
+ 
 
-Requires exif tool ( sudo apt-get install exif ) for JPG exif functionality
-The project contains a script to solve dependencies using pacman or apt-get as package managers
-You can perform automatic download of required dependencies by issuing : ./get-dependencies.sh
+OpenCV should be a version after 3.2 along with the nonfree components 
 
+If you wish to use the semantic search features you will also need Darknet
+
+All of these dependencies can be installed using the script provided in 3dparty/get_third_party_libs.sh
+Beeing on the main directory and issuing the command
+```
+3dparty/get_third_party_libs.sh
+```
+will download these dependencies and guide you through the proceedure, you should also enable the CMake switches ENABLE_DARKNET ENABLE_FACEDETECTION ENABLE_OPENCV ENABLE_PATTERNRECOGNITION afterwards
+
+```
+sudo apt-get install cmake build-essential git g++ gcc exif libjpeg-dev libpng12-dev
+```
 
 
 ## Building
 ------------------------------------------------------------------ 
 In order to make the project simply issue
-"mkdir build && cd build &&  cmake .. && make" from the root directory
+```
+mkdir build && cd build &&  cmake .. && make
+```
 It will create a local copy of the binaries
 
 
