@@ -37,9 +37,7 @@ The program requires libjpeg , libpng , opencv , darknet and gcc to enable all f
 It also requires exif tool for JPG exif functionality that greatly speeds up some operations when just scanning JPEG headers.
  
 
-OpenCV should be a version after 3.2 along with the nonfree components 
-
-If you wish to use the semantic search features you will also need Darknet
+OpenCV should be a version after 3.0 along with the nonfree components and this can be tricky to install. If you also wish to use the semantic search features ( which is a really nice feature ) you will also need Darknet
 
 All of these dependencies can be installed using the script provided in 3dparty/get_third_party_libs.sh
 Beeing on the main directory and issuing the command
@@ -55,28 +53,17 @@ sudo apt-get install cmake build-essential git g++ gcc exif libjpeg-dev libpng12
 
 ## Building
 ------------------------------------------------------------------ 
-In order to make the project simply issue
+In order to make the project go to the Project root directory and simply issue
 ```
 mkdir build && cd build &&  cmake .. && make
 ```
-It will create a local copy of the binaries
+It will create a local copy of the binaries, if you wish to make a system persistent installation just issue
+
+```
+mkdir build && cd build &&  cmake .. && sudo make install
+```
 
 
-
-## Installation of current version
------------------------------------------------------------------- 
-In order to install lsimg and the AdvancedImageSearch to your system you can do it
-issuing 
-./install.sh
-your password is required.. 
-
-In order to remove the project you can use the uninstall script by issuing
-./uninstall.sh
-
-
-## Installation of OpenCV3.2 and Darknet
------------------------------------------------------------------- 
-In order to install dependencies you can use the script 3dparty/get_third_party_libs.sh 
 
 
 ## Examples
