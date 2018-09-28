@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1372536983 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -8,30 +8,30 @@
 	"pngInput.h"
 	"ppmInput.h"
 
-1372536973 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
 
-1372525293 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
 	"codecs.h"
 
-1366115167 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/configuration.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/configuration.h
 
-1372525298 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
 	"codecs.h"
 
-1362071985 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.h
 	"codecs.h"
 
-1362091790 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.h
 
-1362261862 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.c
 	"jpgExifexternal.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1362261546 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.h
 
-1372536415 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
 	"jpgInput.h"
 	<stdio.h>
 	<string.h>
@@ -39,7 +39,7 @@
 	<stdlib.h>
 	"codecs.h"
 
-1372539992 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
 	"pngInput.h"
 	<unistd.h>
 	<stdlib.h>
@@ -48,7 +48,7 @@
 	<stdarg.h>
 	<png.h>
 
-1372537406 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -56,46 +56,38 @@
 	"codecs.h"
 	"ppmInput.h"
 
-1362175600 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/faceDetection.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/faceDetection.c
 	"faceDetection.h"
 	"../configuration.h"
 	"../tools/timers.h"
 	<cv.h>
 	<cxcore.h>
 
-1362691314 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/faceDetection.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/faceDetection.h
 	"../codecs/codecs.h"
 
-1350514538 /usr/local/include/opencv/cv.h
+1524057212 /usr/local/include/opencv/cv.h
 	"opencv2/core/core_c.h"
-	"opencv2/core/core.hpp"
 	"opencv2/imgproc/imgproc_c.h"
-	"opencv2/imgproc/imgproc.hpp"
-	"opencv2/video/tracking.hpp"
-	"opencv2/features2d/features2d.hpp"
-	"opencv2/flann/flann.hpp"
-	"opencv2/calib3d/calib3d.hpp"
-	"opencv2/objdetect/objdetect.hpp"
-	"opencv2/legacy/compat.hpp"
-	"opencv2/core/internal.hpp"
+	"opencv2/photo/photo_c.h"
+	"opencv2/video/tracking_c.h"
+	"opencv2/objdetect/objdetect_c.h"
 
-1343256930 /usr/local/include/opencv2/core/core_c.h
+1524057212 /usr/local/include/opencv2/core/core_c.h
 	"opencv2/core/types_c.h"
+	"cxcore.h"
+	"cxcore.h"
+	"opencv2/core/utility.hpp"
 
-1343256930 /usr/local/include/opencv2/core/types_c.h
+1524057212 /usr/local/include/opencv2/core/types_c.h
+	<ipl.h>
+	<ipl/ipl.h>
+	"opencv2/core/cvdef.h"
 	<assert.h>
 	<stdlib.h>
 	<string.h>
 	<float.h>
-	<stdint.h>
-	<intrin.h>
-	<emmintrin.h>
-	<fastmath.h>
-	<math.h>
-	<ipl.h>
-	<ipl/ipl.h>
-	"tegra_round.hpp"
-	"emmintrin.h"
+	"opencv2/core.hpp"
 
 1351205713 /usr/local/include/opencv2/core/core.hpp
 	"opencv2/core/types_c.h"
@@ -113,47 +105,44 @@
 	"opencv2/core/operations.hpp"
 	"opencv2/core/mat.hpp"
 
-1351868647 /usr/local/include/opencv2/core/version.hpp
+1524057212 /usr/local/include/opencv2/core/version.hpp
 
-1351868647 /usr/local/include/opencv2/core/operations.hpp
-	<string.h>
-	<limits.h>
-	<ext/atomicity.h>
-	<bits/atomicity.h>
-	<limits>
+1524057212 /usr/local/include/opencv2/core/operations.hpp
+	<cstdio>
 
-1346194506 /usr/local/include/opencv2/core/mat.hpp
-	<limits.h>
-	<string.h>
+1524057212 /usr/local/include/opencv2/core/mat.hpp
+	"opencv2/core/matx.hpp"
+	"opencv2/core/types.hpp"
+	"opencv2/core/bufferpool.hpp"
+	"opencv2/core/mat.inl.hpp"
 
-1350514538 /usr/local/include/opencv2/imgproc/imgproc_c.h
-	"opencv2/core/core_c.h"
+1524057212 /usr/local/include/opencv2/imgproc/imgproc_c.h
 	"opencv2/imgproc/types_c.h"
 
-1350687311 /usr/local/include/opencv2/imgproc/types_c.h
+1524057212 /usr/local/include/opencv2/imgproc/types_c.h
 	"opencv2/core/core_c.h"
 
 1350687311 /usr/local/include/opencv2/imgproc/imgproc.hpp
 	"opencv2/core/core.hpp"
 	"opencv2/imgproc/types_c.h"
 
-1350514538 /usr/local/include/opencv2/video/tracking.hpp
-	"opencv2/core/core.hpp"
-	"opencv2/imgproc/imgproc.hpp"
+1524057213 /usr/local/include/opencv2/video/tracking.hpp
+	"opencv2/core.hpp"
+	"opencv2/imgproc.hpp"
 
 1350687311 /usr/local/include/opencv2/features2d/features2d.hpp
 	"opencv2/core/core.hpp"
 	"opencv2/flann/miniflann.hpp"
 	<limits>
 
-1350514538 /usr/local/include/opencv2/flann/miniflann.hpp
-	"opencv2/core/core.hpp"
+1524057212 /usr/local/include/opencv2/flann/miniflann.hpp
+	"opencv2/core.hpp"
 	"opencv2/flann/defines.h"
 
-1348786506 /usr/local/include/opencv2/flann/defines.h
+1524057212 /usr/local/include/opencv2/flann/defines.h
 	"config.h"
 
-1343256930 /usr/local/include/opencv2/flann/config.h
+1524057212 /usr/local/include/opencv2/flann/config.h
 
 1350514538 /usr/local/include/opencv2/flann/flann.hpp
 	"opencv2/core/types_c.h"
@@ -161,9 +150,8 @@
 	"opencv2/flann/flann_base.hpp"
 	"opencv2/flann/miniflann.hpp"
 
-1343256930 /usr/local/include/opencv2/flann/flann_base.hpp
+1524057212 /usr/local/include/opencv2/flann/flann_base.hpp
 	<vector>
-	<string>
 	<cassert>
 	<cstdio>
 	"general.h"
@@ -172,41 +160,38 @@
 	"saving.h"
 	"all_indices.h"
 
-1343256930 /usr/local/include/opencv2/flann/general.h
-	"defines.h"
-	<stdexcept>
-	<cassert>
+1524057212 /usr/local/include/opencv2/flann/general.h
+	"opencv2/core.hpp"
 
-1343256930 /usr/local/include/opencv2/flann/matrix.h
+1524057212 /usr/local/include/opencv2/flann/matrix.h
 	<stdio.h>
 	"general.h"
 
-1343256930 /usr/local/include/opencv2/flann/params.h
+1524057212 /usr/local/include/opencv2/flann/params.h
 	"any.h"
 	"general.h"
 	<iostream>
 	<map>
 
-1350687311 /usr/local/include/opencv2/flann/any.h
+1524057212 /usr/local/include/opencv2/flann/any.h
 	"defines.h"
 	<stdexcept>
 	<ostream>
 	<typeinfo>
 
-1343256930 /usr/local/include/opencv2/flann/saving.h
+1524057212 /usr/local/include/opencv2/flann/saving.h
 	<cstring>
 	<vector>
 	"general.h"
 	"nn_index.h"
 
-1343256930 /usr/local/include/opencv2/flann/nn_index.h
-	<string>
+1524057212 /usr/local/include/opencv2/flann/nn_index.h
 	"general.h"
 	"matrix.h"
 	"result_set.h"
 	"params.h"
 
-1343256930 /usr/local/include/opencv2/flann/result_set.h
+1524057212 /usr/local/include/opencv2/flann/result_set.h
 	<algorithm>
 	<cstring>
 	<iostream>
@@ -214,7 +199,7 @@
 	<set>
 	<vector>
 
-1343256930 /usr/local/include/opencv2/flann/all_indices.h
+1524057212 /usr/local/include/opencv2/flann/all_indices.h
 	"general.h"
 	"nn_index.h"
 	"kdtree_index.h"
@@ -226,7 +211,7 @@
 	"lsh_index.h"
 	"autotuned_index.h"
 
-1343256930 /usr/local/include/opencv2/flann/kdtree_index.h
+1524057212 /usr/local/include/opencv2/flann/kdtree_index.h
 	<algorithm>
 	<map>
 	<cassert>
@@ -241,7 +226,7 @@
 	"random.h"
 	"saving.h"
 
-1343256930 /usr/local/include/opencv2/flann/dynamic_bitset.h
+1524057212 /usr/local/include/opencv2/flann/dynamic_bitset.h
 	<boost/dynamic_bitset.hpp>
 	<limits.h>
 	"dist.h"
@@ -1340,29 +1325,30 @@
 	"boost/limits.hpp"
 	"boost/config.hpp"
 
-1350687311 /usr/local/include/opencv2/flann/dist.h
+1524057212 /usr/local/include/opencv2/flann/dist.h
 	<cmath>
 	<cstdlib>
 	<string.h>
 	<stdint.h>
 	"defines.h"
+	<Intrin.h>
 	"arm_neon.h"
 
-1343256930 /usr/local/include/opencv2/flann/heap.h
+1524057212 /usr/local/include/opencv2/flann/heap.h
 	<algorithm>
 	<vector>
 
-1343256930 /usr/local/include/opencv2/flann/allocator.h
+1524057212 /usr/local/include/opencv2/flann/allocator.h
 	<stdlib.h>
 	<stdio.h>
 
-1343256930 /usr/local/include/opencv2/flann/random.h
+1524057212 /usr/local/include/opencv2/flann/random.h
 	<algorithm>
 	<cstdlib>
 	<vector>
 	"general.h"
 
-1350514538 /usr/local/include/opencv2/flann/kdtree_single_index.h
+1524057212 /usr/local/include/opencv2/flann/kdtree_single_index.h
 	<algorithm>
 	<map>
 	<cassert>
@@ -1376,9 +1362,8 @@
 	"random.h"
 	"saving.h"
 
-1343256930 /usr/local/include/opencv2/flann/kmeans_index.h
+1524057212 /usr/local/include/opencv2/flann/kmeans_index.h
 	<algorithm>
-	<string>
 	<map>
 	<cassert>
 	<limits>
@@ -1394,24 +1379,23 @@
 	"saving.h"
 	"logger.h"
 
-1343256930 /usr/local/include/opencv2/flann/logger.h
+1524057212 /usr/local/include/opencv2/flann/logger.h
 	<stdio.h>
 	<stdarg.h>
 	"defines.h"
 
-1343256930 /usr/local/include/opencv2/flann/composite_index.h
+1524057212 /usr/local/include/opencv2/flann/composite_index.h
 	"general.h"
 	"nn_index.h"
 	"kdtree_index.h"
 	"kmeans_index.h"
 
-1343256930 /usr/local/include/opencv2/flann/linear_index.h
+1524057212 /usr/local/include/opencv2/flann/linear_index.h
 	"general.h"
 	"nn_index.h"
 
-1350514538 /usr/local/include/opencv2/flann/hierarchical_clustering_index.h
+1524057212 /usr/local/include/opencv2/flann/hierarchical_clustering_index.h
 	<algorithm>
-	<string>
 	<map>
 	<cassert>
 	<limits>
@@ -1426,7 +1410,7 @@
 	"random.h"
 	"saving.h"
 
-1350514538 /usr/local/include/opencv2/flann/lsh_index.h
+1524057212 /usr/local/include/opencv2/flann/lsh_index.h
 	<algorithm>
 	<cassert>
 	<cstring>
@@ -1442,7 +1426,7 @@
 	"random.h"
 	"saving.h"
 
-1343256930 /usr/local/include/opencv2/flann/lsh_table.h
+1524057212 /usr/local/include/opencv2/flann/lsh_table.h
 	<algorithm>
 	<iostream>
 	<iomanip>
@@ -1454,7 +1438,7 @@
 	"dynamic_bitset.h"
 	"matrix.h"
 
-1343256930 /usr/local/include/opencv2/flann/autotuned_index.h
+1524057212 /usr/local/include/opencv2/flann/autotuned_index.h
 	"general.h"
 	"nn_index.h"
 	"ground_truth.h"
@@ -1467,11 +1451,11 @@
 	"linear_index.h"
 	"logger.h"
 
-1343256930 /usr/local/include/opencv2/flann/ground_truth.h
+1524057212 /usr/local/include/opencv2/flann/ground_truth.h
 	"dist.h"
 	"matrix.h"
 
-1343256930 /usr/local/include/opencv2/flann/index_testing.h
+1524057212 /usr/local/include/opencv2/flann/index_testing.h
 	<cstring>
 	<cassert>
 	<cmath>
@@ -1481,10 +1465,12 @@
 	"logger.h"
 	"timer.h"
 
-1350687311 /usr/local/include/opencv2/flann/timer.h
+1524057212 /usr/local/include/opencv2/flann/timer.h
 	<time.h>
+	"opencv2/core.hpp"
+	"opencv2/core/utility.hpp"
 
-1343256930 /usr/local/include/opencv2/flann/sampling.h
+1524057212 /usr/local/include/opencv2/flann/sampling.h
 	"matrix.h"
 	"random.h"
 
@@ -1527,59 +1513,59 @@
 	"opencv2/core/core_c.h"
 	"opencv2/core/core.hpp"
 
-1350514538 /usr/local/include/opencv/cxcore.h
+1524057212 /usr/local/include/opencv/cxcore.h
 	"opencv2/core/core_c.h"
-	"opencv2/core/core.hpp"
 
-1372540111 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
 	"filters.h"
 	<stdio.h>
 	<stdlib.h>
 
-1362555563 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.h
 	"../codecs/codecs.h"
 
-1362687104 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/findPatterns.c
+1538092598 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/findPatterns.c
 	"findPatterns.h"
 	"../configuration.h"
 	"../tools/timers.h"
+	<stdio.h>
 	"../../PatternRecognition/PatternRecognition.h"
 
-1362686883 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/findPatterns.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/findPatterns.h
 	"../codecs/codecs.h"
 
-1362855341 /home/ammar/Documents/Programming/AdvancedImageSearch/src/PatternRecognition/PatternRecognition.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/PatternRecognition/PatternRecognition.h
 
-1366115585 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"histograms.h"
 	"../tools/timers.h"
 
-1366115516 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
 
-1372540145 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"imageComparison.h"
 	"../tools/timers.h"
 
-1361983164 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.h
 	"../codecs/codecs.h"
 
-1372540161 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"imageResizer.h"
 	"../tools/timers.h"
 
-1362092042 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageResizer.h
 	"../codecs/codecs.h"
 
-1372540178 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/main.c
+1538092503 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/main.c
 	"AdvancedImageSearchLib.h"
 	<stdio.h>
 	<stdlib.h>
@@ -1595,24 +1581,25 @@
 	"image_processing/imageComparison.h"
 	"image_processing/faceDetection.h"
 	"image_processing/findPatterns.h"
+	"neural_networks/findSemantics.h"
 	"caching/resultbank.h"
 	"tools/string_extension_scanner.h"
 	"tools/parameter_parser.h"
 	"tools/timers.h"
 
-1362351059 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/AdvancedImageSearchLib.h
+1538092064 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/AdvancedImageSearchLib.h
 
-1361665780 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/version.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/version.h
 
-1366115022 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.h
 	"../codecs/codecs.h"
 
-1361719430 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.h
 
-1362078562 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.h
+1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.h
 	"../AdvancedImageSearchLib.h"
 
-1362090217 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -1620,7 +1607,7 @@
 	"string_extension_scanner.h"
 	"../codecs/codecs.h"
 
-1362091912 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.c
 	"timers.h"
 	"../configuration.h"
 	<sys/time.h>
@@ -1629,7 +1616,7 @@
 	<string.h>
 	<unistd.h>
 
-1366117467 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.c
+1538092239 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -1643,9 +1630,481 @@
 	"../codecs/ppmInput.h"
 	"../image_processing/imageResizer.h"
 
-1372540244 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.c
+1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.c
 	"resultbank.h"
 	"../image_processing/findPatterns.h"
 	"../image_processing/faceDetection.h"
 	"../image_processing/histograms.h"
+	<stdio.h>
+
+1524057212 /usr/local/include/opencv2/core/cvdef.h
+	<limits.h>
+	"opencv2/core/hal/interface.h"
+	<emmintrin.h>
+	<pmmintrin.h>
+	<tmmintrin.h>
+	<smmintrin.h>
+	<nmmintrin.h>
+	<nmmintrin.h>
+	<popcntintrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<Intrin.h>
+	<arm_neon.h>
+	<arm_neon.h>
+	<intrin.h>
+
+1524057212 /usr/local/include/opencv2/core/hal/interface.h
+	<cstddef>
+	<stddef.h>
+	<stdbool.h>
+	<cstdint>
+	<stdint.h>
+
+1524057212 /usr/local/include/opencv2/core.hpp
+	"opencv2/core/cvdef.h"
+	"opencv2/core/version.hpp"
+	"opencv2/core/base.hpp"
+	"opencv2/core/cvstd.hpp"
+	"opencv2/core/traits.hpp"
+	"opencv2/core/matx.hpp"
+	"opencv2/core/types.hpp"
+	"opencv2/core/mat.hpp"
+	"opencv2/core/persistence.hpp"
+	"opencv2/opencv.hpp"
+	"opencv2/xfeatures2d.hpp"
+	"opencv2/core/operations.hpp"
+	"opencv2/core/cvstd.inl.hpp"
+	"opencv2/core/utility.hpp"
+	"opencv2/core/optim.hpp"
+	"opencv2/core/ovx.hpp"
+
+1524057212 /usr/local/include/opencv2/core/base.hpp
+	"opencv2/opencv_modules.hpp"
+	<climits>
+	<algorithm>
+	"opencv2/core/cvdef.h"
+	"opencv2/core/cvstd.hpp"
+	"opencv2/core/neon_utils.hpp"
+
+1536242910 /usr/local/include/opencv2/opencv_modules.hpp
+
+1524057212 /usr/local/include/opencv2/core/cvstd.hpp
+	"opencv2/core/cvdef.h"
+	<cstddef>
+	<cstring>
+	<cctype>
+	<string>
+	<algorithm>
+	<utility>
+	<cstdlib>
+	<cmath>
+	"opencv2/core/ptr.inl.hpp"
+
+1524057212 /usr/local/include/opencv2/core/ptr.inl.hpp
+	<algorithm>
+
+1524057212 /usr/local/include/opencv2/core/neon_utils.hpp
+	"opencv2/core/cvdef.h"
+
+1524057212 /usr/local/include/opencv2/core/traits.hpp
+	"opencv2/core/cvdef.h"
+
+1524057212 /usr/local/include/opencv2/core/matx.hpp
+	"opencv2/core/cvdef.h"
+	"opencv2/core/base.hpp"
+	"opencv2/core/traits.hpp"
+	"opencv2/core/saturate.hpp"
+
+1524057212 /usr/local/include/opencv2/core/saturate.hpp
+	"opencv2/core/cvdef.h"
+	"opencv2/core/fast_math.hpp"
+
+1524057212 /usr/local/include/opencv2/core/fast_math.hpp
+	"opencv2/core/cvdef.h"
+	<fastmath.h>
+	<cmath>
+	<math.h>
+	"tegra_round.hpp"
+
+1524057212 /usr/local/include/opencv2/core/types.hpp
+	<climits>
+	<cfloat>
+	<vector>
+	<limits>
+	"opencv2/core/cvdef.h"
+	"opencv2/core/cvstd.hpp"
+	"opencv2/core/matx.hpp"
+
+1524057212 /usr/local/include/opencv2/core/bufferpool.hpp
+
+1524057212 /usr/local/include/opencv2/core/mat.inl.hpp
+
+1524057212 /usr/local/include/opencv2/core/persistence.hpp
+	"opencv2/core/types.hpp"
+	"opencv2/core/mat.hpp"
+	"opencv2/opencv.hpp"
+	<time.h>
+
+1524057212 /usr/local/include/opencv2/opencv.hpp
+	"opencv2/opencv_modules.hpp"
+	"opencv2/core.hpp"
+	"opencv2/calib3d.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/flann.hpp"
+	"opencv2/highgui.hpp"
+	"opencv2/imgcodecs.hpp"
+	"opencv2/imgproc.hpp"
+	"opencv2/ml.hpp"
+	"opencv2/objdetect.hpp"
+	"opencv2/photo.hpp"
+	"opencv2/shape.hpp"
+	"opencv2/stitching.hpp"
+	"opencv2/superres.hpp"
+	"opencv2/video.hpp"
+	"opencv2/videoio.hpp"
+	"opencv2/videostab.hpp"
+	"opencv2/viz.hpp"
+	"opencv2/cudaarithm.hpp"
+	"opencv2/cudabgsegm.hpp"
+	"opencv2/cudacodec.hpp"
+	"opencv2/cudafeatures2d.hpp"
+	"opencv2/cudafilters.hpp"
+	"opencv2/cudaimgproc.hpp"
+	"opencv2/cudaobjdetect.hpp"
+	"opencv2/cudaoptflow.hpp"
+	"opencv2/cudastereo.hpp"
+	"opencv2/cudawarping.hpp"
+
+1524057212 /usr/local/include/opencv2/calib3d.hpp
+	"opencv2/core.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/core/affine.hpp"
+	"opencv2/calib3d/calib3d_c.h"
+
+1524057212 /usr/local/include/opencv2/features2d.hpp
+	"opencv2/core.hpp"
+	"opencv2/flann/miniflann.hpp"
+
+1524057212 /usr/local/include/opencv2/core/affine.hpp
+	<opencv2/core.hpp>
+
+1524057212 /usr/local/include/opencv2/calib3d/calib3d_c.h
+	"opencv2/core/core_c.h"
+
+1524057212 /usr/local/include/opencv2/flann.hpp
+	"opencv2/core.hpp"
+	"opencv2/flann/miniflann.hpp"
+	"opencv2/flann/flann_base.hpp"
+
+1524057212 /usr/local/include/opencv2/core/utility.hpp
+	"opencv2/core.hpp"
+	"opencv2/core/core_c.h"
+
+1524057212 /usr/local/include/opencv2/highgui.hpp
+	"opencv2/core.hpp"
+	"opencv2/imgcodecs.hpp"
+	"opencv2/videoio.hpp"
+	"opencv2/highgui/highgui_c.h"
+
+1524057212 /usr/local/include/opencv2/imgcodecs.hpp
+	"opencv2/core.hpp"
+	<opencv2/opencv.hpp>
+
+1524057213 /usr/local/include/opencv2/videoio.hpp
+	"opencv2/core.hpp"
+
+1524057212 /usr/local/include/opencv2/highgui/highgui_c.h
+	"opencv2/core/core_c.h"
+	"opencv2/imgproc/imgproc_c.h"
+	"opencv2/imgcodecs/imgcodecs_c.h"
+	"opencv2/videoio/videoio_c.h"
+
+1524057212 /usr/local/include/opencv2/imgcodecs/imgcodecs_c.h
+	"opencv2/core/core_c.h"
+
+1524057213 /usr/local/include/opencv2/videoio/videoio_c.h
+	"opencv2/core/core_c.h"
+
+1524057212 /usr/local/include/opencv2/imgproc.hpp
+	"opencv2/core.hpp"
+	<opencv2/core.hpp>
+	<opencv2/imgproc.hpp>
+	<opencv2/imgcodecs.hpp>
+	<opencv2/highgui.hpp>
+	<iostream>
+	<opencv2/imgproc.hpp>
+	<opencv2/highgui.hpp>
+	<opencv2/imgproc.hpp>
+	<opencv2/highgui.hpp>
+	<math.h>
+	<opencv2/imgproc.hpp>
+	<opencv2/highgui.hpp>
+	"opencv2/imgproc.hpp"
+	"opencv2/highgui.hpp"
+	"opencv2/imgproc/imgproc_c.h"
+
+1524057213 /usr/local/include/opencv2/ml.hpp
+	"opencv2/core.hpp"
+	<float.h>
+	<map>
+	<iostream>
+
+1524057213 /usr/local/include/opencv2/objdetect.hpp
+	"opencv2/core.hpp"
+	"opencv2/objdetect/detection_based_tracker.hpp"
+	"opencv2/objdetect/objdetect_c.h"
+
+1524057213 /usr/local/include/opencv2/objdetect/detection_based_tracker.hpp
+	<vector>
+
+1524057213 /usr/local/include/opencv2/objdetect/objdetect_c.h
+	"opencv2/core/core_c.h"
+	<deque>
+	<vector>
+
+1524057213 /usr/local/include/opencv2/photo.hpp
+	"opencv2/core.hpp"
+	"opencv2/imgproc.hpp"
+	"opencv2/photo/photo_c.h"
+
+1524057213 /usr/local/include/opencv2/photo/photo_c.h
+	"opencv2/core/core_c.h"
+
+1524057213 /usr/local/include/opencv2/shape.hpp
+	"opencv2/shape/emdL1.hpp"
+	"opencv2/shape/shape_transformer.hpp"
+	"opencv2/shape/hist_cost.hpp"
+	"opencv2/shape/shape_distance.hpp"
+
+1524057213 /usr/local/include/opencv2/shape/emdL1.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/shape/shape_transformer.hpp
+	<vector>
+	"opencv2/core.hpp"
+	"opencv2/imgproc.hpp"
+
+1524057213 /usr/local/include/opencv2/shape/hist_cost.hpp
+	"opencv2/imgproc.hpp"
+
+1524057213 /usr/local/include/opencv2/shape/shape_distance.hpp
+	"opencv2/core.hpp"
+	"opencv2/shape/hist_cost.hpp"
+	"opencv2/shape/shape_transformer.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching.hpp
+	"opencv2/core.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/stitching/warpers.hpp"
+	"opencv2/stitching/detail/matchers.hpp"
+	"opencv2/stitching/detail/motion_estimators.hpp"
+	"opencv2/stitching/detail/exposure_compensate.hpp"
+	"opencv2/stitching/detail/seam_finders.hpp"
+	"opencv2/stitching/detail/blenders.hpp"
+	"opencv2/stitching/detail/camera.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/warpers.hpp
+	"opencv2/stitching/detail/warpers.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/warpers.hpp
+	"opencv2/core.hpp"
+	"opencv2/core/cuda.hpp"
+	"opencv2/imgproc.hpp"
+	"opencv2/opencv_modules.hpp"
+	"warpers_inl.hpp"
+
+1524057212 /usr/local/include/opencv2/core/cuda.hpp
+	"opencv2/core.hpp"
+	"opencv2/core/cuda_types.hpp"
+	"opencv2/core/cuda.inl.hpp"
+
+1524057212 /usr/local/include/opencv2/core/cuda_types.hpp
+
+1524057212 /usr/local/include/opencv2/core/cuda.inl.hpp
+	"opencv2/core/cuda.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/warpers_inl.hpp
+	"opencv2/core.hpp"
+	"warpers.hpp"
+	<limits>
+
+1524057213 /usr/local/include/opencv2/stitching/detail/matchers.hpp
+	"opencv2/core.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/opencv_modules.hpp"
+	"opencv2/xfeatures2d/cuda.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/motion_estimators.hpp
+	"opencv2/core.hpp"
+	"matchers.hpp"
+	"util.hpp"
+	"camera.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/util.hpp
+	<list>
+	"opencv2/core.hpp"
+	"util_inl.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/util_inl.hpp
+	<queue>
+	"opencv2/core.hpp"
+	"util.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/camera.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/exposure_compensate.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/seam_finders.hpp
+	<set>
+	"opencv2/core.hpp"
+	"opencv2/opencv_modules.hpp"
+
+1524057213 /usr/local/include/opencv2/stitching/detail/blenders.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/superres.hpp
+	"opencv2/core.hpp"
+	"opencv2/superres/optical_flow.hpp"
+
+1524057213 /usr/local/include/opencv2/superres/optical_flow.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/video.hpp
+	"opencv2/video/tracking.hpp"
+	"opencv2/video/background_segm.hpp"
+	"opencv2/video/tracking_c.h"
+
+1524057213 /usr/local/include/opencv2/video/background_segm.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/video/tracking_c.h
+	"opencv2/imgproc/types_c.h"
+
+1524057213 /usr/local/include/opencv2/videostab.hpp
+	"opencv2/videostab/stabilizer.hpp"
+	"opencv2/videostab/ring_buffer.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/stabilizer.hpp
+	<vector>
+	<ctime>
+	"opencv2/core.hpp"
+	"opencv2/imgproc.hpp"
+	"opencv2/videostab/global_motion.hpp"
+	"opencv2/videostab/motion_stabilizing.hpp"
+	"opencv2/videostab/frame_source.hpp"
+	"opencv2/videostab/log.hpp"
+	"opencv2/videostab/inpainting.hpp"
+	"opencv2/videostab/deblurring.hpp"
+	"opencv2/videostab/wobble_suppression.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/global_motion.hpp
+	<vector>
+	<fstream>
+	"opencv2/core.hpp"
+	"opencv2/features2d.hpp"
+	"opencv2/opencv_modules.hpp"
+	"opencv2/videostab/optical_flow.hpp"
+	"opencv2/videostab/motion_core.hpp"
+	"opencv2/videostab/outlier_rejection.hpp"
+	"opencv2/cudaimgproc.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/optical_flow.hpp
+	"opencv2/core.hpp"
+	"opencv2/opencv_modules.hpp"
+	"opencv2/cudaoptflow.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/motion_core.hpp
+	<cmath>
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/outlier_rejection.hpp
+	<vector>
+	"opencv2/core.hpp"
+	"opencv2/videostab/motion_core.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/motion_stabilizing.hpp
+	<vector>
+	<utility>
+	"opencv2/core.hpp"
+	"opencv2/videostab/global_motion.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/frame_source.hpp
+	<vector>
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/log.hpp
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/inpainting.hpp
+	<vector>
+	"opencv2/core.hpp"
+	"opencv2/videostab/optical_flow.hpp"
+	"opencv2/videostab/fast_marching.hpp"
+	"opencv2/videostab/global_motion.hpp"
+	"opencv2/photo.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/fast_marching.hpp
+	<cmath>
+	<queue>
+	<algorithm>
+	"opencv2/core.hpp"
+	"fast_marching_inl.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/fast_marching_inl.hpp
+	"opencv2/videostab/fast_marching.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/deblurring.hpp
+	<vector>
+	"opencv2/core.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/wobble_suppression.hpp
+	<vector>
+	"opencv2/core.hpp"
+	"opencv2/core/cuda.hpp"
+	"opencv2/videostab/global_motion.hpp"
+	"opencv2/videostab/log.hpp"
+
+1524057213 /usr/local/include/opencv2/videostab/ring_buffer.hpp
+	<vector>
+	"opencv2/imgproc.hpp"
+
+1524057213 /usr/local/include/opencv2/viz.hpp
+	<opencv2/viz/types.hpp>
+	<opencv2/viz/widgets.hpp>
+	<opencv2/viz/viz3d.hpp>
+	<opencv2/viz/vizcore.hpp>
+
+1524057213 /usr/local/include/opencv2/viz/types.hpp
+	<string>
+	<opencv2/core.hpp>
+	<opencv2/core/affine.hpp>
+
+1524057213 /usr/local/include/opencv2/viz/widgets.hpp
+	<opencv2/viz/types.hpp>
+
+1524057213 /usr/local/include/opencv2/viz/viz3d.hpp
+	<opencv2/core.hpp>
+	<opencv2/viz/types.hpp>
+	<opencv2/viz/widgets.hpp>
+
+1524057213 /usr/local/include/opencv2/viz/vizcore.hpp
+	<opencv2/viz/types.hpp>
+	<opencv2/viz/widgets.hpp>
+	<opencv2/viz/viz3d.hpp>
+
+1524057212 /usr/local/include/opencv2/core/cvstd.inl.hpp
+	<complex>
+	<ostream>
+
+1524057212 /usr/local/include/opencv2/core/optim.hpp
+	"opencv2/core.hpp"
+
+1524057212 /usr/local/include/opencv2/core/ovx.hpp
+	"cvdef.h"
+
+1538092438 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/neural_networks/findSemantics.h
+	"../codecs/codecs.h"
 

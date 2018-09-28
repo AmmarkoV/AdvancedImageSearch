@@ -105,6 +105,11 @@ struct AISLib_SearchCriteria
    float containsSimilarityPercent;
    void * containsImage;
 
+
+   char semanticsUsed;
+   float semanticsSimilarityPercent;
+
+
 };
 
 struct AISLib_SearchResults

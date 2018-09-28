@@ -104,6 +104,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="neural_networks/findSemantics.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="neural_networks/findSemantics.h" />
 		<Unit filename="tools/parameter_parser.c">
 			<Option compilerVar="CC" />
 		</Unit>

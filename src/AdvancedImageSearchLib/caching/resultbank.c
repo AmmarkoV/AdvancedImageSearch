@@ -1,5 +1,6 @@
 #include "resultbank.h"
 
+#include "../neural_networks/findSemantics.h"
 #include "../image_processing/findPatterns.h"
 #include "../image_processing/faceDetection.h"
 #include "../image_processing/histograms.h"
@@ -22,7 +23,6 @@ unsigned long hash(unsigned char *str)
 
 // ---  ---  ---  ---  ---  ---  ---  ---  ---  ---
 
-
 int request_findPatternInImage(char * filename , char * patternname,  struct Image * pattern,struct Image * img , float similarity)
 {
    //fprintf(stderr,"request_findPatternInImage");
@@ -31,6 +31,17 @@ int request_findPatternInImage(char * filename , char * patternname,  struct Ima
     return findPatternInImage(pattern,img,similarity);
    #else
     return findPatternInImage(pattern,img,similarity);
+   #endif
+}
+
+int request_findSemanticsOfImage(char * filename , char * patternname,  struct Image * pattern,struct Image * img , float similarity)
+{
+   //fprintf(stderr,"request_findPatternInImage");
+   #if USE_CACHING
+    //TODO IMPLEMENT A QUESTION TO A DATABASE IF WE HAVE THE PATTERN IN FILENAME
+    return findSemanticsOfImage(pattern,img,similarity);
+   #else
+    return findSemanticsOfImage(pattern,img,similarity);
    #endif
 }
 

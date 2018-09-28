@@ -37,6 +37,7 @@ ENDIF( ENABLE_OPENCV )
 IF( ENABLE_DARKNET )
  add_definitions(-DUSE_DARKNET)
  add_subdirectory (src/DarknetProcessor) 
+ set(NeuralNetworkParts DarknetProcessor )
 ENDIF( ENABLE_DARKNET )
 
 add_subdirectory (src/AdvancedImageSearchLib)

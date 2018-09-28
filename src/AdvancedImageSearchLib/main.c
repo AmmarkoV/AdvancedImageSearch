@@ -35,6 +35,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_processing/imageComparison.h"
 #include "image_processing/faceDetection.h"
 #include "image_processing/findPatterns.h"
+#include "neural_networks/findSemantics.h"
 
 #include "caching/resultbank.h"
 
@@ -221,6 +222,12 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     if (criteria->containsUsed)
     {
       if (!request_findPatternInImage(filename , criteria->containsImageFilename , criteria->containsImage,img , criteria->containsSimilarityPercent)) { return 0; }
+    }
+
+    //fprintf(stderr,"criteria->semanticsUsed..");
+    if (criteria->semanticsUsed)
+    {
+      if (!request_findSemanticsOfImage(filename , criteria->containsImageFilename , criteria->containsImage,img , criteria->containsSimilarityPercent)) { return 0; }
     }
 
     return 1;

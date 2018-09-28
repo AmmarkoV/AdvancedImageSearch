@@ -341,6 +341,27 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
                      finalArgument=i+4;
                    }
     } else
+   if (strcmp(argv[i],"--semantics")==0)
+   {
+     //fprintf(stderr,"semantics..\n");
+     finalArgument=i+1;
+     if (i+1<argc) {
+                     #if USE_DARKNET
+                     criteria->criteriaSpecified=1;
+                     criteria->semanticsUsed=1;
+                     criteria->semanticsSimilarityPercent=atof(argv[i+2]);
+                     #else
+                      printNotCompiledInSupport(argv[i]);
+                     #endif
+
+                     finalArgument=i+2;
+                   } else
+                   {
+                       fprintf(stderr,"Not enough arguments..\n");
+                   }
+    }
+
+
    if (strcmp(argv[i],"--contains")==0)
     {
      //fprintf(stderr,"Contains..\n");

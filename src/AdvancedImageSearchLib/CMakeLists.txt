@@ -31,6 +31,9 @@ cmake_minimum_required( VERSION 2.8.7 )
                  image_processing/imageResizer.c
                  image_processing/imageResizer.h
 
+                 neural_networks/findSemantics.c
+                 neural_networks/findSemantics.h
+
                  tools/parameter_parser.c
                  tools/parameter_parser.h
                  tools/string_extension_scanner.c
@@ -45,8 +48,8 @@ cmake_minimum_required( VERSION 2.8.7 )
               )
   
     add_library(AdvancedImageSearchLib SHARED ${ADV_IMG_LIB_INGREDIENTS} ) 
-    target_link_libraries(AdvancedImageSearchLib rt dl m  ${PatternRecognitionParts} ) 
-    add_dependencies(AdvancedImageSearchLib ${PatternRecognitionParts} )  
+    target_link_libraries(AdvancedImageSearchLib rt dl m  ${PatternRecognitionParts} ${NeuralNetworkParts} ) 
+    add_dependencies(AdvancedImageSearchLib ${PatternRecognitionParts} ${NeuralNetworkParts} )  
  
  
 

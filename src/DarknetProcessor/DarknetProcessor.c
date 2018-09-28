@@ -7,7 +7,7 @@
 #include "recordOutput.h"
 
 //This is only used for the drawRectangleRGB, if you remove it it is not needed..
-#include "..//Drawing/drawing.h"
+#include "../Drawing/drawing.h"
 
 //if define GPU 1 is not used then nothing will work as it is supposed to be if we are doing a GPU build..
 #define GPU 1
@@ -18,6 +18,7 @@ int haveInitialization=0;
 int produceFileOutput=1;
 int produceRGBOutput=1;
 
+int forbidNameListChange = 0;
 
 
 struct darknetDetectorResult
@@ -148,8 +149,17 @@ int internalDarknetInitialization(
      if (options!=0)
      {
       classes     = option_find_int(options, "classes", 20);
-      namelistfile = option_find_str(options, "names", namelistfile);
-      fprintf(stderr,"Names list Source changed to : %s\n",namelistfile);
+      
+      if (forbidNameListChange)
+      { 
+       //FORBID NAMELISTCHANGES TO NOT BREAK ON DIFFERENT DIRS..
+       fprintf(stderr,"\nNames list Source change forbidden\n");
+      } else
+      {
+       namelistfile = option_find_str(options, "names", namelistfile);
+       fprintf(stderr,"Names list Source changed to : %s\n",namelistfile);
+       fprintf(stderr,"This can be disabled using --forbidNameListChange\n");
+      }
      }
     }
     fprintf(stderr,"Number of Classes : %u\n",classes);
@@ -200,6 +210,7 @@ int initArgs_DarknetProcessor(int argc, char *argv[])
  float nms=0.4;
 
 
+ fprintf(stderr,"Parsing argc/argv .. ");
  unsigned int i=0;
  for (i=0; i<argc; i++)
  {
@@ -216,12 +227,12 @@ int initArgs_DarknetProcessor(int argc, char *argv[])
    if (strstr(argv[i],"--nms")!=0)             { nms=atof(argv[i+1]); } else
    if (strstr(argv[i],"--detector")!=0)        { mode=0; } else
    if (strstr(argv[i],"--classifier")!=0)      { mode=1; } else
+   if (strstr(argv[i],"--forbidNameListChange")!=0)    { forbidNameListChange=1;} else
    if (strstr(argv[i],"--noVisualization")!=0) { produceRGBOutput=0; } else
    if (strstr(argv[i],"--noFileOutput")!=0)    { produceFileOutput=0; } else
    if (strstr(argv[i],"--fast")!=0)            { produceFileOutput=0; produceRGBOutput=0; }
-
-
  }
+ fprintf(stderr,"done .. ");
 
  #if GPU
   fprintf(stderr,"Thinking about GPUS\n");
@@ -448,6 +459,7 @@ int doDetector(image * im, layer * l ,  void * data, unsigned int width, unsigne
 
 int doClassifier(image * im, layer * l ,  float *predictions, void * data, unsigned int width, unsigned int height)
 {
+fprintf(stderr,"doClassifier..\n");
  #ifdef GPU
         cuda_pull_array(l->output_gpu, l->output, l->outputs);
  #endif
@@ -503,6 +515,7 @@ float getDetectionProbability_DarknetProcessor(unsigned int detectionNumber)
 
 int addDataInput_DarknetProcessor(unsigned int stream , void * data, unsigned int width, unsigned int height,unsigned int channels,unsigned int bitsperpixel)
 {
+fprintf(stderr,"addDataInput_DarknetProcessor called...\n");
  if (!haveInitialization)
     {
       fprintf(stderr,"Darknet Processor was not initialized properly and will not do anything..\n");
@@ -512,10 +525,12 @@ int addDataInput_DarknetProcessor(unsigned int stream , void * data, unsigned in
  //fprintf(stderr,"addDataInput_DarknetProcessor %u (%ux%u) channels=%u\n" , stream , width, height,channels);
  if (stream==0)
  {
+fprintf(stderr,"convertBufferToImage..\n");
     //This is the original input image that was given to addDataInput_DarknetProcessor
     image im=convertBufferToImage(data, width, height, channels);
 
 
+fprintf(stderr,"resize_image..\n");
     //We might want to resize the image to make it 448x448
     image sized = resize_image(im, dc.net->w, dc.net->h);
 
@@ -529,10 +544,12 @@ int addDataInput_DarknetProcessor(unsigned int stream , void * data, unsigned in
     //This is the final layer of the net
     layer l = dc.net->layers[dc.net->n-1];
 
+fprintf(stderr,"network_predict..\n");
     //Detecting happens here
     float *prediction = network_predict(dc.net /*Neural Net*/, sized.data /*Search Image*/);
 
 
+fprintf(stderr," if (prediction!=0)..\n");
     if (prediction!=0)
     {
       switch (mode)
