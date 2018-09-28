@@ -37,18 +37,20 @@ The program requires libjpeg , libpng , opencv , darknet and gcc to enable all f
 It also requires exif tool for JPG exif functionality that greatly speeds up some operations when just scanning JPEG headers.
  
 
-OpenCV should be a version after 3.0 along with the nonfree components and this can be tricky to install. If you also wish to use the semantic search features ( which is a really nice feature ) you will also need Darknet
-
-All of these dependencies can be installed using the script provided in 3dparty/get_third_party_libs.sh
-Beeing on the main directory and issuing the command
-```
-3dparty/get_third_party_libs.sh
-```
-will download these dependencies and guide you through the proceedure, you should also enable the CMake switches ENABLE_DARKNET ENABLE_FACEDETECTION ENABLE_OPENCV ENABLE_PATTERNRECOGNITION afterwards
-
+To install them issue :
 ```
 sudo apt-get install cmake build-essential git g++ gcc exif libjpeg-dev libpng12-dev
 ```
+
+Libraries that are not available on repositories can be installed using the following instructions. OpenCV should be a version after version 3.0 which went under a very large refactoring and also contain the nonfree/contrib components. This library is not available in repositories and thus has to be downloaded and built from source something that might be tricky for some users. The semantic search features ( which is a really nice feature ) will also require Darknet to be installed in order to be enabled.
+
+Luckily, all of these dependencies can be installed using the script provided in 3dparty/get_third_party_libs.sh which asks you and then downloads, configures and tries to auto-build the dependencies. 
+
+In order to run the script and assuming you are on the main directory issuing the command :
+```
+3dparty/get_third_party_libs.sh
+```
+will download these dependencies and guide you through the procedure, you should also enable the correct CMake switches afterwards. This can be done using console ( cmake -DENABLE_DARKNET=ON -DENABLE_FACEDETECTION=ON -DENABLE_OPENCV=ON -DENABLE_PATTERNRECOGNITION=ON .. )  or a GUI like cmake-gui 
 
 
 ## Building
