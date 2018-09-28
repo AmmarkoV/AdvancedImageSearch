@@ -253,9 +253,12 @@ int initArgs_DarknetProcessor(int argc, char *argv[])
    fprintf(stderr,"Processor is compiled without GPU define, if Darknet is compiled WITH it you may experience crazy problems since ");
    fprintf(stderr,"Darknet ABI changes depending on this flag..!\n");
  #endif // GPU
-
+ 
+if (mode==0)
+ {
  framesProcessed=resumeFrameOutput();
  fprintf(stderr,"Resuming @ %u\n",framesProcessed);
+ }
 
  return internalDarknetInitialization(
                                        cfgFile,    //"yourpath/yolo.cfg"

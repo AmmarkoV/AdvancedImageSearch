@@ -14,7 +14,7 @@ target_link_libraries(DarknetProcessor Darknet rt dl m pthread cuda cudart cubla
  
 
 set_target_properties(DarknetProcessor PROPERTIES 
-                       DEBUG_POSTFIX "D"
+                       #DEBUG_POSTFIX "D"
                        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
                        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
                        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"

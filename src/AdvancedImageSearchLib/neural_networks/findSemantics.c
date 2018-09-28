@@ -37,7 +37,7 @@ char cwd[PATH_MAX];
 int findSemanticsOfImage(struct Image * pattern,struct Image * img,float similarity)
 {
    int result = 0;
-    #if USE_DARKNET
+   #if USE_DARKNET
   if(!haveInit)
    {
     if (getcwd(cwd, sizeof(cwd)) != NULL) { }
