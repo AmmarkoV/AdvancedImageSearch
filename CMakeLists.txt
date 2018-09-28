@@ -56,7 +56,7 @@ ENDIF( ENABLE_OPENCV )
 
 INSTALL(PROGRAMS "src/AdvancedImageSearchLib/libAdvancedImageSearchLib.so" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
 
-INSTALL(FILES "data/haarcascade_frontalface_alt.xml" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
+INSTALL(FILES "data/haarcascade_frontalface_alt.dat" DESTINATION "/usr/lib/AdvancedImageSearch" ) 
 
 
 # TODO FIX INSTALLATION DIRECTORIES 

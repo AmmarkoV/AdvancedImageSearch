@@ -23,7 +23,7 @@ int openCVFaceDetector(struct Image * img)
    if (!faceDetectorInitialized)
    {
       char filename[1024]={0};
-      strcpy (filename,"/usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.xml");
+      strcpy (filename,"/usr/lib/AdvancedImageSearch/haarcascade_frontalface_alt.dat");
 
       // load the classifier note that I put the file in the same directory with this code */
       cascade = ( CvHaarClassifierCascade* ) cvLoad( filename, 0, 0, 0 );
