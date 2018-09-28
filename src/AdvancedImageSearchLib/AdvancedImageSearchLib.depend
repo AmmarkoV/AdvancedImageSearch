@@ -8,30 +8,30 @@
 	"pngInput.h"
 	"ppmInput.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
+1538119937 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/codecs.h
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.h
 	"codecs.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/configuration.h
+1537532708 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/configuration.h
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.h
 	"codecs.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.h
 	"codecs.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.h
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.c
 	"jpgExifexternal.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgExifexternal.h
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/jpgInput.c
 	"jpgInput.h"
 	<stdio.h>
 	<string.h>
@@ -39,7 +39,7 @@
 	<stdlib.h>
 	"codecs.h"
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/pngInput.c
 	"pngInput.h"
 	<unistd.h>
 	<stdlib.h>
@@ -48,7 +48,7 @@
 	<stdarg.h>
 	<png.h>
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/codecs/ppmInput.c
 	"codecs.h"
 	<stdio.h>
 	<stdlib.h>
@@ -1516,12 +1516,12 @@
 1524057212 /usr/local/include/opencv/cxcore.h
 	"opencv2/core/core_c.h"
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.c
 	"filters.h"
 	<stdio.h>
 	<stdlib.h>
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/filters.h
 	"../codecs/codecs.h"
 
 1538092598 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/findPatterns.c
@@ -1536,14 +1536,14 @@
 
 1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/PatternRecognition/PatternRecognition.h
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"histograms.h"
 	"../tools/timers.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/histograms.h
 
 1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/image_processing/imageComparison.c
 	<stdio.h>
@@ -1594,12 +1594,12 @@
 1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/caching/resultbank.h
 	"../codecs/codecs.h"
 
-1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.h
+1536226558 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.h
 
 1538065101 /home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/parameter_parser.h
 	"../AdvancedImageSearchLib.h"
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/string_extension_scanner.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -1607,7 +1607,7 @@
 	"string_extension_scanner.h"
 	"../codecs/codecs.h"
 
-1538065101 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.c
+1536226558 source:/home/ammar/Documents/Programming/AdvancedImageSearch/src/AdvancedImageSearchLib/tools/timers.c
 	"timers.h"
 	"../configuration.h"
 	<sys/time.h>

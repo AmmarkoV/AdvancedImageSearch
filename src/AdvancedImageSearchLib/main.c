@@ -227,7 +227,7 @@ int imageFitsCriteria(char * filename , struct Image * img,struct AISLib_SearchC
     //fprintf(stderr,"criteria->semanticsUsed..");
     if (criteria->semanticsUsed)
     {
-      if (!request_findSemanticsOfImage(filename , criteria->containsImageFilename , criteria->containsImage,img , criteria->containsSimilarityPercent)) { return 0; }
+      if (!request_findSemanticsOfImage(filename , criteria->semanticsImageFilename , criteria->semanticsImage,img , criteria->semanticsSimilarityPercent)) { return 0; }
     }
 
     return 1;

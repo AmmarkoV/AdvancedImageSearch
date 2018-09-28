@@ -31,6 +31,19 @@
 
 #define DEBUG_READING_IMAGES 0
 
+
+void printImage(const char * label,struct Image * img)
+{
+  fprintf(stderr,"========== Image `%s` summary ==========\n",label);
+
+  fprintf(stderr,"Data:%p\n",img->pixels);
+  fprintf(stderr,"Width:%u Height:%u\n",img->width,img->height);
+  fprintf(stderr,"Channels:%u BitsPerPixel:%u\n",img->channels,img->bitsperpixel);
+
+  fprintf(stderr,"========== =========== ========= ==========\n");
+}
+
+
 struct Image * readImage( char *filename,unsigned int type,char read_only_header)
 {
 

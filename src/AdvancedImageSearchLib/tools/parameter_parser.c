@@ -345,16 +345,40 @@ char * parseCommandLineParameters(int argc, char *argv[], struct AISLib_SearchCr
    {
      //fprintf(stderr,"semantics..\n");
      finalArgument=i+1;
-     if (i+1<argc) {
+     if (i+2<argc) {
                      #if USE_DARKNET
-                     criteria->criteriaSpecified=1;
-                     criteria->semanticsUsed=1;
+                     strncpy( criteria->semanticsImageFilename , argv[i+1] , MAX_CRITERIA_STRING_SIZE );
                      criteria->semanticsSimilarityPercent=atof(argv[i+2]);
+
+                     fprintf(stderr,"Load File : %s\n",criteria->semanticsImageFilename);
+                     fprintf(stderr,"Load Similarity : %0.2f\n",criteria->semanticsSimilarityPercent);
+
+                     struct Image * img = readImage(criteria->semanticsImageFilename,JPG_CODEC,0);
+                     if (img!=0)
+                     {
+                       printImage("Original Image",img);
+                       //WritePPM("testOriginal.ppm",img);
+                       struct Image * rszdImage = resizeImage(img,criteria->comparisonWidth,criteria->comparisonHeight);
+                       if (rszdImage!=0)
+                       {
+                         printImage("Resized Image",rszdImage);
+                         //WritePPM("testResized.ppm",rszdImage);
+                         criteria->semanticsUsed=1;
+                         criteria->semanticsImage = (void*) rszdImage;
+                         criteria->criteriaSpecified=1;
+                       }else
+                       {
+                         fprintf(stderr,"Failed to open pattern to search for (%s)..\n",criteria->semanticsImageFilename);
+                       }
+                       //Deallocate initial BIG image , we won't be needing it
+                       destroyImage(img);
+                     }
+
                      #else
                       printNotCompiledInSupport(argv[i]);
                      #endif
 
-                     finalArgument=i+2;
+                     finalArgument=i+3;
                    } else
                    {
                        fprintf(stderr,"Not enough arguments..\n");

@@ -117,6 +117,7 @@ int ReadJPEG( char *filename,struct Image * pic,char read_only_header)
 
     float get_channels = (float) cinfo.output_width*cinfo.output_height*cinfo.num_components / cinfo.image_width * cinfo.image_height;
 	pic->channels=cinfo.out_color_components;
+	pic->bitsperpixel = 8;
 
     if (get_channels < pic->channels)
           { fprintf(stderr,"Picture %s has incorrect filesize allocated for its channels ( %u vs %0.2f) ..!\n",filename , pic->channels , get_channels); }

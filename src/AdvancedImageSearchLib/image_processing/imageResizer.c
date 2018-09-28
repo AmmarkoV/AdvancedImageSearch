@@ -132,6 +132,7 @@ struct Image * resizeImage(struct Image * img,unsigned int resizeWidth , unsigne
    smallerImg->height = resizeHeight;
    smallerImg->channels = img->channels;
    smallerImg->bitsperpixel = img->bitsperpixel;
+   smallerImg->image_size = resizeWidth * resizeHeight * img->channels * ( img->bitsperpixel/8);
 
    smallerImg->pixels = resizeImageInternal3Bytes(img->pixels, img->width, img->height, smallerImg->width , smallerImg->height);
 

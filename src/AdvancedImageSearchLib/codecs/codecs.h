@@ -52,6 +52,8 @@ struct Image
   unsigned int image_size;
 };
 
+void printImage(const char * label,struct Image * img);
+
 struct Image * readImage( char *filename,unsigned int type,char read_only_header);
 
 int writeImageFile(struct Image * pic,unsigned int type,char *filename);

@@ -108,6 +108,8 @@ struct AISLib_SearchCriteria
 
    char semanticsUsed;
    float semanticsSimilarityPercent;
+   char semanticsImageFilename[MAX_CRITERIA_STRING_SIZE];
+   void * semanticsImage;
 
 
 };
