@@ -34,7 +34,7 @@ wget https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
 ## Library Dependencies
 ------------------------------------------------------------------ 
 The program requires libjpeg , libpng , opencv , darknet and gcc to enable all features! It can also operate without problems without darknet and/or opencv but some advanced functionality will not be available.
-It also requires exif tool ( sudo apt-get install exif ) for JPG exif functionality that greatly speeds up some operations by just scanning JPEG headers.
+It also requires exif tool for JPG exif functionality that greatly speeds up some operations when just scanning JPEG headers.
  
 
 OpenCV should be a version after 3.2 along with the nonfree components 
