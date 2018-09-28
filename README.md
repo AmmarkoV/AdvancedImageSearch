@@ -3,11 +3,11 @@
 # Advanced Image Search for Linux
 ## Enabling content aware image search for linux using computer vision
 ------------------------------------------------------------------ 
-The purpose of this library are command line tools that enable content-aware image browsing from the CLI..
+The purpose of this library is to provide command line tools that enable content-aware image browsing from the CLI..
 
-lsimg for example ( which is the first implemented application ) should be able to return images which are larger than a specific resolution , that contain faces , that are similar to another one , that are bright ( histograms ) , that have been taken in a specific Longitude/Latitude ( EXIF ) etc..
+lsimg for example ( which is the first implemented application ) should be able to return images which are larger than a specific resolution , that contain faces , that are similar to another one , that are bright ( histograms ) , that have been taken in a specific Longitude/Latitude ( EXIF ) or the same content as some other image file etc..
 
-Of course some of this functionality is theoretical for now , you can view implemented functionality by issuing "lsimg - help" 
+You can view implemented functionality by issuing "lsimg - help" 
 
 
 To submit bug or feature tickets you can use the github issue system
@@ -17,12 +17,18 @@ https://github.com/AmmarkoV/AdvancedImageSearch/issues
 ## Getting the project
 ------------------------------------------------------------------ 
 To get the project issue 
+```
 git clone git://github.com/AmmarkoV/AdvancedImageSearch.git
 cd AdvancedImageSearch
+```
 
 You can also get the project as a zip file by clicking here
 https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
+or 
 
+```
+wget https://nodeload.github.com/AmmarkoV/AdvancedImageSearch/zip/master
+```
 
 
 ## Library Dependencies
