@@ -34,6 +34,7 @@ else
       git clone https://github.com/pjreddie/darknet
       cd darknet
       wget https://pjreddie.com/media/files/darknet19.weights 
+      ln -s data/imagenet.shortnames.list data/imagenet.names
       
       make
       
