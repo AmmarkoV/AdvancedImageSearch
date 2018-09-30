@@ -26,7 +26,7 @@ struct darknetDetectorResult
  char label[128];
  float probability;
 };
-#define detectorReturnTopNResults 5
+#define detectorReturnTopNResults 10
 struct darknetDetectorResult detectorResults[detectorReturnTopNResults]={0};
 
 

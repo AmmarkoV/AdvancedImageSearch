@@ -19,7 +19,7 @@ struct detectorResult
  char label[128];
  float probability;
 };
-#define detectorReturnTopNResults 5
+#define detectorReturnTopNResults 10
 struct detectorResult patternResults[detectorReturnTopNResults]={0};
 struct detectorResult haystackResults[detectorReturnTopNResults]={0};
 
@@ -55,9 +55,9 @@ int isItAMatch(struct detectorResult * needle,struct detectorResult * haystack,f
 
   if (visualization)
    { fprintf(stderr,"_______________________\n"); }
-  for (i=0; i<5; i++)
+  for (i=0; i<detectorReturnTopNResults; i++)
   {
-   for (z=0; z<5; z++)
+   for (z=0; z<detectorReturnTopNResults; z++)
    {
      if (
           (needle[i].probability>similarityNormalized) &&
