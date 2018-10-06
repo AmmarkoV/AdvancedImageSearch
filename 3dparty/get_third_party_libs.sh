@@ -19,6 +19,14 @@ echo "Will pick 32bit binaries"
 fi
 
 
+
+sudo apt-get install cmake build-essential git g++ gcc exif libjpeg-dev libpng12-dev sed mesa-utils
+
+HAS_NVIDIA=`glxinfo | grep NVIDIA`
+
+
+
+
 # ---------------------------------------------------------------------
 if [ -d darknet ]
 then
@@ -35,6 +43,19 @@ else
       cd darknet
       wget https://pjreddie.com/media/files/darknet19.weights 
       ln -s data/imagenet.shortnames.list data/imagenet.names
+
+      if [ -z "$HAS_NVIDIA" ]
+      then
+       echo "Could not find an NVIDIA card.."
+      else
+       echo "Found an NVIDIA card.."
+       if [ -d /usr/local/cuda ]
+       then 
+        echo "Found a CUDA installation, will try to enable GPU(fast) version of DarkNet"
+         sed -i 's/GPU=0/GPU=1/g' Makefile
+       fi   
+      fi
+
       
       make
       
