@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES("/usr/local/cuda/include")
 LINK_DIRECTORIES("/usr/local/cuda/lib64")
 
 add_library(DarknetProcessor SHARED DarknetProcessor.h DarknetProcessor.c recordOutput.h recordOutput.c imageOps.c imageOps.h ) 
-target_link_libraries(DarknetProcessor Darknet rt dl m pthread cuda cudart cublas curand stdc++) 
+target_link_libraries(DarknetProcessor Darknet rt dl m pthread cuda cudart cublas curand stdc++)  #CUDA 9.0  ${CUDA_LIBRARIES}  ? 
  
 
 #target_compile_definitions(DarknetProcessor PRIVATE FOO=1 BAR=1)
